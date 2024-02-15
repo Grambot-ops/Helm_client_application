@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CompetitionCategory extends Model
 {
     use HasFactory;
+
+    public function competitions()
+    {
+        return $this->hasMany(Competition::class);
+    }
 }

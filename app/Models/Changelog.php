@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Changelog extends Model
 {
     use HasFactory;
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
+    }
 }
