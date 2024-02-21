@@ -1,4 +1,4 @@
-<footer class="w-full px-4 py-6 text-sm border-t flex flex-wrap justify-between items-center text-white" style="background-color: #f26130">
+<footer class="w-full px-4 py-6 text-sm border-t flex flex-wrap justify-between items-center text-white" style="background-color: #FA6432">
     <div class="flex flex-wrap justify-between w-full md:w-auto">
         <div class="mb-1 text-white">
             Thomas More Competition Platform - © {{ date('Y') }}

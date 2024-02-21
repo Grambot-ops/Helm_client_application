@@ -1,4 +1,4 @@
-<div class="mx-auto flex justify-between items-center bg-orange-500">
+<div class="mx-auto flex justify-between items-center" style="background-color: #FA6432">
     <!-- Logo -->
     <div class="flex p-4 items-center bg-white">
         <a href="#">
