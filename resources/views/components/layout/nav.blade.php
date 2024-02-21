@@ -1,6 +1,6 @@
-<div class="container mx-auto p-4 flex justify-between items-center bg-orange-500">
+<div class="mx-auto flex justify-between items-center bg-orange-500">
     <!-- Logo -->
-    <div class="flex items-center space-x-2">
+    <div class="flex p-4 items-center bg-white">
         <a href="#">
             <img src="{{ asset('thomasmore_logo_oranje.svg') }}" alt="Thomas more logo" class="h-10">
         </a>
