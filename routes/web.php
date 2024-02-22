@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Admin\Users;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +28,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('admin/users', Users::class)->name('users');
+//Route::middleware(['auth','admin','active'])->prefix('admin')->name('admin.')->group(function () {
+//    Route::redirect('/', '/admin/users');
+//    Route::get('records', Users::class)->name('users');
+//});
