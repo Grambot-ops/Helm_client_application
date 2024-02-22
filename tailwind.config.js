@@ -13,6 +13,9 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                'tm-orange': '#fa6432',
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },

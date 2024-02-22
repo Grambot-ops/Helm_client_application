@@ -1,4 +1,4 @@
-<div class="mx-auto flex justify-between items-center" style="background-color: #FA6432">
+<div class="mx-auto flex justify-between items-center bg-tm-orange">
     <!-- Logo -->
     <div class="flex p-4 items-center bg-white">
         <a href="#">
@@ -14,7 +14,7 @@
         </div>
 
         {{-- Rechter dropdown (user) --}}
-        <div class="relative" x-data="{ open: false }">
+        <div class="relative me-4" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center space-x-2 text-white">
                 <span>USER</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
