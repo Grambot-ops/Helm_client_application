@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('changelogs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable(false);
-            $table->foreignId('competition_id')->nullable(false);
+            $table->foreignId('user_id')->constrained()->nullable(false);
+            $table->foreignId('competition_id')->constrained()->nullable(false);
             $table->dateTime('date_change');
             $table->timestamps();
         });

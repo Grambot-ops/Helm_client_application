@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable(false);
+            $table->foreignId('user_id')->nullable(false)->constrained();
             $table->text('message');
             $table->timestamps();
         });

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
             /* TODO: add DTR */
-            $table->foreignId('delivery_type_id')->nullable(false);
-            $table->foreignId('participation_id')->nullable(false);
+            $table->foreignId('delivery_type_id')->nullable(false)->constrained();
+            $table->foreignId('participation_id')->nullable(false)->constrained();
             $table->string('path')->nullable();
             $table->string('link')->nullable();
             $table->text('description')->nullable();

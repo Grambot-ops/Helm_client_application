@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('participations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('competition_id');
-            $table->foreignId('user_id');
+            $table->foreignId('competition_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->integer('ranking')->nullable(false);
             $table->boolean('disqualified')->nullable(false);
             $table->timestamps();
