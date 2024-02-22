@@ -8,6 +8,7 @@
     </x-tmk.section>
     <x-tmk.section>
         <div class="my-4"></div>
+        <div class="my-4">{{ $users->links()}}</div>
         <table class="text-center w-full border border-gray-300">
             <colgroup>
                 <col class="w-14">
@@ -82,3 +83,4 @@
         {{--<div class="my-4">{{ $users->links() }}</div>--}}
     </x-tmk.section>
 </div>
+
