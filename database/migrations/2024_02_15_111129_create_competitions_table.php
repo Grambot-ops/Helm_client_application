@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('competition_category_id')->nullable();
-            $table->foreignId('competition_type_id')->nullable(false);
+            $table->foreignId('competition_category_id')->nullable()->constrained();
+            $table->foreignId('competition_type_id')->nullable(false)->constrained();
             /* Organizer */
-            $table->foreignId('user_id')->nullable(false);
+            $table->foreignId('user_id')->nullable(false)->constrained();
             $table->string('title')->nullable(false);
             $table->boolean('by_vote')->nullable(false);
             $table->string('path_to_photo')->nullable();
