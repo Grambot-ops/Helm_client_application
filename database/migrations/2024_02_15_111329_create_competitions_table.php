@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('competition_category_id')->nullable();
-            $table->foreignId('category_type_id')->nullable(false);
+            $table->foreignId('competition_type_id')->nullable(false);
             /* Organizer */
             $table->foreignId('user_id')->nullable(false);
             $table->string('title')->nullable(false);
             $table->boolean('by_vote')->nullable(false);
-            $table->string('path_to_string')->nullable();
+            $table->string('path_to_photo')->nullable();
             $table->text('rules')->nullable();
             $table->text('prize')->nullable();
             $table->text('description')->nullable(false);
