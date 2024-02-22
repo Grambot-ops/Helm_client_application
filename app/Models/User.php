@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -92,5 +93,13 @@ class User extends Authenticatable
     public function competitions()
     {
         return $this->hasMany(Competition::class);
+    }
+
+    public function scopeSearchName($query, $search = '%')
+    {
+        //Search based on the given name or surname or together
+        return $query->where('name', 'like', "%{$search}%")
+            ->orWhere('surname', 'like', "%{$search}%")
+            ->orWhere(DB::raw("CONCAT(`name`,' ',`surname`)"), 'like', "%{$search}%");
     }
 }

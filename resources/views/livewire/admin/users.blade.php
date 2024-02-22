@@ -11,16 +11,14 @@
         <table class="text-center w-full border border-gray-300">
             <colgroup>
                 <col class="w-14">
+                <col class="w-max">
+                <col class="w-max">
                 <col class="w-20">
-                <col class="w-max">
-                <col class="w-14">
-                <col class="w-max">
                 <col class="w-24">
             </colgroup>
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
                 <th>#</th>
-                <th></th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Active</th>
@@ -37,13 +35,19 @@
             </tr>
             </thead>
             <tbody>
-            {{--@foreach($users as $user)
+            @forelse($users as $user)
                 <tr
                     wire:key="{{ $user->id }}"
                     class="border-t border-gray-300">
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}} {{$user->surname}}</td>
-                    <td>Role</td>
+                    <td>
+                        @if($user->admin)
+                            Admin
+                        @else
+                            User
+                        @endif
+                    </td>
                     <td>@if($user-> active)
                             Active
                         @else
@@ -66,12 +70,13 @@
                         </div>
                     </td>
                 </tr>
+            @empty
                     <tr>
                         <td colspan="6" class="border-t border-gray-300 p-4 text-center text-gray-500">
                             <div class="font-bold italic text-sky-800">No users found</div>
                         </td>
                     </tr>
-            @endforeach--}}
+            @endforelse
             </tbody>
         </table>
         {{--<div class="my-4">{{ $users->links() }}</div>--}}
