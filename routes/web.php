@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ManageCompetitionCategories;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
+Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
 
 Route::middleware([
     'auth:sanctum',
