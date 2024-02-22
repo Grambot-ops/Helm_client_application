@@ -8,25 +8,36 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+            <h1 class="text-lg text-center font-bold">Register TCMP account</h1>
 
-            <div>
+            <div class="mt-4">
                 <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-input id="name" class="block mt-1 w-full bg-gray-50" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="surname" value="{{ __('Surname') }}" />
+                <x-input id="surname" class="block mt-1 w-full bg-gray-50" type="text" name="surname" :value="old('surname')" required autofocus autocomplete="surname" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="username" value="{{ __('Username') }}" />
+                <x-input id="username" class="block mt-1 w-full bg-gray-50" type="text" name="username" :value="old('username')" required autofocus autocomplete="surname" />
             </div>
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-input id="email" class="block mt-1 w-full bg-gray-50" type="email" name="email" :value="old('email')" required autocomplete="username" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-input id="password" class="block mt-1 w-full bg-gray-50" type="password" name="password" required autocomplete="new-password" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-input id="password_confirmation" class="block mt-1 w-full bg-gray-50" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
