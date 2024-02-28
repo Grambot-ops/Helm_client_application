@@ -32,5 +32,3 @@
         </div>
     </nav>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@2.3.0/dist/alpine.js" defer></script>
