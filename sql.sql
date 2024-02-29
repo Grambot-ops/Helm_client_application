@@ -1,20 +1,27 @@
 INSERT INTO `users` (`id`,`name`,`email`,`password`,`surname`,`username`,`active`)
 VALUES
-    (1,"Tarik","nisl.maecenas@hotmail.org","nec","Kirkland","pellentesque.",true),
-    (2,"Dora","fames.ac.turpis@aol.edu","sit","Kelley","sed",true),
-    (3,"Darrel","fusce.dolor@hotmail.net","id,","Zimmerman","nisi",true),
-    (4,"Paul","a.mi.fringilla@icloud.edu","fames","O'connor","blandit",false),
-    (5,"Rhea","non@aol.edu","nisi.","Calderon","enim,",false),
-    (6,"Velma","rhoncus.nullam@hotmail.edu","accumsan","Mann","vitae,",false),
-    (7,"Daria","nisl.quisque@google.com","vel","Mcknight","eu,",true),
-    (8,"Quinn","arcu.vivamus@yahoo.org","sodales","Allen","felis",true),
-    (9,"Jael","sapien.aenean@aol.couk","velit.","Conley","luctus",false),
-    (10,"Caesar","nibh.quisque@aol.net","dapibus","Jones","tristique",true);
+    (1,"Tarik","nisl.maecenas@hotmail.org","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Kirkland","pellentesque.",true),
+    (2,"Dora","fames.ac.turpis@aol.edu","$2a$12$ojVVgiPCKjlWWtLrHpcDGOQ2vLaKQRiBNubSm/LfYkr5FAMW7Zo/e","Kelley","sed",true),
+    (3,"Darrel","fusce.dolor@hotmail.net","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Zimmerman","nisi",true),
+    (4,"Paul","a.mi.fringilla@icloud.edu","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","O'connor","blandit",false),
+    (5,"Rhea","non@aol.edu","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Calderon","enim,",false),
+    (6,"Velma","rhoncus.nullam@hotmail.edu","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Mann","vitae,",false),
+    (7,"Daria","nisl.quisque@google.com","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Mcknight","eu,",true),
+    (8,"Quinn","arcu.vivamus@yahoo.org","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Allen","felis",true),
+    (9,"Jael","sapien.aenean@aol.couk","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Conley","luctus",false),
+    (10,"Caesar","nibh.quisque@aol.net","$2a$12$JisyKOgS5/7ukaq6bKAoiOel5NAegyQws8jV4NoQbUpz/xA6UWp/K","Jones","tristique",true);
 
 INSERT INTO `roles` (`id`,`name`)
 VALUES
     (1, "Admin"),
     (2, "User");
+
+INSERT INTO `delivery_types` (`id`,`name`)
+VALUES
+    (1, "email"),
+    (2, "phone"),
+    (3, "photo"),
+    (4, "link");
 
 INSERT INTO `user_roles` (`role_id`,`user_id`)
 VALUES
@@ -24,11 +31,6 @@ VALUES
     (2, 3),
     (2, 2),
     (2, 4);
-
-INSERT INTO `delivery_types` (`id`,`name`)
-VALUES
-    (1, "email"),
-    (2, "phone");
 
 INSERT INTO `announcements` (`id`, `user_id`,`message`)
 VALUES
@@ -130,16 +132,16 @@ VALUES
 
 INSERT INTO `submissions` (`id`,`delivery_type_id`,`participation_id`,`path`,`link`,`description`)
 VALUES
-    (1,7,9,"http://facebook.com/one","https://zoom.us/sub/cars","Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed"),
-    (2,7,9,"https://whatsapp.com/one","http://facebook.com/en-us","Integer id magna et ipsum cursus vestibulum. Mauris magna. Duis dignissim tempor arcu. Vestibulum ut eros non enim commodo"),
-    (3,4,10,"http://walmart.com/fr","http://youtube.com/en-ca","Proin mi. Aliquam gravida mauris ut mi. Duis risus odio,"),
-    (4,1,2,"https://twitter.com/en-ca","http://guardian.co.uk/en-us","rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar"),
-    (5,1,4,"http://pinterest.com/sub","https://pinterest.com/en-us","vulputate, nisi sem semper erat, in consectetuer ipsum nunc id"),
-    (6,4,9,"http://pinterest.com/sub/cars","http://cnn.com/group/9","magna nec quam. Curabitur vel lectus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur"),
-    (7,6,6,"https://walmart.com/fr","https://pinterest.com/sub/cars","Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat,"),
-    (8,4,2,"https://youtube.com/sub/cars","http://whatsapp.com/settings","Fusce aliquam, enim nec tempus scelerisque, lorem ipsum sodales purus, in molestie tortor nibh sit amet"),
-    (9,4,2,"https://wikipedia.org/settings","https://netflix.com/settings","venenatis vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras dolor dolor, tempus non, lacinia at,"),
-    (10,4,6,"https://baidu.com/sub","http://cnn.com/group/9","nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio.");
+    (1,1,9,"http://facebook.com/one","https://zoom.us/sub/cars","Sed dictum. Proin eget odio. Aliquam vulputate ullamcorper magna. Sed"),
+    (2,1,9,"https://whatsapp.com/one","http://facebook.com/en-us","Integer id magna et ipsum cursus vestibulum. Mauris magna. Duis dignissim tempor arcu. Vestibulum ut eros non enim commodo"),
+    (3,1,10,"http://walmart.com/fr","http://youtube.com/en-ca","Proin mi. Aliquam gravida mauris ut mi. Duis risus odio,"),
+    (4,2,2,"https://twitter.com/en-ca","http://guardian.co.uk/en-us","rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar"),
+    (5,2,4,"http://pinterest.com/sub","https://pinterest.com/en-us","vulputate, nisi sem semper erat, in consectetuer ipsum nunc id"),
+    (6,1,9,"http://pinterest.com/sub/cars","http://cnn.com/group/9","magna nec quam. Curabitur vel lectus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur"),
+    (7,1,6,"https://walmart.com/fr","https://pinterest.com/sub/cars","Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat,"),
+    (8,3,2,"https://youtube.com/sub/cars","http://whatsapp.com/settings","Fusce aliquam, enim nec tempus scelerisque, lorem ipsum sodales purus, in molestie tortor nibh sit amet"),
+    (9,3,2,"https://wikipedia.org/settings","https://netflix.com/settings","venenatis vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras dolor dolor, tempus non, lacinia at,"),
+    (10,1,6,"https://baidu.com/sub","http://cnn.com/group/9","nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio.");
 
 INSERT INTO `likes` (`user_id`,`competition_id`)
 VALUES
