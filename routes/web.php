@@ -1,7 +1,9 @@
 <?php
 
+
 use App\Livewire\Admin\Users;
 use App\Models\User;
+use App\Livewire\ManageCompetitionCategories;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,18 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::middleware(['auth'])->group(function() {
+    Route::view('/', 'home')->name('home');
+    Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
+    Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
 });
 
 Route::get('admin/users', Users::class)->name('users');
