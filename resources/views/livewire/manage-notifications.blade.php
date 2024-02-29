@@ -16,7 +16,8 @@
                     <div class="relative mt-8 flex items-center gap-x-4">
                         <div class="text-sm leading-6">
                             <p class="font-semibold text-gray-900">
-                                <x-button class="bg-tm-orange" href="#">
+
+                                <x-button wire:click="openEdit({{$noti->id}})" class="bg-tm-blue" href="#">
                                     <span class="absolute inset-0"></span>
                                     Edit
                                 </x-button>
@@ -29,5 +30,18 @@
             </div>
         </div>
     </div>
-
+    <x-dialog-modal wire:model.blur="showModalEdit">
+    <x-slot name="title">
+        <h2>Edit show</h2>
+    </x-slot>
+    <x-slot name="content">
+        <x-input id="description" type="text" placeholder="description" wire:model="editNotification.description">
+        </x-input>
+        <x-input id="interval" type="text" placeholder="interval" wire:model="editNotification.interval_default"/>
+    </x-slot>
+    <x-slot name="footer">
+        <x-secondary-button wire:click="closeEdit">Cancel</x-secondary-button>
+        <x-button wire:click="editNoti({{$noti}})">Update notification</x-button>
+    </x-slot>
+    </x-dialog-modal>
 </div>
