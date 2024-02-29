@@ -33,56 +33,36 @@ class Users extends Component
             $this->resetPage();
     }
 
-    #[Validate([
-        'editUser.name' => 'required|min:3|max:30|unique:User,name',
-        'editUser.email' => 'required|email|unique:email',
-    ], as: [
-        'editUser.name' => 'name for this user',
-        'editUser.email' => 'email for this user'
-    ])]
-    public $editUser = ['id' => null, 'name' => null, 'email' => null, 'active' => false];
+    public $editUser = ['id' => null, 'surname' => null, 'name' => null, 'email' => null, 'active' => false];
 
     // reset all the values and error messages
     public function resetValues()
     {
         $this->reset('editUser');
+        $this->form->reset();
         $this->resetErrorBag();
     }
 
-    public function editUser(User $user)
+    public function editUsers(User $user)
     {
         $this->resetErrorBag();
         $this->form->fill($user);
+        if ($this->form->active == 1)
+            $this->form->active = true;
+        else
+            $this->form->active = false;
         $this->showModal = true;
     }
 
-    public function update(User $user)
+    public function updateUser(User $user): void
     {
-        $this->editUser['name'] = trim($this->editUser['name']);
-        $this->editUser['email'] = trim($this->editUser['email']);
-        #$this->validateOnly('editUser.name');
-        $oldName = $user->name;
-        $user->update([
-            'name' => trim($this->editUser['name']),
+        $this->form->update($user);
+        $this->showModal = false;
+        $this->dispatch('swal:toast', [
+            'background' => 'success',
+            'html' => "The user <b><i>{$this->form->name}</i></b> has been updated",
+            'icon' => 'success',
         ]);
-        #$this->validateOnly('editUser.email');
-        $oldEmail = $user->email;
-        $user->update([
-            'email' => trim($this->editUser['email']),
-        ]);
-        $this->resetValues();
-        if (strtolower($this->editUser['name']) !== strtolower($oldName)) {
-            $this->dispatch('swal:toast', [
-                'background' => 'success',
-                'html' => "The user <b><i>{$oldName}</i></b> has been updated to <b><i>{$user->name}</i></b>",
-            ]);
-        }
-        if (strtolower($this->editUser['email']) !== strtolower($oldEmail)) {
-            $this->dispatch('swal:toast', [
-                'background' => 'success',
-                'html' => "The user <b><i>{$oldEmail}</i></b> has been updated to <b><i>{$user->email}</i></b>",
-            ]);
-        }
     }
 
     public function deleteUser($id)

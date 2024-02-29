@@ -58,7 +58,7 @@
                     <td>
                         <div class="border border-gray-300 rounded-md overflow-hidden m-2 grid grid-cols-2 h-10">
                             <button
-                                wire:click="editUser({{ $user->id }})"
+                                wire:click="editUsers({{ $user }})"
                                 class="text-gray-400 hover:text-sky-100 hover:bg-sky-500 transition border-r border-gray-300">
                                 <x-phosphor-pencil-line-duotone class="inline-block w-5 h-5"/>
                             </button>
@@ -86,7 +86,7 @@
     <x-dialog-modal id="userModal"
                     wire:model.live="showModal">
         <x-slot name="title">
-            <h2>Edit record</h2>
+            <h2>Edit user</h2>
         </x-slot>
         <x-slot name="content">
             {{-- error messages --}}
@@ -101,23 +101,25 @@
             @endif
             <div class="flex flex-row gap-4 mt-4">
                 <div class="flex-1 flex-col gap-2">
-                    <p class="text-lg font-medium">{!! $form->artist ?? '&nbsp;' !!}</p>
-                    <p class="italic">{!! $form->title ?? '&nbsp;' !!}</p>
-                    <x-label for="name" value="name" class="mt-4"/>
+                    <x-label for="name" value="Name" class="mt-4"/>
                     <x-input id="name" type="text" step="0.01"
                              wire:model="form.name"
                              class="mt-1 block w-full"/>
-                    <x-label for="active" value="Active" class="mt-4"/>
-                    <x-input id="active" type="boolean"
-                             wire:model="form.active"
+                    <x-label for="surname" value="Surname" class="mt-4"/>
+                    <x-input id="surname" type="text" step="0.01"
+                             wire:model="form.surname"
                              class="mt-1 block w-full"/>
+                    <x-label for="active" value="Active" class="mt-4"/>
+                    <x-input id="active" type="checkbox"
+                             wire:model="form.active"
+                             class="mt-1 block"/>
                 </div>
             </div>
         </x-slot>
         <x-slot name="footer">
             <x-secondary-button @click="$wire.showModal = false">Cancel</x-secondary-button>
             <x-tmk.form.button color="info"
-                               wire:click="updateRecord({{ $form->id }})"
+                               wire:click="updateUser({{ $form->id }})"
                                class="ml-2">Save changes
             </x-tmk.form.button>
         </x-slot>
