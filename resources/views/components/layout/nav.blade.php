@@ -16,7 +16,17 @@
         {{-- Rechter dropdown (user) --}}
         <div class="relative me-4" x-data="{ open: false }">
             <button @click="open = !open" class="flex items-center space-x-2 text-white">
-                <span>USER</span>
+                <span>
+                    {{-- Normally you should be authenticated --}}
+                    @auth
+                        @php
+                        $user = auth()->user();
+                        @endphp
+                        {{ $user->fullname }}
+                    @else
+                        USER
+                    @endauth
+                </span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                     <path fill-rule="evenodd" d="M10 0a8 8 0 100 16 8 8 0 000-16zM0 10a10 10 0 1120 0 10 10 0 01-20 0z" clip-rule="evenodd" />
