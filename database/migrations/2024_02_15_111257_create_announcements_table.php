@@ -17,6 +17,13 @@ return new class extends Migration
             $table->text('message');
             $table->timestamps();
         });
+        DB::table('announcements')->insert(
+
+            [
+                ['id' => 1, 'user_id' => 4, 'message' => 'You have been kicked'],
+                ['id' => 2, 'user_id' => 5, 'message' => 'You have won the competition'],
+
+            ]);
     }
 
     /**
