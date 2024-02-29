@@ -14,6 +14,7 @@
                         journey of competition! We are thrilled to announce the commencement of our much-anticipated
                         competition!!!</p>
                     </div>
+                    <p>Amount of days before the deadline that this notification will be sent out:</p>
                     <x-input></x-input>
                     <div class="relative mt-8 flex items-center gap-x-4">
 
@@ -39,6 +40,7 @@
                         to see all of your submissions. As the competition heats up, we're reaching
                         out with an important deadline reminder.</p>
                     </div>
+                    <p>Amount of days before the deadline that this notification will be sent out:</p>
                     <x-input></x-input>
                     <div class="relative mt-8 flex items-center gap-x-4">
 
@@ -64,9 +66,9 @@
                             announce the conclusion of our competition! This marks the end of an incredible
                             journey filled with creativity, innovation and passion from talented individuals like you.</p>
                     </div>
+                    <p>Amount of days before the deadline that this notification will be sent out:</p>
                     <x-input></x-input>
                     <div class="relative mt-8 flex items-center gap-x-4">
-
                         <div class="text-sm leading-6">
                             <p class="font-semibold text-gray-900">
                                 <x-button href="#">
