@@ -37,18 +37,11 @@ VALUES
     (1, 4, "You have been kicked"),
     (2, 5, "You have won the competition");
 
-INSERT INTO `notifications` (`id`,`description`,`interval_default`) /*Is it IntervalDefault or IntervalDefaut?*/
+INSERT INTO `notifications` (`id`,`title`,`description`,`interval_default`) /*Is it IntervalDefault or IntervalDefaut?*/
 VALUES
-    (1,"aliquet diam. Sed",1),
-    (2,"Cras dictum ultricies ligula.",3),
-    (3,"enim mi tempor lorem, eget mollis",10),
-    (4,"Etiam",3),
-    (5,"et ipsum cursus vestibulum. Mauris magna. Duis",7),
-    (6,"In mi pede, nonummy",3),
-    (7,"Praesent interdum ligula eu enim.",5),
-    (8,"non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra",2),
-    (9,"libero nec ligula consectetuer rhoncus. Nullam velit dui,",7),
-    (10,"dolor. Donec fringilla. Donec feugiat metus sit amet ante. Vivamus",1);
+    (1,"Begin Competition","Get ready to unleash your talents, ignite your passions and embark on a thrilling journey of competition! We are thrilled to announce the commencement of our much-anticipated competition!!!",1),
+    (2,"Deadline Warning","We hope this message finds you well and we are filled with excitement to see all of your submissions. As the competition heats up, we're reaching out with an important deadline reminder.",3),
+    (3,"End competition","With great excitement and a sense of accomplishment, we are thrilled to announce the conclusion of our competition! This marks the end of an incredible journey filled with creativity, innovation and passion from talented individuals like you.",10);
 
 INSERT INTO `competition_categories` (`id`,`name`)
 VALUES
@@ -145,13 +138,13 @@ VALUES
 
 INSERT INTO `likes` (`user_id`,`competition_id`)
 VALUES
-    (7,6),
+    (7,5),
     (7,6),
     (2,7),
     (4,7),
     (6,8),
     (1,5),
-    (6,6),
+    (6,1),
     (6,6),
     (6,7),
     (9,6);
