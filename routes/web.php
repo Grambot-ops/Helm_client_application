@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function() {
 });
 
 Route::get('admin/users', Users::class)->name('users');
-//Route::middleware(['auth','admin','active'])->prefix('admin')->name('admin.')->group(function () {
-//    Route::redirect('/', '/admin/users');
-//    Route::get('records', Users::class)->name('users');
-//});
+Route::middleware(['auth','admin','active'])->prefix('admin')->name('admin.')->group(function () {
+    Route::redirect('/', '/admin/users');
+    Route::get('records', Users::class)->name('users');
+});
