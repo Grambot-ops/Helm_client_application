@@ -1,10 +1,10 @@
 <div class="mx-auto flex justify-between items-center bg-tm-orange">
     <!-- Logo -->
-    <div class="flex p-4 items-center bg-white">
-        <a href="{{ route('home') }}">
+    <a href="{{ route('home') }}">
+        <div class="flex p-4 items-center bg-white">
             <img src="{{ asset('thomasmore_logo_oranje.svg') }}" alt="Thomas more logo" class="h-10">
-        </a>
-    </div>
+        </div>
+    </a>
 
     <!-- Navbar -->
     <nav class="flex justify-between items-center">
