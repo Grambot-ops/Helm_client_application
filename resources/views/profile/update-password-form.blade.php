@@ -28,8 +28,8 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-action-message class="me-3" on="saved">
-            {{ __('Saved.') }}
+        <x-action-message class="me-3 text-green-300" on="saved">
+            {{ __('Saved!') }}
         </x-action-message>
 
         <x-button>
