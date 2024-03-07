@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     use HasFactory;
-    protected $fillable = ['description', 'interval_default'];
+    protected $fillable = ['title', 'description', 'interval_default'];
     public function noticomps()
     {
         return $this->hasMany(NotiComp::class);
