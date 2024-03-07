@@ -38,7 +38,7 @@
         <h2>Edit notification</h2>
     </x-slot>
     <x-slot name="content" class="mx-auto">
-        <x-input class="w-full mb-3" id="description" type="text" placeholder="title" wire:model="editNotification.title">
+        <x-input class="w-full mb-3" id="title" type="text" placeholder="title" wire:model="editNotification.title">
         </x-input>
         <br>
         <x-input class="w-full mb-3" id="description" type="text" placeholder="description" wire:model="editNotification.description">
