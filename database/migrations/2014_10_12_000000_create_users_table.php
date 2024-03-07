@@ -24,6 +24,16 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
+        $data = [
+            ['id' => 1, 'name' => 'Tarik', 'email' => 'nisl.maecenas@hotmail.org', 'password' => Hash::make('password1'), 'surname' => 'Kirkland', 'username' => 'pellentesque.', 'active' => true],
+            ['id' => 2, 'name' => 'Dora', 'email' => 'fames.ac.turpis@aol.edu', 'password' => Hash::make('password2'), 'surname' => 'Kelley', 'username' => 'sed', 'active' => true],
+            ['id' => 3, 'name' => 'Darrel', 'email' => 'fusce.dolor@hotmail.net', 'password' => Hash::make('password3'), 'surname' => 'Zimmerman', 'username' => 'nisi', 'active' => true],
+            // Add more data as needed
+        ];
+
+        foreach ($data as $row) {
+            DB::table('users')->insert($row);
+        }
     }
 
     /**
