@@ -16,6 +16,13 @@ return new class extends Migration
             $table->string('name')->nullable(false);
             $table->timestamps();
         });
+
+        DB::table('roles')->insert(
+
+            [
+                ['id' => 1, 'name' => 'Admin'],
+                ['id' => 2, 'name' => 'User'],
+            ]);
     }
 
     /**

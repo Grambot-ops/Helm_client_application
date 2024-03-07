@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -16,7 +18,6 @@ class User extends Authenticatable
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'active',
+        'surname',
     ];
 
     /**
@@ -55,8 +58,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected function fullname(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) =>
+                sprintf("%s %s", $attributes['name'], $attributes['surname']),
+        );
+    }
     protected $appends = [
         'profile_photo_url',
+        'fullname',
     ];
 
     public function votes()
@@ -92,5 +104,13 @@ class User extends Authenticatable
     public function competitions()
     {
         return $this->hasMany(Competition::class);
+    }
+
+    public function scopeSearchName($query, $search = '%')
+    {
+        //Search based on the given name or surname or together
+        return $query->where('name', 'like', "%{$search}%")
+            ->orWhere('surname', 'like', "%{$search}%")
+            ->orWhere(DB::raw("CONCAT(`name`,' ',`surname`)"), 'like', "%{$search}%");
     }
 }
