@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Livewire\Dashboard;
 use App\Livewire\Admin\Users;
 use App\Models\User;
 use App\Livewire\ManageCompetitionCategories;
@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth'])->group(function() {
-    Route::view('/', 'home')->name('home');
     Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
     Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
+    Route::get('/', Dashboard::class)->name('dashboard');
+    Route::view('settings', 'profile.show')->name('settings');
 });
 
 Route::get('admin/users', Users::class)->name('users');

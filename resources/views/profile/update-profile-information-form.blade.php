@@ -59,6 +59,20 @@
             <x-input-error for="name" class="mt-2" />
         </div>
 
+        <!-- Surname -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="surname" value="{{ __('Surname') }}" />
+            <x-input id="surname" type="text" class="mt-1 block w-full" wire:model="state.surname" required autocomplete="" />
+            <x-input-error for="surname" class="mt-2" />
+        </div>
+
+        <!-- Username -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="username" value="{{ __('Display name') }}" />
+            <x-input id="username" type="text" class="mt-1 block w-full" wire:model="state.username" required autocomplete="username" />
+            <x-input-error for="username" class="mt-2" />
+        </div>
+
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="email" value="{{ __('Email') }}" />
@@ -84,8 +98,8 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-action-message class="me-3" on="saved">
-            {{ __('Saved.') }}
+        <x-action-message class="me-3 text-green-300" on="saved">
+            {{ __('Saved!') }}
         </x-action-message>
 
         <x-button wire:loading.attr="disabled" wire:target="photo">

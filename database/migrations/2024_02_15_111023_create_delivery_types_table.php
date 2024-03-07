@@ -16,6 +16,15 @@ return new class extends Migration
             $table->string('name')->nullable(false);
             $table->timestamps();
         });
+        DB::table('delivery_types')->insert(
+
+            [
+                ['id' => 1, 'name' => 'email'],
+                ['id' => 2, 'name' => 'phone'],
+                ['id' => 3, 'name' => 'photo'],
+                ['id' => 4, 'name' => 'link'],
+
+            ]);
     }
 
     /**
