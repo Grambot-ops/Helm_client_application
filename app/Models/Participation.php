@@ -9,9 +9,9 @@ class Participation extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo(Competition::class);
+        return $this->belongsTo(User::class);
     }
 
     public function submissions()
@@ -19,7 +19,7 @@ class Participation extends Model
         $this->hasMany(Submission::class);
     }
 
-    public function competitions()
+    public function competition()
     {
         $this->belongsTo(Competition::class);
     }
