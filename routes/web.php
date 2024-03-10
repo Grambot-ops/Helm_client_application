@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function() {
     Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
     Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
+    Route::get('view-submissions', \App\Livewire\ViewSubmissions::class)->name('all-submissions');
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::view('settings', 'profile.show')->name('settings');
 });
