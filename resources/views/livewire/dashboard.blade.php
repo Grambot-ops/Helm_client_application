@@ -6,14 +6,14 @@
     <h1 class="text-center text-3xl mb-4 font-bold">Competitions</h1>
 
     <div class="container mx-auto px-14">
-        <div class="grid grid-cols-3 gap-12">
+        <div class="grid lg:grid-cols-3 gap-12">
             @foreach($competitions as $competition)
             <x-tmk.card title="{{ $competition->title }}"
                         closed="{{ $competition->closed }}"
                         description="{{ $competition->description }}">
                 <div>
                     <button
-                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
                         See more info
                     </button>
                     <button
