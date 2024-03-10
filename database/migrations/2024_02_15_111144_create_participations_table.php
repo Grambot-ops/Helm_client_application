@@ -22,16 +22,16 @@ return new class extends Migration
         DB::table('participations')->insert(
 
             [
-                ['competition_id' => 6, 'user_id' => 5, 'ranking' => 1, 'disqualified' => true],
-                ['competition_id' => 8, 'user_id' => 3, 'ranking' => 0, 'disqualified' => false],
-                ['competition_id' => 7, 'user_id' => 3, 'ranking' => 3, 'disqualified' => true],
-                ['competition_id' => 5, 'user_id' => 1, 'ranking' => 4, 'disqualified' => true],
-                ['competition_id' => 9, 'user_id' => 9, 'ranking' => 3, 'disqualified' => false],
-                ['competition_id' => 4, 'user_id' => 3, 'ranking' => 0, 'disqualified' => false],
-                ['competition_id' => 3, 'user_id' => 7, 'ranking' => 1, 'disqualified' => true],
-                ['competition_id' => 4, 'user_id' => 8, 'ranking' => 3, 'disqualified' => true],
-                ['competition_id' => 9, 'user_id' => 2, 'ranking' => 1, 'disqualified' => false],
-                ['competition_id' => 8, 'user_id' => 4, 'ranking' => 5, 'disqualified' => true],
+                ['id' => 1, 'competition_id' => 6, 'user_id' => 5, 'ranking' => 1, 'disqualified' => true],
+                ['id' => 2, 'competition_id' => 8, 'user_id' => 3, 'ranking' => 0, 'disqualified' => false],
+                ['id' => 3, 'competition_id' => 7, 'user_id' => 3, 'ranking' => 3, 'disqualified' => true],
+                ['id' => 4, 'competition_id' => 5, 'user_id' => 1, 'ranking' => 4, 'disqualified' => true],
+                ['id' => 5, 'competition_id' => 9, 'user_id' => 9, 'ranking' => 3, 'disqualified' => false],
+                ['id' => 6, 'competition_id' => 4, 'user_id' => 3, 'ranking' => 0, 'disqualified' => false],
+                ['id' => 7, 'competition_id' => 3, 'user_id' => 7, 'ranking' => 1, 'disqualified' => true],
+                ['id' => 8, 'competition_id' => 4, 'user_id' => 8, 'ranking' => 3, 'disqualified' => true],
+                ['id' => 9, 'competition_id' => 9, 'user_id' => 2, 'ranking' => 1, 'disqualified' => false],
+                ['id' => 10, 'competition_id' => 8, 'user_id' => 4, 'ranking' => 5, 'disqualified' => true],
 
             ]);
     }
