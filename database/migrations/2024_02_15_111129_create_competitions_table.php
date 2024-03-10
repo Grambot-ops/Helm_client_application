@@ -27,6 +27,7 @@ return new class extends Migration
             $table->dateTime('end_date')->nullable(false);
             $table->dateTime('submission_date')->nullable(false);
             $table->boolean('accepted')->nullable(false);
+            $table->boolean('declined')->default(false)->nullable(false);
             $table->timestamps();
         });
         DB::table('competitions')->insert(

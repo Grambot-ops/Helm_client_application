@@ -40,6 +40,9 @@
                     <button type="submit" class="block w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition">Logout</button>
                 </form>
                 <div class="border-t border-gray-100"></div>
+                @if(auth()->user()->admin)
+                    <a href="{{ route('accept-competition') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View proposals</a>
+                @endif
                 <a href="{{ route('compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
                 <a href="{{ route('comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition types</a>
                 <a href="{{ route('notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>

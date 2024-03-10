@@ -27,5 +27,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('view-submissions', \App\Livewire\ViewSubmissions::class)->name('all-submissions');
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::view('settings', 'profile.show')->name('settings');
+
+    /* FIXME: wrap in admin middleware */
     Route::get('admin/users', Users::class)->name('users');
+    Route::get('admin/accept-competition', \App\Livewire\AcceptCompetition::class)->name('accept-competition');
 });
