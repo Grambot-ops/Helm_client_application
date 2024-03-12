@@ -10,6 +10,8 @@ class ManageNotifications extends Component
 {
     public $showModal = false;
     public $showModalEdit = false;
+    public $editNotificationId;
+
     #[Layout('layouts.tmcp')]
     public function render()
     {
@@ -18,31 +20,31 @@ class ManageNotifications extends Component
         return view('livewire.manage-notifications',compact('notifications'));
     }
 
-    public $editNotification = ['id' => null, 'description' => null, 'intervalDefault' => null];
+    public $editNotification = ['id' => null, 'title'=> null, 'description' => null, 'intervalDefault' => null];
     public function openEdit(Notification $noti){
         $this->editNotification = [
             'id' => $noti->id,
+            'title' => $noti->title,
             'description' => $noti->description,
             'interval_default' => $noti->interval_default,
         ];
 
+        $this->editNotificationId = $noti->id;
         $this->showModalEdit = true;
     }
+
+
 
     public function closeEdit(){
         $this->showModalEdit = false;
     }
-    public function editNoti(Notification $noti){
-
-        $this->editNotification['description'] = trim($this->editNotification['description']);
-        $this->editNotification['interval_default'] = trim($this->editNotification['interval_default']);
-
-
-        $noti->update([
+    public function editNoti(){
+        $notification = Notification::findOrFail($this->editNotificationId);
+        $notification->update([
+            'title' => trim($this->editNotification['title']),
             'description' => trim($this->editNotification['description']),
             'interval_default' => trim($this->editNotification['interval_default']),
         ]);
-
-
     }
+
 }
