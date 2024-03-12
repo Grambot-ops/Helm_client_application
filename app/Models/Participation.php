@@ -21,6 +21,6 @@ class Participation extends Model
 
     public function competition()
     {
-        $this->belongsTo(Competition::class);
+        return $this->belongsTo(Competition::class);
     }
 }

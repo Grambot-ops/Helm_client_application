@@ -10,6 +10,9 @@ class ViewSubmissions extends Component
 {
     public $showModalDelete = false;
     public $showModalInfo = false;
+    public $submissionToDelete;
+    public $submissionToShowInfo;
+
 
     #[Layout('layouts.tmcp', ['title' => 'Submissions', 'description' => 'all submissions from the competitions'])]
     public function render()
@@ -19,36 +22,28 @@ class ViewSubmissions extends Component
         return view('livewire.view-submissions', compact('submissions'));
     }
 
-    public $Submission = ['id' => null, 'description' => null];
-    public function openDelete(Submission $submission): void
-    {
-        $this->Submission = [
-            'id' => $submission->id,
-            'description' => $submission->description,
-        ];
 
+    public function openDelete(Submission $submission)
+    {
+        $this->submissionToDelete = $submission;
         $this->showModalDelete = true;
     }
     public function closeDelete(){
         $this->showModalDelete = false;
     }
 
-    public function deleteSubmission(Submission $submission)
+    public function deleteSubmission()
     {
-        $submission->delete();
+        $this->submissionToDelete->delete();
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The submission <b><i>{$submission->id}</i></b> has been deleted",
+            'html' => "The submission <b><i>{$this->submissionToDelete->id}</i></b> has been deleted",
         ]);
         $this->showModalDelete = false;
     }
 
     public function openInfo(Submission $submission){
-        $this->Submission = [
-            'id' => $submission->id,
-            'description' => $submission->description,
-        ];
-
+        $this->submissionToShowInfo = $submission;
         $this->showModalInfo = true;
     }
     public function closeInfo(){
