@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 @props([
     'title' => '',
     'description' => '',
@@ -7,12 +6,10 @@
     'hashtags' => [],
 ])
 
->>>>>>> c30f5af8cd496815873f333b095c250b8722ae8d
 <div class="w-full rounded overflow-hidden shadow-lg">
     <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
     <div class="px-6 py-4">
         <div class="justify-between flex mb-2">
-<<<<<<< HEAD
             <div class="font-bold text-xl mb-2">{{ $competition->title }}</div>
             <div class="text-red-800 font-bold mt-1">closed
                 <x-phosphor-lock-simple class="inline-block w-6 h-6 mb-1"/>
@@ -41,7 +38,6 @@
             class="text-gray-400 hover:text-yellow-300 transition border-gray-300">
             <x-phosphor-star-duotone class="inline-block w-7 h-7"/>
         </button>
-=======
             <div class="font-bold text-xl mb-2">{{ $title }}</div>
             @if($closed)
             <div class="text-red-800 font-bold mt-1">closed
@@ -62,6 +58,5 @@
     @endforeach
     <div class="px-6 pt-2 pb-4 flex justify-between">
         {{ $slot }}
->>>>>>> c30f5af8cd496815873f333b095c250b8722ae8d
     </div>
 </div>

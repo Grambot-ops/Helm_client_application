@@ -12,6 +12,7 @@
                             <div class="justify-between flex">
                                 <div class="font-bold text-xl mb-2">{{$submission->participation->user->name}}</div>
                                 <div class="font-bold mt-1">
+
                                     <x-button wire:click="openInfo({{$submission}})" class="bg-white px-0.5 mx-05 hover:bg-white" href="#">
                                     <x-phosphor-info class="inline-block w-6 h-6 mb-1 text-blue-400"/>
                                     </x-button>
@@ -33,8 +34,6 @@
             </div>
         </div>
     </div>
-
-
     <x-dialog-modal wire:model="showModalDelete">
         <x-slot name="title">
         </x-slot>

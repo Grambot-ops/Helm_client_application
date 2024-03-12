@@ -22,6 +22,7 @@ class ViewSubmissions extends Component
         return view('livewire.view-submissions', compact('submissions'));
     }
 
+
     public function openDelete(Submission $submission)
     {
         $this->submissionToDelete = $submission;
