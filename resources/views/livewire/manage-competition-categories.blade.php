@@ -1,19 +1,27 @@
 <div>
-    {{-- Filter --}}
-    <x-tmk.section class="mb-4 flex gap-2 flex-wrap">
-        <x-input id="search" type="text" placeholder="Filter category"
-                 wire:model.live.debounce.500ms="search"
-                 class="flex-1 shadow-md placeholder-gray-300"/>
-        <x-input id="newCategory" type="text" placeholder="New category"
-                 @keydown.enter="$el.setAttribute('disabled', true); $el.value = '';"
-                 @keydown.tab="$el.setAttribute('disabled', true); $el.value = '';"
-                 @keydown.esc="$el.setAttribute('disabled', true); $el.value = '';"
-                 wire:model="newCategory"
-                 wire:keydown.enter="createCategory()"
-                 wire:keydown.tab="createCategory()"
-                 wire:keydown.escape="resetValues()"
-                 class="flex-1 shadow-md placeholder-gray-300"/>
+    <x-tmk.section class="mb-4 flex flex-wrap gap-2">
+        <!-- Search Input -->
+        <div class="flex-grow">
+            <x-input id="search" type="text" placeholder="Filter category"
+                     wire:model.live.debounce.500ms="search"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:border-blue-400 placeholder-gray-500"/>
+        </div>
+
+        <!-- New Category Input -->
+        <div class="flex-grow">
+            <x-input id="newCategory" type="text" placeholder="New category"
+                     @keydown.enter="$el.setAttribute('disabled', true); $el.value = '';"
+                     @keydown.tab="$el.setAttribute('disabled', true); $el.value = '';"
+                     @keydown.esc="$el.setAttribute('disabled', true); $el.value = '';"
+                     wire:model="newCategory"
+                     wire:keydown.enter="createCategory()"
+                     wire:keydown.tab="createCategory()"
+                     wire:keydown.escape="resetValues()"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:border-blue-400 placeholder-gray-500"/>
+            <x-input-error for="newCategory" class="mt-2 text-red-500"/>
+        </div>
     </x-tmk.section>
+
     {{-- Table with categories --}}
     <x-tmk.section>
         <div class="my-4 w-full">{{ $categories->links() }}</div>
@@ -28,7 +36,7 @@
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
                 <th>#</th>
-                <th wire:click="resort('competitions')">
+                <th>
                     <span data-tippy-content="Order by # competition">
                         <x-tmk.logo class="w-6 mx-auto fill-gray-200 inline-block"/>
                     </span>

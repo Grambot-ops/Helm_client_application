@@ -6,6 +6,7 @@ use App\Livewire\Forms\CategoryForm;
 use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,18 +14,16 @@ class ManageCompetitionCategories extends Component
 {
     use WithPagination;
 
-    // filter and pagination
     public $orderBy = 'name';
     public $orderAsc = true;
     public $search;
     public $perPage = 5;
-    // show/hide the modal
+    public $newCategory;
     public $showModal = false;
     public CategoryForm $form;
 
-    public function updated($propertyName, $propertyValue)
+    public function updated($propertyName)
     {
-        // reset if the $search, $noCover, $noStock or $perPage property has changed (updated)
         if (in_array($propertyName, ['search', 'perPage']))
             $this->resetPage();
     }
@@ -53,8 +52,16 @@ class ManageCompetitionCategories extends Component
 
     public function createCategory()
     {
-        $this->form->create();
-        $this->showModal = false;
+        $validatedData = $this->validate([
+            'newCategory' => 'required|unique:competition_categories,name',
+        ], [
+            'newCategory.unique' => 'The category name has already been taken.',
+        ]);
+
+        CompetitionCategory::create([
+            'name' => trim($validatedData['newCategory'])
+        ]);
+
         $this->dispatch('swal:toast', [
             'background' => 'success',
             'html' => "The record <b><i>{$this->form->name}</i></b> has been added",
@@ -75,15 +82,17 @@ class ManageCompetitionCategories extends Component
     #[Layout('layouts.tmcp', ['title' => 'categories', 'description' => 'Manage the categories of your competitions',])]
     public function render()
     {
-        $competitions = CompetitionCategory::withCount('competitions')
-            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
-            ->get();
-        $query = CompetitionCategory::orderBy('name')
-            ->orderBy('id');
-        $categories = $query
-            ->paginate($this->perPage);
-        return view('livewire.manage-competition-categories', compact('categories', 'competitions'));
+        $query = CompetitionCategory::orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
+
+        if ($this->search) {
+            $query->where('name', 'like', '%' . $this->search . '%');
+        }
+
+        $categories = $query->paginate($this->perPage);
+
+        return view('livewire.manage-competition-categories', compact('categories'));
     }
+
     public function resort($column)
     {
         $this->orderBy === $column ?

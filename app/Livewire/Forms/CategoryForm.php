@@ -5,41 +5,32 @@ namespace App\Livewire\Forms;
 use App\Models\CompetitionCategory;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
-use Http;
-use Illuminate\Support\Facades\Storage;
-use Image;
 
 class CategoryForm extends Form
 {
     public $id = null;
-    #[Validate('required', as: 'name of the artist')]
+
+    // Validation rule for the name field
+    #[Validate('required')]
     public $name = null;
 
-    // read the selected record
-    public function read($category)
+    // Read the selected record
+    public function read(CompetitionCategory $category)
     {
         $this->id = $category->id;
-        $this->name = $category->artist;
+        $this->name = $category->name; // Assuming 'name' is the correct attribute
     }
 
-    // create a new record
-    public function create()
+    // Update the selected record
+    public function update(CompetitionCategory $category)
     {
-        $this->validate();
-        CompetitionCategory::create([
-            'name' => $this->name,
-        ]);
-    }
-
-    // update the selected record
-    public function update(CompetitionCategory $category) {
         $this->validate();
         $category->update([
             'name' => $this->name,
         ]);
     }
 
-    // delete the selected record
+    // Delete the selected record
     public function delete(CompetitionCategory $category)
     {
         $category->delete();
