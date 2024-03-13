@@ -92,22 +92,12 @@
     </x-tmk.section>
 
     {{-- Modal for add and update category --}}
-    <x-dialog-modal id="categoryModal"
-                    wire:model.live="showModal">
+    <x-dialog-modal id="categoryModal" wire:model.live="showModal">
         <x-slot name="title">
             <h2>{{ is_null($form->id) ? 'New category' : 'Edit category' }}</h2>
         </x-slot>
         <x-slot name="content">
             {{-- error messages --}}
-            @if ($errors->any())
-                <x-tmk.alert type="danger">
-                    <x-tmk.list>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </x-tmk.list>
-                </x-tmk.alert>
-            @endif
             @if ($errors->any())
                 <x-tmk.alert type="danger">
                     <x-tmk.list>
@@ -126,7 +116,7 @@
                 </div>
             </div>
         </x-slot>
-        <x-slot name="footer">
+    <x-slot name="footer">
             <x-secondary-button @click="$wire.showModal = false">Cancel</x-secondary-button>
             @if(is_null($form->id))
                 <x-tmk.form.button color="success"
