@@ -1,10 +1,10 @@
 <div class="mx-auto flex justify-between items-center bg-tm-orange">
     <!-- Logo -->
     <div class="flex p-4 items-center bg-white">
-        <a href="{{ route('home') }}">
+        <a href="{{ route('dashboard') }}">
             <img src="{{ asset('thomasmore_logo_oranje.svg') }}" alt="Thomas more logo" class="h-10">
-        </a>
-    </div>
+        </div>
+    </a>
 
     <!-- Navbar -->
     <nav class="flex justify-between items-center">
@@ -34,7 +34,7 @@
             </button>
             <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                <a href="{{ route('settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
                 <a href="{{ route('compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
                 <a href="{{ route('notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>
