@@ -70,6 +70,14 @@ class ManageCompetitionCategories extends Component
     }
     public function updateCategory(CompetitionCategory $category)
     {
+        $existingCategory = CompetitionCategory::where('name', $this->form->name)
+            ->where('id', '!=', $category->id)
+            ->exists();
+
+        if ($existingCategory) {
+            $this->addError('form.name', 'The category name already exists.');
+            return;
+        }
         $this->form->update($category);
         $this->showModal = false;
         $this->dispatch('swal:toast', [
