@@ -25,6 +25,3 @@ Route::middleware(['auth'])->group(function() {
     Route::view('settings', 'profile.show')->name('settings');
     Route::get('admin/users', Users::class)->name('users');
 });
-
-
-
