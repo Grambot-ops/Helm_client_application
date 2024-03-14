@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\ManageCompetitionTypes;
 use App\Livewire\Dashboard;
 use App\Livewire\Admin\Users;
 use App\Models\User;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function() {
     Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
+    Route::get('manage-competition-types', ManageCompetitionTypes::class)->name('comptyp');
     Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
     Route::get('view-submissions', \App\Livewire\ViewSubmissions::class)->name('all-submissions');
     Route::get('/', Dashboard::class)->name('dashboard');
