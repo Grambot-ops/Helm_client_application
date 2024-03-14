@@ -19,16 +19,16 @@ return new class extends Migration
         DB::table('competition_categories')->insert(
 
             [
-                ['id' => 1, 'name' => 'lectus'],
-                ['id' => 2, 'name' => 'fermentum'],
-                ['id' => 3, 'name' => 'nulla'],
-                ['id' => 4, 'name' => 'Etiam'],
-                ['id' => 5, 'name' => 'ligula'],
-                ['id' => 6, 'name' => 'dapibus'],
-                ['id' => 7, 'name' => 'et'],
-                ['id' => 8, 'name' => 'purus'],
-                ['id' => 9, 'name' => 'Donec'],
-                ['id' => 10, 'name' => 'lectus'],
+                ['id' => 1, 'name' => 'IT Factory'],
+                ['id' => 2, 'name' => 'Orthopedics'],
+                ['id' => 3, 'name' => 'Chemistry'],
+                ['id' => 4, 'name' => 'Biology'],
+                ['id' => 5, 'name' => 'Mathematics'],
+                ['id' => 6, 'name' => 'Business'],
+                ['id' => 7, 'name' => 'Midwife'],
+                ['id' => 8, 'name' => 'Photography'],
+                ['id' => 9, 'name' => 'Game Development'],
+                ['id' => 10, 'name' => 'Physics'],
             ]);
     }
 

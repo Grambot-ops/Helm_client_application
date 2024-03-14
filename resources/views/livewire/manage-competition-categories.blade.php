@@ -28,20 +28,18 @@
         <table class="text-center w-full border border-gray-300">
             <colgroup>
                 <col class="w-20">
-                <col class="w-20">
-                <col class="w-20">
+                <col class="w-52">
+                <col class="w-60">
                 <col class="w-max">
                 <col class="w-20">
             </colgroup>
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
-                <th>#</th>
-                <th>
-                    <span data-tippy-content="Order by # competition">
-                        <x-tmk.logo class="w-6 mx-auto fill-gray-200 inline-block"/>
-                    </span>
-                </th>
+                <th>id</th>
                 <th>Name</th>
+                <th>
+                    Competitions in category
+                </th>
                 <th></th>
                 <th>
                     <x-tmk.form.select id="perPage"
@@ -60,8 +58,8 @@
                 <tr wire:key="{{ $category->id }}"
                     class="border-t border-gray-300">
                     <td>{{ $category->id }}</td>
-                    <td>{{ count($category->competitions) }}</td>
                     <td>{{ $category->name }}</td>
+                    <td>{{ count($category->competitions) }}</td>
                     <td></td>
                     <td>
                         <div class=" text-right border border-gray-300 rounded-md overflow-hidden m-2 grid grid-cols-2 h-10">
