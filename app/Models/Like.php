@@ -9,12 +9,12 @@ class Like extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function competitions()
+    public function competition()
     {
         return $this->belongsTo(Competition::class);
     }
