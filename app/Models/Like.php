@@ -9,7 +9,7 @@ class Like extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -17,5 +17,11 @@ class Like extends Model
     public function competitions()
     {
         return $this->belongsTo(Competition::class);
+    }
+
+    public function scopeSearchName($query, $search = '%')
+    {
+        return $query->where('name', 'like', "%{$search}%")
+            ->orWhere('surname', 'like', "%{$search}%");
     }
 }
