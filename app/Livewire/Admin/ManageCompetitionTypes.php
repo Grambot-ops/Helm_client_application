@@ -42,6 +42,15 @@ class ManageCompetitionTypes extends Component
 
     public function deleteType(CompetitionType $type)
     {
+        if ($type->competitions()->exists()) {
+            $this->dispatch('swal:toast', [
+                'background' => 'error',
+                'html' => "Cannot delete the type <b><i>{$type->name}</i></b> as it has associated competitions.",
+                'icon' => 'error',
+            ]);
+            return;
+        }
+
         $this->form->delete($type);
         $this->dispatch('swal:toast', [
             'background' => 'success',
