@@ -4,10 +4,11 @@
     'description' => '',
     'closed' => false,
     'hashtags' => [],
+    'picture' => '',
 ])
 
 <div class="w-full rounded overflow-hidden shadow-lg">
-    <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+    <img class="w-full cards-vh" src="{{ URL::asset($picture ?? '/assets/card-top.jpg') }}" alt="Competition">
     <div class="px-6 py-4">
         <div class="justify-between flex mb-2">
             <div class="font-bold text-xl mb-2">{{ $title }}</div>
