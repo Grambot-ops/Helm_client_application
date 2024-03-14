@@ -20,17 +20,16 @@ return new class extends Migration
         DB::table('competition_types')->insert(
 
             [
-                ['id' => 1, 'name' => 'Mauris'],
-                ['id' => 2, 'name' => 'ac'],
-                ['id' => 3, 'name' => 'nibh'],
-                ['id' => 4, 'name' => 'dui,'],
-                ['id' => 5, 'name' => 'justo.'],
-                ['id' => 6, 'name' => 'porttitor'],
-                ['id' => 7, 'name' => 'euismod'],
-                ['id' => 8, 'name' => 'sagittis'],
-                ['id' => 9, 'name' => 'dolor.'],
-                ['id' => 10, 'name' => 'Pellentesque'],
-
+                ['id' => 1, 'name' => 'Podcast'],
+                ['id' => 2, 'name' => 'Link'],
+                ['id' => 3, 'name' => 'Code'],
+                ['id' => 4, 'name' => 'Video'],
+                ['id' => 5, 'name' => 'Photo'],
+                ['id' => 6, 'name' => 'Text'],
+                ['id' => 7, 'name' => 'Recipe'],
+                ['id' => 8, 'name' => 'Quote'],
+                ['id' => 9, 'name' => 'Essay'],
+                ['id' => 10, 'name' => 'Quiz'],
             ]);
     }
 
