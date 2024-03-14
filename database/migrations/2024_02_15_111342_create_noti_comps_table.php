@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('noti_comps', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('notification_id')->nullable(false)->constrained()->onDelete('cascade');
             $table->foreignId('competition_id')->nullable(false)->constrained()->onDelete('cascade');
             $table->integer('interval_exception')->nullable();
