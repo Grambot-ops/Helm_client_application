@@ -165,7 +165,7 @@ return new class extends Migration
                     'competition_category_id' => 9,
                     'competition_type_id' => 3,
                     'user_id' => 6,
-                    'title' => 'Innovate & Create',
+                    'title' => 'Innovate and Create',
                     'by_vote' => false,
                     'path_to_photo' => '/assets/card-top.jpg',
                     'rules' => 'Develop a new product concept and present a prototype demonstrating its functionality.',
