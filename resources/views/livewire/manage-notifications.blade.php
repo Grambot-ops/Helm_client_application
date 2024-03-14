@@ -38,12 +38,15 @@
         <h2>Edit notification</h2>
     </x-slot>
     <x-slot name="content" class="mx-auto">
+        <p>Title</p>
         <x-input class="w-full mb-3" id="title" type="text" placeholder="title" wire:model="editNotification.title">
         </x-input>
         <br>
+        <p>Description</p>
         <x-input class="w-full mb-3" id="description" type="text" placeholder="description" wire:model="editNotification.description">
         </x-input>
         <br>
+        <p>Interval</p>
         <x-input class="w-full mb-3" id="interval" type="text" placeholder="interval" wire:model="editNotification.interval_default"/>
     </x-slot>
     <x-slot name="footer">
