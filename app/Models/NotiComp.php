@@ -9,7 +9,7 @@ class NotiComp extends Model
 {
     use HasFactory;
 
-    public function notifications()
+    public function notification()
     {
         return $this->belongsTo(Notification::class);
     }
