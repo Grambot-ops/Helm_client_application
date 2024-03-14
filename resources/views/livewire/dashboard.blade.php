@@ -6,6 +6,22 @@
     <h1 class="text-center text-3xl mb-4 font-bold">Competitions</h1>
 
     <div class="container mx-auto px-14">
+        <div class="grid grid-rows-3 grid-flow-col gap-4">
+            <div class="row-span-3">
+                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                    Propose Competition
+                </button>
+                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                    View own competitions
+                </button>
+                <br>
+                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-5">
+                    Saved competitions
+                </button>
+            </div>
+            <x-input class="row-span-3 col-span-3 m-7"
+                     placeholder="Filter on title or description"/>
+        </div>
         <div class="grid lg:grid-cols-3 gap-12">
             @foreach($competitions as $competition)
                 @if($competition->accepted)
