@@ -46,7 +46,7 @@ class Competition extends Model
         return $this->hasMany(NotiComp::class);
     }
 
-    public function competition_categories()
+    public function competition_category()
     {
         return $this->belongsTo(CompetitionCategory::class);
     }
