@@ -45,6 +45,8 @@ class ManageNotifications extends Component
             'description' => trim($this->editNotification['description']),
             'interval_default' => trim($this->editNotification['interval_default']),
         ]);
+
+        $this->showModalEdit = false;
     }
 
 }
