@@ -12,16 +12,36 @@
                     <x-tmk.card title="{{ $competition->title }}"
                                 closed="{{ $competition->closed }}"
                                 description="{{ $competition->description }}"
-                                picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}">
+                                picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
+                                hashtags="{{ $competition->competition_category->name }}">
                         <div>
                             <button
                                 class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                See more info
+                                See more info {{ date('Y-m-d') }}
                             </button>
+                            @if( date('Y-m-d') < $competition->start_date)
                             <button
                                 class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                Ranking
+                                Apply
                             </button>
+                            @elseif( $competition->start_date < date('Y-m-d') ||  date('Y-m-d') < $competition->submission_date)
+                                <button
+                                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                                    Submit
+                                </button>
+                            @elseif( $competition->submission_date < date('Y-m-d') ||  date('Y-m-d') < $competition->end_date)
+                                <button
+                                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                                    Vote
+                                </button>
+                            @elseif( $competition->submission_date < date('Y-m-d'))
+                                <button
+                                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                                    Ranking
+                                </button>
+                            @endif
+
+
                         </div>
                         <button
                             class="text-gray-400 hover:text-yellow-300 transition border-gray-300">
