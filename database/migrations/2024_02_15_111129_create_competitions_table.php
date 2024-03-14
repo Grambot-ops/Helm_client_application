@@ -124,8 +124,8 @@ return new class extends Migration
                     'prize' => 'An advanced robotics kit',
                     'description' => 'Enter the arena of robotics. Build, program, and battle your robot against others!',
                     'start_date' => '2023-8-16',
-                    'end_date' => '2024-6-30',
-                    'submission_date' => '2024-11-21',
+                    'end_date' => '2024-3-13',
+                    'submission_date' => '2024-1-21',
                     'accepted' => true,
                 ],
                 [
@@ -187,9 +187,9 @@ return new class extends Migration
                     'rules' => 'Solve complex mathematical problems and present proofs of your solutions.',
                     'prize' => 'A prestigious mathematics award',
                     'description' => 'Immerse yourself in the depths of mathematical theory. Let the numbers guide you!',
-                    'start_date' => '2023-5-5',
-                    'end_date' => '2024-12-25',
-                    'submission_date' => '2024-6-20',
+                    'start_date' => '2024-8-5',
+                    'end_date' => '2026-12-25',
+                    'submission_date' => '2025-6-20',
                     'accepted' => true,
                 ],
 
