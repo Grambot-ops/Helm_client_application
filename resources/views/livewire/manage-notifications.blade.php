@@ -43,14 +43,14 @@
         </x-input>
         <br>
         <p>Description</p>
-        <x-input class="w-full mb-3" id="description" type="text" placeholder="description" wire:model="editNotification.description">
-        </x-input>
+        <x-tmk.form.textarea rows="6" class="w-full mb-3" id="description" type="text" placeholder="description" wire:model="editNotification.description">
+        </x-tmk.form.textarea>
         <br>
-        <p>Interval</p>
+        <p>Time before competition that the notification will be sent</p>
         <x-input class="w-full mb-3" id="interval" type="text" placeholder="interval" wire:model="editNotification.interval_default"/>
     </x-slot>
     <x-slot name="footer">
-        <x-secondary-button wire:click="closeEdit">Cancel</x-secondary-button>
+        <x-secondary-button class="mr-2" wire:click="closeEdit">Cancel</x-secondary-button>
         <x-button wire:click="editNoti({{$noti->id}})">Update notification</x-button>
     </x-slot>
     </x-dialog-modal>
