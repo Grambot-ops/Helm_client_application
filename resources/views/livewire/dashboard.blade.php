@@ -33,7 +33,7 @@
                         <div>
                             <button
                                 class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                <a href="{{ route('apply', ['competitionName' => urlencode($competition->title)]) }}" class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
+                                <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}" class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
                                     See more info
                                 </a>
                             </button>

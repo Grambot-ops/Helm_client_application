@@ -2,17 +2,17 @@
     <div class="flex items-center mb-4">
         <div class="flex-grow">
             <div>
-                <h1 class="text-3xl font-bold mb-10 text-black">{{ $competitionName }}</h1>
-                <p class="text-black mb-7">{{ $competitionDescription }}</p>
-                <p class="mb-3"><strong class="text-black">Category:</strong> {{ $competitionCategory }}</p>
-                <p><strong class="text-black">Type:</strong> {{ $competitionType }}</p>
+                <h1 class="text-3xl font-bold mb-10 text-black">{{ $competition->title }}</h1>
+                <p class="text-black mb-7">{{ $competition->description }}</p>
+                <p class="mb-3"><strong class="text-black">Category:</strong> {{ $competition->competition_category->name }}</p>
+                <p><strong class="text-black">Type:</strong> {{ $competition->competition_type->name }}</p>
             </div>
             <div class="mt-auto">
             </div>
         </div>
         <div class="flex justify-center items-center flex-grow">
             <div class="border-tm-darker-blue rounded overflow-hidden" style="border-width: 16px;">
-                <img src="{{ $competitionPicture }}" alt="{{ $competitionName }}" class="w-52 h-52 object-cover">
+                <img src="{{ $competition->path_to_photo }}" alt="{{ $competition->name }}" class="w-52 h-52 object-cover">
             </div>
         </div>
 
@@ -25,7 +25,7 @@
                 <div class="flex-start flex items-center pt-3">
                     <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
                     <p class="text-sm text-black">
-                        {{ $competitionStartDate }}
+                        {{ $competition->start_date }}
                     </p>
                 </div>
                 <div class="mb-6 ms-4 mt-2">
@@ -37,7 +37,7 @@
                 <div class="flex-start flex items-center pt-2">
                     <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
                     <p class="text-sm text-black">
-                        {{ $competitionSubmissionDate }}
+                        {{ $competition->submission_date }}
                     </p>
                 </div>
                 <div class="mb-6 ms-4 mt-2">
@@ -49,7 +49,7 @@
                 <div class="flex-start flex items-center pt-2">
                     <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
                     <p class="text-sm text-black">
-                        {{ $competitionEndDate }}
+                        {{ $competition->end_date }}
                     </p>
                 </div>
                 <div class="ms-4 mt-2 pb-5">
@@ -61,10 +61,10 @@
 
     <div class="mt-7">
         <h2 class="text-xl font-bold mb-2 text-black">Rules</h2>
-        <p class="mb-5 text-black">{{ $competitionRules }}</p>
+        <p class="mb-5 text-black">{{ $competition->rules }}</p>
 
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
-        <p class="mb-7 text-black">{{ $competitionPrize }}</p>
+        <p class="mb-7 text-black">{{ $competition->prize }}</p>
     </div>
     <a href="#" class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">Apply for competition</a>
 </div>
