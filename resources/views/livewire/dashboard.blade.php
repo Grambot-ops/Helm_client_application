@@ -17,7 +17,9 @@
                         <div>
                             <button
                                 class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                See more info {{ date('Y-m-d') }}
+                                <a href="{{ route('apply', ['competitionName' => urlencode($competition->title)]) }}" class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
+                                    See more info
+                                </a>
                             </button>
                             @if( date('Y-m-d') < $competition->start_date)
                             <button
@@ -40,7 +42,6 @@
                                     Ranking
                                 </button>
                             @endif
-
 
                         </div>
                         <button
