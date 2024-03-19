@@ -13,22 +13,11 @@ class ApplyForCompetition extends Component
 
     public function render(Request $request)
     {
-        $competitionName = urldecode($request->query('competitionName'));
-        $competition = Competition::where('title', $competitionName)->firstOrFail();
-        $competitionDescription = $competition->description;
-        $competitionCategory = $competition->competition_category->name;
-        $competitionType = $competition->competition_type->name;
+        $id = urldecode($request->query('id'));
+        /* FIXME: return a custom error page when competition isn't found? */
+        $competition = Competition::where('id', $id)->firstOrFail();
 
-        $competitionStartDate = Carbon::parse($competition->start_date)->toFormattedDateString();
-        $competitionSubmissionDate = Carbon::parse($competition->submission_date)->toFormattedDateString();
-        $competitionEndDate = Carbon::parse($competition->end_date)->toFormattedDateString();
-
-        $competitionPicture = $competition->path_to_photo;
-
-        $competitionRules = $competition->rules;
-        $competitionPrize = $competition->prize;
-
-        return view('livewire.admin.apply-for-competition', compact('competitionName', 'competitionDescription', 'competitionCategory','competitionType', 'competitionStartDate', 'competitionSubmissionDate', 'competitionEndDate', 'competitionPicture', 'competitionRules','competitionPrize'));
+        return view('livewire.admin.apply-for-competition', compact('competition'));
     }
 
 }
