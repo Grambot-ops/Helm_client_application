@@ -19,6 +19,7 @@ class Competition extends Model
     }
 
     protected $appends = ['closed'];
+    protected $fillable = ['accepted', 'declined'];
 
     public function changelogs()
     {
