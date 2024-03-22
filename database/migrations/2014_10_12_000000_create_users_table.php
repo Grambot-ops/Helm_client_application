@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('surname')->nullable(false);
             $table->string('username')->nullable(false);
-            $table->boolean('active')->nullable(false);
+            $table->boolean('active')->nullable(false)->default(true);
             $table->rememberToken();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
