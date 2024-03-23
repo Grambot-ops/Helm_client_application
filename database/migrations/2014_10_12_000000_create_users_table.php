@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('surname')->nullable(false);
             $table->string('username')->nullable(false);
             $table->boolean('active')->nullable(false)->default(true);
+            $table->boolean('admin')->nullable(false)->default(false);
             $table->rememberToken();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
@@ -30,12 +32,13 @@ return new class extends Migration
             [
                 [
                     'id' => 1,
-                    'name' => 'Tarik',
-                    'email' => 'nisl.maecenas@hotmail.org',
-                    'password' => Hash::make('password1'),
-                    'surname' => 'Kirkland',
-                    'username' => 'pellentesque.',
+                    'name' => 'Root',
+                    'email' => 'admin@vcoa.tmcplatform.be',
+                    'password' => Hash::make('admin'),
+                    'surname' => 'Admin',
+                    'username' => 'admin',
                     'active' => true,
+                    'admin' => true,
                 ],
                 [
                     'id' => 2,
@@ -45,6 +48,7 @@ return new class extends Migration
                     'surname' => 'Kelley',
                     'username' => 'sed',
                     'active' => true,
+                    'admin' => false,
                 ],
                 [
                     'id' => 3,
@@ -54,6 +58,7 @@ return new class extends Migration
                     'surname' => 'Zimmerman',
                     'username' => 'nisi',
                     'active' => true,
+                    'admin' => false,
                 ],
                 [
                     'id' => 4,
@@ -63,6 +68,7 @@ return new class extends Migration
                     'surname' => 'O connor',
                     'username' => 'blandit',
                     'active' => false,
+                    'admin' => false,
                 ],
                 [
                     'id' => 5,
@@ -72,6 +78,7 @@ return new class extends Migration
                     'surname' => 'Calderon',
                     'username' => 'enim',
                     'active' => false,
+                    'admin' => false,
                 ],
                 [
                     'id' => 6,
@@ -81,6 +88,7 @@ return new class extends Migration
                     'surname' => 'Mann',
                     'username' => 'vitae',
                     'active' => false,
+                    'admin' => false,
                 ],
                 [
                     'id' => 7,
@@ -90,6 +98,7 @@ return new class extends Migration
                     'surname' => 'Mcknight',
                     'username' => 'eu',
                     'active' => true,
+                    'admin' => false,
                 ],
                 [
                     'id' => 8,
@@ -99,6 +108,7 @@ return new class extends Migration
                     'surname' => 'Allen',
                     'username' => 'felis',
                     'active' => false,
+                    'admin' => false,
                 ],
                 [
                     'id' => 9,
@@ -108,6 +118,7 @@ return new class extends Migration
                     'surname' => 'Conley',
                     'username' => 'luctus',
                     'active' => false,
+                    'admin' => false,
                 ],
                 [
                     'id' => 10,
@@ -117,6 +128,7 @@ return new class extends Migration
                     'surname' => 'Jones',
                     'username' => 'tristique',
                     'active' => true,
+                    'admin' => false,
                 ],
             ]
 
