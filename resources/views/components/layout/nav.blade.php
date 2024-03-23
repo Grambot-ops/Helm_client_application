@@ -41,11 +41,11 @@
                 </form>
                 <div class="border-t border-gray-100"></div>
                 @if(auth()->user()->admin)
-                    <a href="{{ route('accept-competition') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View proposals</a>
+                    <a href="{{ route('admin.accept-competition') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View proposals</a>
+                    <a href="{{ route('admin.compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
+                    <a href="{{ route('admin.comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition types</a>
+                    <a href="{{ route('admin.notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>
                 @endif
-                <a href="{{ route('compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
-                <a href="{{ route('comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition types</a>
-                <a href="{{ route('notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>
             </div>
         </div>
     </nav>
