@@ -32,5 +32,4 @@ Route::middleware(['auth'])->group(function() {
         Route::get('users', Users::class)->name('users');
         Route::get('accept-competition', \App\Livewire\AcceptCompetition::class)->name('accept-competition');
     });
-    /* FIXME: wrap in admin middleware */
 });
