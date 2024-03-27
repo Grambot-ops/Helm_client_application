@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -37,102 +38,24 @@ return new class extends Migration
                     'password' => Hash::make('admin'),
                     'surname' => 'Admin',
                     'username' => 'admin',
-                    'active' => true,
                     'admin' => true,
                 ],
                 [
                     'id' => 2,
-                    'name' => 'Dora',
-                    'email' => 'fames.ac.turpis@aol.edu',
-                    'password' => Hash::make('password2'),
-                    'surname' => 'Kelley',
-                    'username' => 'sed',
-                    'active' => true,
+                    'name' => 'Regular',
+                    'email' => 'user@vcoa.tmcplatform.be',
+                    'password' => Hash::make('password'),
+                    'surname' => 'User',
+                    'username' => 'user',
                     'admin' => false,
-                ],
-                [
-                    'id' => 3,
-                    'name' => 'Darrel',
-                    'email' => 'fusce.dolor@hotmail.net',
-                    'password' => Hash::make('password3'),
-                    'surname' => 'Zimmerman',
-                    'username' => 'nisi',
-                    'active' => true,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 4,
-                    'name' => 'Paul',
-                    'email' => 'a.mi.fringilla@icloud.edu',
-                    'password' => Hash::make('password4'),
-                    'surname' => 'O connor',
-                    'username' => 'blandit',
-                    'active' => false,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 5,
-                    'name' => 'Rhea',
-                    'email' => 'non@aol.edu',
-                    'password' => Hash::make('password5'),
-                    'surname' => 'Calderon',
-                    'username' => 'enim',
-                    'active' => false,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 6,
-                    'name' => 'Velma',
-                    'email' => 'rhoncus.nullam@hotmail.edu',
-                    'password' => Hash::make('password6'),
-                    'surname' => 'Mann',
-                    'username' => 'vitae',
-                    'active' => false,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 7,
-                    'name' => 'Daria',
-                    'email' => 'nisl.quisque@google.com',
-                    'password' => Hash::make('password7'),
-                    'surname' => 'Mcknight',
-                    'username' => 'eu',
-                    'active' => true,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 8,
-                    'name' => 'Quinn',
-                    'email' => 'arcu.vivamus@yahoo.org',
-                    'password' => Hash::make('password8'),
-                    'surname' => 'Allen',
-                    'username' => 'felis',
-                    'active' => false,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 9,
-                    'name' => 'Jael',
-                    'email' => 'sapien.aenean@aol.couk',
-                    'password' => Hash::make('password9'),
-                    'surname' => 'Conley',
-                    'username' => 'luctus',
-                    'active' => false,
-                    'admin' => false,
-                ],
-                [
-                    'id' => 10,
-                    'name' => 'Caesar',
-                    'email' => 'nibh.quisque@aol.net',
-                    'password' => Hash::make('password10'),
-                    'surname' => 'Jones',
-                    'username' => 'tristique',
-                    'active' => true,
-                    'admin' => false,
-                ],
+                ]
             ]
-
         );
+
+        for($i = 0; $i < 20; $i++)
+        {
+            User::factory()->create();
+        }
     }
     /**
      * Reverse the migrations.
