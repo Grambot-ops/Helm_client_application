@@ -14,7 +14,7 @@ class Like extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function competitions()
+    public function competition()
     {
         return $this->belongsTo(Competition::class);
     }

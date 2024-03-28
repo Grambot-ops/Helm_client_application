@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
-use App\Livewire\Forms\CategoryForm;
+use App\Livewire\Forms\TypeForm;
 use App\Models\Competition;
-use App\Models\CompetitionCategory;
+use App\Models\CompetitionType;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ManageCompetitionCategories extends Component
+class ManageCompetitionTypes extends Component
 {
     use WithPagination;
 
@@ -18,76 +18,76 @@ class ManageCompetitionCategories extends Component
     public $orderAsc = true;
     public $search;
     public $perPage = 5;
-    public $newCategory;
+    public $newType;
     public $showModal = false;
-    public CategoryForm $form;
+    public TypeForm $form;
 
     public function updated($propertyName)
     {
         if (in_array($propertyName, ['search', 'perPage']))
             $this->resetPage();
     }
-    public function editCategory(CompetitionCategory $category)
+    public function editType(CompetitionType $type)
     {
         $this->resetErrorBag();
-        $this->form->fill($category);
+        $this->form->fill($type);
         $this->showModal = true;
     }
-    public function newCategory()
+    public function newType()
     {
         $this->form->reset();
         $this->resetErrorBag();
         $this->showModal = true;
     }
 
-    public function deleteCategory(CompetitionCategory $category)
+    public function deleteType(CompetitionType $type)
     {
-        if ($category->competitions()->exists()) {
+        if ($type->competitions()->exists()) {
             $this->dispatch('swal:toast', [
                 'background' => 'error',
-                'html' => "Cannot delete the category <b><i>{$category->name}</i></b> as it has associated competitions.",
+                'html' => "Cannot delete the type <b><i>{$type->name}</i></b> as it has associated competitions.",
                 'icon' => 'error',
             ]);
             return;
         }
 
-        $this->form->delete($category);
+        $this->form->delete($type);
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The category <b><i>{$category->name}</i></b> has been deleted",
+            'html' => "The type <b><i>{$type->name}</i></b> has been deleted",
             'icon' => 'success',
         ]);
     }
 
-    public function createCategory()
+    public function createType()
     {
         $validatedData = $this->validate([
-            'newCategory' => 'required|unique:competition_categories,name',
+            'newType' => 'required|unique:competition_types,name',
         ], [
-            'newCategory.unique' => 'The category name has already been taken.',
+            'newType.unique' => 'The type name has already been taken.',
         ]);
 
-        CompetitionCategory::create([
-            'name' => trim($validatedData['newCategory'])
+        CompetitionType::create([
+            'name' => trim($validatedData['newType'])
         ]);
 
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The record <b><i>{$this->form->name}</i></b> has been added",
+            'html' => "The type <b><i>{$this->form->name}</i></b> has been added",
             'icon' => 'success',
         ]);
     }
-    public function updateCategory(CompetitionCategory $category)
+    public function updateType(CompetitionType $type)
     {
-        $existingCategory = CompetitionCategory::where('name', $this->form->name)
-            ->where('id', '!=', $category->id)
+        $existingType = CompetitionType::where('name', $this->form->name)
+            ->where('id', '!=', $type->id)
             ->exists();
 
-        if ($existingCategory) {
-            $this->addError('form.name', 'The category name already exists.');
+        if ($existingType) {
+            $this->addError('form.name', 'That type name already exists.');
             return;
         }
-        $this->form->update($category);
+        $this->form->update($type);
         $this->showModal = false;
         $this->dispatch('swal:toast', [
             'background' => 'success',
@@ -96,18 +96,18 @@ class ManageCompetitionCategories extends Component
         ]);
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'categories', 'description' => 'Manage the categories of your competitions',])]
+    #[Layout('layouts.tmcp', ['title' => 'types', 'description' => 'Manage the types of your competitions',])]
     public function render()
     {
-        $query = CompetitionCategory::orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
+        $query = CompetitionType::orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');
 
         if ($this->search) {
             $query->where('name', 'like', '%' . $this->search . '%');
         }
 
-        $categories = $query->paginate($this->perPage);
+        $types = $query->paginate($this->perPage);
 
-        return view('livewire.manage-competition-categories', compact('categories'));
+        return view('livewire.admin.manage-competition-types', compact('types'));
     }
 
     public function resort($column)

@@ -14,12 +14,12 @@ class Submission extends Model
         return $this->hasMany(Vote::class);
     }
 
-    public function delivery_types()
+    public function delivery_type()
     {
         return $this->belongsTo(DeliveryType::class);
     }
 
-    public function participations()
+    public function participation()
     {
         return $this->belongsTo(Participation::class);
     }

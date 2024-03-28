@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Admin\ApplyForCompetition;
+use App\Livewire\Admin\ManageCompetitionTypes;
 use App\Livewire\Dashboard;
 use App\Livewire\Admin\Users;
 use App\Models\User;
@@ -18,14 +20,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
-    Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
+    Route::get('apply-for-competition', ApplyForCompetition::class)->name('apply');
+    Route::get('view-submissions', \App\Livewire\ViewSubmissions::class)->name('all-submissions');
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::view('settings', 'profile.show')->name('settings');
-});
 
-Route::get('admin/users', Users::class)->name('users');
-//Route::middleware(['auth','admin','active'])->prefix('admin')->name('admin.')->group(function () {
-//    Route::redirect('/', '/admin/users');
-//    Route::get('records', Users::class)->name('users');
-//});
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function() {
+        Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
+        Route::get('manage-notifications', \App\Livewire\ManageNotifications::class)->name('notifications');
+        Route::get('manage-competition-types', ManageCompetitionTypes::class)->name('comptyp');
+        Route::get('users', Users::class)->name('users');
+        Route::get('accept-competition', \App\Livewire\AcceptCompetition::class)->name('accept-competition');
+    });
+    /* FIXME: wrap in admin middleware */
+});
