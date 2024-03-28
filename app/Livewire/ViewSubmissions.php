@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Submission;
+use Illuminate\Http\Request;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -15,11 +16,14 @@ class ViewSubmissions extends Component
 
 
     #[Layout('layouts.tmcp', ['title' => 'Submissions', 'description' => 'all submissions from the competitions'])]
-    public function render()
+    public function render(Request $request)
     {
+        $competition = urldecode($request->query('id'));
+        $competition_name = urldecode($request->query('title'));
+
         $submissions = Submission::orderBy('id')
             ->get();
-        return view('livewire.view-submissions', compact('submissions'));
+        return view('livewire.view-submissions', compact('submissions', 'competition', 'competition_name'));
     }
 
 
