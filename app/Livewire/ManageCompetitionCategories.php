@@ -42,6 +42,15 @@ class ManageCompetitionCategories extends Component
 
     public function deleteCategory(CompetitionCategory $category)
     {
+        if ($category->competitions()->exists()) {
+            $this->dispatch('swal:toast', [
+                'background' => 'error',
+                'html' => "Cannot delete the category <b><i>{$category->name}</i></b> as it has associated competitions.",
+                'icon' => 'error',
+            ]);
+            return;
+        }
+
         $this->form->delete($category);
         $this->dispatch('swal:toast', [
             'background' => 'success',

@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+.cards-vh {
+    height: 32vh;
+    object-fit: cover;
+}

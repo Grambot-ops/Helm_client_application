@@ -19,6 +19,7 @@ class Competition extends Model
     }
 
     protected $appends = ['closed'];
+    protected $fillable = ['accepted', 'declined'];
 
     public function changelogs()
     {
@@ -26,7 +27,7 @@ class Competition extends Model
     }
 
     /* organizer */
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -46,12 +47,12 @@ class Competition extends Model
         return $this->hasMany(NotiComp::class);
     }
 
-    public function competition_categories()
+    public function competition_category()
     {
         return $this->belongsTo(CompetitionCategory::class);
     }
 
-    public function competition_types()
+    public function competition_type()
     {
         return $this->belongsTo(CompetitionType::class);
     }
