@@ -3,7 +3,9 @@
 namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\UserForm;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -19,11 +21,12 @@ class Users extends Component
     #[Layout('layouts.tmcp', ['title' => 'Manage Users',])]
     public function render()
     {
-        $query = User::orderBy('id')
-            ->searchName($this->search);
-        $users = $query
+        $userRoles = UserRole::with('roles')->get();
+        \Log::info($userRoles);
+        $users = User::orderBy('id')
+            ->searchName($this->search)
             ->paginate($this->perPage);
-        return view('livewire.admin.users', compact('users'));
+        return view('livewire.admin.users', compact('users', 'userRoles'));
     }
 
     public function updated($propertyName, $propertyValue)
