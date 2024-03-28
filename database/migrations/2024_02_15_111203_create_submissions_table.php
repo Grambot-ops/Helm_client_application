@@ -16,6 +16,7 @@ return new class extends Migration
             /* TODO: add DTR */
             $table->foreignId('delivery_type_id')->nullable(false)->constrained();
             $table->foreignId('participation_id')->nullable(false)->constrained();
+            $table->string('title')->nullable(false)->default("This competition has no name");
             $table->string('path')->nullable();
             $table->string('link')->nullable();
             $table->text('description')->nullable();
