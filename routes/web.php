@@ -4,6 +4,7 @@ use App\Livewire\Admin\ApplyForCompetition;
 use App\Livewire\Admin\ManageCompetitionTypes;
 use App\Livewire\Dashboard;
 use App\Livewire\Admin\Users;
+use App\Livewire\Ranking;
 use App\Models\User;
 use App\Livewire\ManageCompetitionCategories;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('view-submissions', \App\Livewire\ViewSubmissions::class)->name('all-submissions');
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::view('settings', 'profile.show')->name('settings');
+    Route::get('ranking', Ranking::class)->name('ranking');
 
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function() {
         Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
