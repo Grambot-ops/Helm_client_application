@@ -66,5 +66,5 @@
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
         <p class="mb-7 text-black">{{ $competition->prize }}</p>
     </div>
-    <a href="#" class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">Apply for competition</a>
+    <button wire:click="apply" class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">Apply for competition</button>
 </div>
