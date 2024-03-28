@@ -37,19 +37,20 @@
             </thead>
             <tbody>
             @forelse($users as $user)
-                <tr
-                    wire:key="{{ $user->id }}"
-                    class="border-t border-gray-300">
-                    <td>{{$user->id}}</td>
-                    <td>{{$user->name}} {{$user->surname}}</td>
+                <tr wire:key="{{ $user->id }}" class="border-t border-gray-300">
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->name }} {{ $user->surname }}</td>
                     <td>
-                        @if($user->admin)
-                            Admin
-                        @else
-                            User
-                        @endif
+                        @forelse($user->user_roles as $userRole)
+                            @if($userRole->roles)
+                                {{ $userRole->roles->name }}
+                            @endif
+                        @empty
+                            No role
+                        @endforelse
                     </td>
-                    <td>@if($user-> active)
+                    <td>
+                        @if($user->active)
                             Active
                         @else
                             Inactive
