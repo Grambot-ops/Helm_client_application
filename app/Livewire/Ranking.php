@@ -15,13 +15,14 @@ class Ranking extends Component
     {
         $id = request('id');
         $competition = Competition::find($id);
-        #$likes = $competition->likes->unique('user_id');
-        #$likes = Like::withCount('user')->where('competition_id', $id)->orderBy('user_count', 'desc')->get()->unique('user_id');
+        $podium = $competition->likes->unique('user_id')->sort(function ($a, $b) {
+            return $b->user->likes->count() <=> $a->user->likes->count();
+        })->take(4);
         $likes = $competition->likes->unique('user_id')->sort(function ($a, $b) {
             return $b->user->likes->count() <=> $a->user->likes->count();
         });
         $i = 1;
-        return view('livewire.ranking', compact('competition', 'likes', 'i'));
+        return view('livewire.ranking', compact('competition', 'likes', 'i', 'podium'));
     }
 
     public function likesById($userId, $competitionId)
