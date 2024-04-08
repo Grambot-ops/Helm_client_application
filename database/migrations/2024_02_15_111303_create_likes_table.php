@@ -20,8 +20,8 @@ return new class extends Migration
         DB::table('likes')->insert(
 
             [
-                ['user_id' => 7, 'competition_id' => 5],
-                ['user_id' => 7, 'competition_id' => 6],
+                ['user_id' => 1, 'competition_id' => 5],
+                ['user_id' => 1, 'competition_id' => 6],
                 ['user_id' => 2, 'competition_id' => 7],
                 ['user_id' => 4, 'competition_id' => 7],
                 ['user_id' => 6, 'competition_id' => 8],

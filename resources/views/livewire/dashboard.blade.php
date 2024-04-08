@@ -3,7 +3,7 @@
 
     <x-slot name="title">Competitions</x-slot>
 
-    <h1 class="text-center text-3xl mb-4 font-bold">Competitions</h1>
+    <h1 class="text-center text-3xl mb-4 font-bold">@if($likedOnly == True) Saved @endif Competition</h1>
 
     <div class="container mx-auto px-14">
         <div class="grid grid-rows-3 grid-flow-col gap-4">
@@ -15,13 +15,46 @@
                     View own competitions
                 </button>
                 <br>
-                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-5">
+                <button wire:click="toggleLikedOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-5">
                     Saved competitions
                 </button>
             </div>
-            <x-input class="row-span-3 col-span-3 m-7"
-                     placeholder="Filter on title or description"/>
+            <div class="grid grid-cols-8 gap-4">
+                <div class="col-span-10 md:col-span-5 lg:col-span-3">
+                    <x-label for="name" value="Filter"/>
+                    <div class="relative">
+                        <x-input id="name" type="text"
+                                 wire:model.live.debounce.500ms="name"
+                                 class="block mt-1 w-full" placeholder="Filter Title Or Description"/>
+                        <button
+                            @click="$wire.set('name', '')"
+                            class="w-5 absolute right-4 top-3">
+                            <x-phosphor-x/>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-span-5 md:col-span-2 lg:col-span-2">
+                    <x-label for="category" value="Category"/>
+                    <x-tmk.form.select id="category"
+                                       wire:model.live="category"
+                                       class="block mt-1 w-full">
+                        <option value="%">All Categories</option>
+                        @foreach($allCategories as $g)
+                            <option value="{{ $g->id }}">
+                                {{ $g->name }}
+                            </option>
+                        @endforeach
+                    </x-tmk.form.select>
+                </div>
+            </div>
         </div>
+        {{-- No records found --}}
+        @if($competitions->isEmpty())
+            <x-tmk.alert type="danger" class="w-full">
+                Can't find any competitions with <b>'{{ $name }}'</b> as a search-term
+            </x-tmk.alert>
+        @endif
         <div class="grid lg:grid-cols-3 gap-12">
             @foreach($competitions as $competition)
                 @if($competition->accepted)
@@ -50,7 +83,7 @@
                             @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    <a href="{{ route('all-submissions', ['id' => urlencode($competition->id), 'title' => urlencode($competition->title)]) }}" class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
+                                    <a href="{{ route('all-submissions', ['id' => urlencode($competition->id), 'title' => urlencode($competition->title)]) }}" class="text-white font-bold py-2 px-4 my-2 rounded">
                                         Vote
                                     </a>
                                 </button>

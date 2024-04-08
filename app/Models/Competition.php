@@ -56,4 +56,10 @@ class Competition extends Model
     {
         return $this->belongsTo(CompetitionType::class);
     }
+
+    public function scopeSearchTitleOrDescription($query, $search = '%')
+    {
+        return $query->where('title', 'like', "%{$search}%")
+            ->orWhere('description', 'like', "%{$search}%");
+    }
 }

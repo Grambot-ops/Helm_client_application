@@ -11,7 +11,7 @@
                         <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
                         <div class="px-6 py-4">
                             <div class="justify-between flex">
-                                <div class="font-bold text-xl mb-2">{{$submission->participation->user->name}}</div>
+                                <div class="font-bold text-xl mb-2">{{$submission->participation->user->name }} {{$submission->participation->user->surname }}</div>
                                 <div class="font-bold mt-1">
                                     <x-button wire:click="openInfo({{$submission}})" class="bg-transparent hover:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-05" href="#">
                                     <x-phosphor-info class="inline-block w-6 h-6 mb-1 text-blue-400"/>
@@ -22,7 +22,7 @@
                                 </div>
                             </div>
                             <p class="text-blue-300 text-sm mb-2">
-                                {{ $submission->participation->user->name }}
+                                {{ $submission->title }}
                             </p>
                             <p class="text-gray-700 text-base">
                                 {{ $submission->description }}
@@ -41,7 +41,7 @@
             <div class="flex">
                 <div class="text-base">
                     <p class="py-3">
-                        Are you sure you want to delete <span class="font-bold"> {{ $submissionToDelete ? $submissionToDelete->id : '' }} ?</span>
+                        Are you sure you want to delete <span class="font-bold"> {{ $submissionToDelete ? $submissionToDelete->title : '' }} ?</span>
                     </p>
                     <p class="py-3">
                        participant: <span class="font-bold"> {{ $submissionToDelete ? $submissionToDelete->participation->user->name : ''  }}</span>
@@ -71,7 +71,7 @@
                 <div class="flex">
                     <div class="text-base">
                         <p class="py-3">
-                            Title: <span class="font-bold text-blue-300"> {{ $submissionToShowInfo ? $submissionToShowInfo->participation->user->name : ''  }}</span>
+                            Title: <span class="font-bold text-blue-300"> {{ $submissionToShowInfo ? $submissionToShowInfo->title : ''  }}</span>
                         </p>
                         <p class="py-3">
                             Description: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->description : ''  }}</span>
