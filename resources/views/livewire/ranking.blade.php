@@ -1,4 +1,4 @@
-@php use App\Models\Like; @endphp
+@php use App\Models\Like;use App\Models\Vote; @endphp
 <div>
     <x-slot name="title">Ranking {{ $competition -> title}}</x-slot>
     <h1 class="text-3xl mb-4 font-bold">Ranking - {{ $competition -> title}}</h1>
@@ -10,7 +10,7 @@
         @foreach($podium as $place)
             <text x={{$i*100}} y="190" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                 @if($place)
-                    {{$place->user->surname}}
+                    {{$place->name}} {{$place->surname}}
                 @else
                     No votes
                 @endif
@@ -37,20 +37,13 @@
                 <th># of votes</th>
             </thead>
             <tbody>
-            @forelse($likes as $like)
-                <tr
-                    wire:key="{{ $like->id }}"
-                    class="border-t border-gray-300">
-                    <td class="p-2">{{$i++}}</td>
-                    <td class="p-2">{{$like->user->name}} {{$like->user->surname}}</td>
-                    <td class="p-2">{{$this -> likesById($like->user_id,$like->competition_id)}}</td>
-            @empty
-                <tr>
-                    <td colspan="6" class="border-t border-gray-300 p-4 text-center text-gray-500">
-                        <div class="font-bold italic text-sky-800">No users found</div>
-                    </td>
+            @foreach($participations as $participation)
+                <tr class="border-b border-gray-300">
+                    <td>{{$i++}}</td>
+                    <td>{{$participation->user->name}} {{$participation->user->surname}}</td>
+                    <td>{{$participation->votes_count}}</td>
                 </tr>
-            @endforelse
+            @endforeach
             </tbody>
         </table>
     </x-tmk.section>

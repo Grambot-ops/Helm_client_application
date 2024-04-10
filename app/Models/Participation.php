@@ -22,7 +22,7 @@ class Participation extends Model
 
     public function submissions()
     {
-        $this->hasMany(Submission::class);
+        return $this->hasMany(Submission::class);
     }
 
     public function competition()
