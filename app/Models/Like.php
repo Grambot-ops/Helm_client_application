@@ -18,4 +18,10 @@ class Like extends Model
     {
         return $this->belongsTo(Competition::class);
     }
+
+    public function scopeSearchName($query, $search = '%')
+    {
+        return $query->where('name', 'like', "%{$search}%")
+            ->orWhere('surname', 'like', "%{$search}%");
+    }
 }

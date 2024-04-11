@@ -9,6 +9,14 @@ class Submission extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'participation_id', // Add competition_id to fillable property
+        'delivery_type_id',
+        'path',
+        'link',
+        'description',
+    ];
+
     public function votes()
     {
         return $this->hasMany(Vote::class);

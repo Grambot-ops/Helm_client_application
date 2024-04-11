@@ -90,7 +90,9 @@
                             @elseif( $competition->submission_date < date('Y-m-d'))
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    Ranking
+                                    <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
+                                        Ranking
+                                    </a>
                                 </button>
                             @endif
                         </div>
