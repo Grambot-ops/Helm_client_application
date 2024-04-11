@@ -37,9 +37,9 @@
                 <th># of votes</th>
             </thead>
             <tbody>
-            @foreach($participations as $i => $participation)
+            @foreach($participations as $participation)
                 <tr class="border-b border-gray-300">
-                    <td>{{$i}}</td>
+                    <td>{{$i++}}</td>
                     <td>{{$participation->user->name}} {{$participation->user->surname}}</td>
                     <td>{{$participation->votes_count}}</td>
                 </tr>
