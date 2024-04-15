@@ -55,7 +55,7 @@
                 Can't find any competitions with <b>'{{ $name }}'</b> as a search-term
             </x-tmk.alert>
         @endif
-        <div class="grid lg:grid-cols-3 gap-12">
+        <x-tmk.card-container>
             @foreach($competitions as $competition)
                 @if($competition->accepted)
                     <x-tmk.card title="{{ $competition->title }}"
@@ -103,7 +103,7 @@
                     </x-tmk.card>
                 @endif
             @endforeach
-        </div>
+        </x-tmk.card-container>
     </div>
 
     @push('script')
