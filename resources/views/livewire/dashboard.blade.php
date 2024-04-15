@@ -64,12 +64,12 @@
                                 picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
                                 hashtags="{{ $competition->competition_category->name }}">
                         <div>
-                            <button
-                                class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}" class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
+                            <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
+                                <button
+                                    class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
                                     See more info
-                                </a>
-                            </button>
+                                </button>
+                            </a>
                             @if( date('Y-m-d') < $competition->start_date)
                             <button
                                 class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
@@ -81,12 +81,12 @@
                                     Submit
                                 </button>
                             @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
+                                <a href="{{ route('all-submissions', ['id' => urlencode($competition->id), 'title' => urlencode($competition->title)]) }}">
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    <a href="{{ route('all-submissions', ['id' => urlencode($competition->id), 'title' => urlencode($competition->title)]) }}" class="text-white font-bold py-2 px-4 my-2 rounded">
                                         Vote
-                                    </a>
                                 </button>
+                                </a>
                             @elseif( $competition->submission_date < date('Y-m-d'))
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
