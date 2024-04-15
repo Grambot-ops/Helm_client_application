@@ -81,7 +81,7 @@
                                     Submit
                                 </button>
                             @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
-                                <a href="{{ route('all-submissions', ['id' => urlencode($competition->id), 'title' => urlencode($competition->title)]) }}">
+                                <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                         Vote

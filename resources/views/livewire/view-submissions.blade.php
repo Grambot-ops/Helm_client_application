@@ -1,23 +1,21 @@
 <div>
     <x-slot name="subtitle">Manage notifications</x-slot>
     <div class="pb-6">
-        <h1 class="text-center text-3xl mb-4 font-bold">Submissions for competition {{ $competition_name }}</h1>
+        <h1 class="text-center text-3xl mb-4 font-bold">Submissions for competition "{{ $competition->title }}"</h1>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-12">
                 @foreach($submissions as $submission)
-                    @if($submission->participation->competition_id == $competition)
-                        <div class="w-full rounded overflow-hidden shadow-lg"
-                        wire:key="{{ $submission->id }}">
+                    <div class="w-full rounded overflow-hidden shadow-lg" wire:key="{{ $submission->id }}">
                         <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
                         <div class="px-6 py-4">
                             <div class="justify-between flex">
                                 <div class="font-bold text-xl mb-2">{{$submission->participation->user->name }} {{$submission->participation->user->surname }}</div>
                                 <div class="font-bold mt-1">
                                     <x-button wire:click="openInfo({{$submission}})" class="bg-transparent hover:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-05" href="#">
-                                    <x-phosphor-info class="inline-block w-6 h-6 mb-1 text-blue-400"/>
+                                        <x-phosphor-info class="inline-block w-6 h-6 mb-1 text-blue-400"/>
                                     </x-button>
                                     <x-button wire:click="openDelete({{$submission}})" class="bg-transparent hover:bg-transparent active:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-0.5" href="#">
-                                    <x-phosphor-trash class="inline-block w-6 h-6 mb-1 text-red-600"/>
+                                        <x-phosphor-trash class="inline-block w-6 h-6 mb-1 text-red-600"/>
                                     </x-button>
                                 </div>
                             </div>
@@ -29,7 +27,6 @@
                             </p>
                         </div>
                     </div>
-                    @endif
                 @endforeach
             </div>
         </div>
