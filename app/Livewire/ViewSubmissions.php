@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Competition;
+use App\Models\Participation;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use Livewire\Attributes\Layout;
@@ -14,16 +16,31 @@ class ViewSubmissions extends Component
     public $submissionToDelete;
     public $submissionToShowInfo;
 
+    public $competition;
+
+    public function mount(Request $request)
+    {
+        $id = $request->id;
+        if(!isset($id))
+            abort(404);
+
+        // Get competition
+        $this->competition = Competition::where('id', $id)
+            ->firstOrFail();
+    }
+
 
     #[Layout('layouts.tmcp', ['title' => 'Submissions', 'description' => 'all submissions from the competitions'])]
-    public function render(Request $request)
+    public function render()
     {
-        $competition = urldecode($request->query('id'));
-        $competition_name = urldecode($request->query('title'));
-
-        $submissions = Submission::orderBy('id')
-            ->get();
-        return view('livewire.view-submissions', compact('submissions', 'competition', 'competition_name'));
+        $competition = $this->competition;
+        $submissions = Submission::whereIn(
+            'participation_id',
+            Participation::select('id')
+                ->where('competition_id', $this->competition->id)
+                ->get()
+        )->get();
+        return view('livewire.view-submissions', compact('submissions', 'competition'));
     }
 
 
@@ -41,8 +58,9 @@ class ViewSubmissions extends Component
         $this->submissionToDelete->delete();
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The submission <b><i>{$this->submissionToDelete->id}</i></b> has been deleted",
+            'html' => "The submission \"<b><i>{$this->submissionToDelete->title}</i></b>\" has been deleted",
         ]);
+        $this->submissionToDelete = null;
         $this->showModalDelete = false;
     }
 
@@ -52,6 +70,9 @@ class ViewSubmissions extends Component
     }
     public function closeInfo(){
         $this->showModalInfo = false;
+        // Not setting this to `null` triggers a bug where the modal tries to
+        // show info about a modal that doesn't exist anymore, causing Livewire
+        // to throw a 404
+        $this->submissionToShowInfo = null;
     }
-
 }
