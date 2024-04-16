@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Notification;
 use Livewire\Attributes\Layout;
@@ -17,7 +17,7 @@ class ManageNotifications extends Component
     {
         $notifications = Notification::orderBy('id')
             ->get();
-        return view('livewire.manage-notifications',compact('notifications'));
+        return view('livewire.admin.manage-notifications', compact('notifications'));
     }
 
     public $editNotification = ['id' => null, 'title'=> null, 'description' => null, 'intervalDefault' => null];

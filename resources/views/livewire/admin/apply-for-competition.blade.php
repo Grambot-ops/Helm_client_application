@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4">
+<div class="container mx-auto px-4" xmlns="http://www.w3.org/1999/html">
     <div class="flex items-center mb-4">
         <div class="flex-grow">
             <div>
@@ -111,7 +111,7 @@
         </div>
 
 
-</div class="bg-white rounded-lg shadow-md p-4 mb-4">
+    </div>
 
     <div class="mt-7">
         <h2 class="text-xl font-bold mb-2 text-black">Rules</h2>
@@ -120,5 +120,17 @@
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
         <p class="mb-7 text-black">{{ $competition->prize }}</p>
     </div>
-    <button wire:click="apply" class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">Apply for competition</button>
+    @if( $competition->submission_date < date('Y-m-d'))
+        <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}"
+           class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+            <button>
+                Ranking
+            </button>
+        </a>
+    @else
+        <button wire:click="apply" class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">
+            Apply for competition
+        </button>
+    @endif
+
 </div>

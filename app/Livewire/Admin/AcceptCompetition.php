@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Competition;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class AcceptCompetition extends Component
     public function acceptCompetition(Competition $competition): void
     {
         $competition->update(['accepted' => true]);
-        $this->redirectRoute('accept-competition');
+        $this->redirectRoute('admin.accept-competition');
         $this->dispatch('swal:toast',
             [
                 'background' => 'success',
@@ -25,7 +25,7 @@ class AcceptCompetition extends Component
     public function declineCompetition(Competition $competition): void
     {
         $competition->update(['declined' => true]);
-        $this->redirectRoute('accept-competition');
+        $this->redirectRoute('admin.accept-competition');
         $this->dispatch('swal:toast',
             [
             'background' => 'success',
@@ -51,6 +51,6 @@ class AcceptCompetition extends Component
 
         $proposals = Competition::where('accepted', '=', 0)->where('declined', '=', 0)->get();
 
-        return view('livewire.accept-competition', compact('proposals'));
+        return view('livewire.admin.accept-competition', compact('proposals'));
     }
 }
