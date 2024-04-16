@@ -1,5 +1,5 @@
 <?php
-
+//"competition type" should be named "submission type"
 namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\TypeForm;

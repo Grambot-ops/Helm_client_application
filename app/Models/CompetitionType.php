@@ -1,5 +1,5 @@
 <?php
-
+//"competition type" should be named "submission type"
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
