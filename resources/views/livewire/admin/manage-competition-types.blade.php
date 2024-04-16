@@ -1,3 +1,4 @@
+<!--"competition type" should be named "submission type"-->
 <div>
     <x-tmk.section class="mb-4 flex flex-wrap gap-2">
         <!-- Search Input -->
@@ -38,7 +39,7 @@
                 <th>id</th>
                 <th>Name</th>
                 <th>
-                    Competitions in type
+                    Submission type
                 </th>
                 <th></th>
                 <th>
