@@ -59,6 +59,9 @@ class ManageCompetitionCategories extends Component
 
     public function createCategory()
     {
+        if ($this->newCategory == ""){
+            return;
+        }
         $validatedData = $this->validate([
             'newCategory' => 'required|unique:competition_categories,name',
         ], [
@@ -70,7 +73,7 @@ class ManageCompetitionCategories extends Component
         ]);
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The record <b><i>{$this->newCategory}</i></b> has been added",
+            'html' => "The category <b><i>{$this->newCategory}</i></b> has been added",
             'icon' => 'success',
         ]);
     }
