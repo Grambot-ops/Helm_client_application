@@ -138,10 +138,21 @@
                 Ranking
             </button>
         </a>
+        @elseif($competition->start_date < date('Y-m-d') && date('Y-m-d') < $competition->submission_date )
+        <a href=""
+           class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+            <button>
+                Submit
+            </button>
+        </a>
     @else
-        <button wire:click="apply" class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">
+        <button wire:click="apply" wire:target="apply"
+                @if($buttonDisabled)
+                    disabled
+                @endif
+                class="bg-tm-blue hover:bg-tm-darker-blue text-white py-2 px-6 rounded inline-block">
             Apply for competition
         </button>
     @endif
-
 </div>
+@livewireScripts
