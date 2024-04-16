@@ -13,12 +13,13 @@ class Dashboard extends Component
     public $name;
     public $category = '%';
     public $likedOnly = false;
+    public $ownOnly = false;
 
     public function updated($property, $value)
     {
         // $property: The name of the current property being updated
         // $value: The value about to be set to the property
-        if (in_array($property, ['name', 'category', 'liked']))
+        if (in_array($property, ['name', 'category', 'liked','own']))
             $this->getErrorBag();
     }
     #[Layout('layouts.tmcp', ['title' => 'Competitions', 'description' => 'Thomas More Competition Platform'])]
@@ -36,6 +37,13 @@ class Dashboard extends Component
                     ->where('user_id',Auth::id());
             });
         }
+        if ($this->ownOnly) {
+            $query->whereIn('id', function ($query) {
+                $query->select('id')
+                    ->from('competitions')
+                    ->where('user_id',Auth::id());
+            });
+        }
         $competitions = $query->get();
 
         return view('livewire.dashboard', compact('competitions', 'allCategories'));
@@ -43,6 +51,11 @@ class Dashboard extends Component
     public function toggleLikedOnly()
     {
         $this->likedOnly = !$this->likedOnly;
+    }
+
+    public function toggleOwnOnly()
+    {
+        $this->ownOnly = !$this->ownOnly;
     }
 
 }

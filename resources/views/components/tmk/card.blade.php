@@ -3,6 +3,9 @@
     'title' => '',
     'description' => '',
     'closed' => false,
+    'open' => false,
+    'vote' => false,
+    'upload' => false,
     'hashtags' => [],
     'picture' => '',
     'hashtags' => '',
@@ -16,6 +19,18 @@
             @if($closed)
                 <div class="text-red-800 font-bold mt-1">closed
                     <x-phosphor-lock-simple class="inline-block w-6 h-6 mb-1"/>
+                </div>
+            @elseif($open)
+                <div class="text-green-800 font-bold mt-1">open
+                    <x-phosphor-lock-simple-open class="inline-block w-6 h-6 mb-1"/>
+                </div>
+            @elseif($vote)
+                <div class="text-yellow-600 font-bold mt-1">votes open
+                    <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                </div>
+            @elseif($upload)
+                <div class="text-blue-300 font-bold mt-1">upload
+                    <x-phosphor-upload-simple class="inline-block w-6 h-6 mb-1"/>
                 </div>
             @endif
         </div>

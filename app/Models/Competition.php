@@ -11,15 +11,28 @@ class Competition extends Model
 {
     use HasFactory;
 
-    protected function closed(): Attribute
+    protected $appends = ['closed', 'open', 'vote', 'upload'];
+    protected $fillable = ['accepted', 'declined'];
+
+    public function getClosedAttribute(): bool
     {
-        return Attribute::make(
-        get: fn($value, $attributes) => $attributes['end_date'] < Carbon::now(),
-        );
+        return $this->attributes['end_date'] < Carbon::now();
     }
 
-    protected $appends = ['closed'];
-    protected $fillable = ['accepted', 'declined'];
+    public function getOpenAttribute(): bool
+    {
+        return $this->attributes['start_date'] > Carbon::now();
+    }
+    public function getVoteAttribute(): bool
+    {
+        return $this->attributes['submission_date'] < Carbon::now() && Carbon::now() < $this->attributes['end_date'];
+    }
+
+    public function getUploadAttribute(): bool
+    {
+        return $this->attributes['start_date'] < Carbon::now() && Carbon::now() < $this->attributes['submission_date'];
+    }
+
 
     public function changelogs()
     {

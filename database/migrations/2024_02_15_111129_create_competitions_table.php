@@ -47,13 +47,13 @@ return new class extends Migration
                     'start_date' => '2023-9-3',
                     'end_date' => '2024-6-1',
                     'submission_date' => '2023-11-1',
-                    'accepted' => false,
+                    'accepted' => true,
                 ],
                 [
                     'id' => 2,
                     'competition_category_id' => 5,
                     'competition_type_id' => 2,
-                    'user_id' => 6,
+                    'user_id' => 1,
                     'title' => 'Code Challenge',
                     'by_vote' => true,
                     'path_to_photo' => '/assets/competitions/CodeChallenge.png',
@@ -95,7 +95,7 @@ return new class extends Migration
                     'start_date' => '2023-7-7',
                     'end_date' => '2024-6-15',
                     'submission_date' => '2023-12-15',
-                    'accepted' => false,
+                    'accepted' => true,
                 ],
                 [
                     'id' => 5,
@@ -111,7 +111,7 @@ return new class extends Migration
                     'start_date' => '2023-6-20',
                     'end_date' => '2024-12-13',
                     'submission_date' => '2023-7-13',
-                    'accepted' => false,
+                    'accepted' => true,
                 ],
                 [
                     'id' => 6,
@@ -143,7 +143,7 @@ return new class extends Migration
                     'start_date' => '2023-5-15',
                     'end_date' => '2024-10-20',
                     'submission_date' => '2023-10-19',
-                    'accepted' => false,
+                    'accepted' => true,
                 ],
                 [
                     'id' => 8,
@@ -159,7 +159,7 @@ return new class extends Migration
                     'start_date' => '2023-7-26',
                     'end_date' => '2024-3-27',
                     'submission_date' => '2023-12-28',
-                    'accepted' => false,
+                    'accepted' => true,
                 ],
                 [
                     'id' => 9,
