@@ -35,7 +35,7 @@ class ApplyForCompetition extends Component
 
     public function render()
     {
-        return view('livewire.admin.apply-for-competition');
+        return view('livewire.see-more-info');
     }
 }
 
