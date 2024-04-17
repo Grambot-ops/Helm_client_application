@@ -19,10 +19,7 @@
                 <span>
                     {{-- Normally you should be authenticated --}}
                     @auth
-                        @php
-                        $user = auth()->user();
-                        @endphp
-                        {{ $user->fullname }}
+                        {{ auth()->user()->fullname }}
                     @else
                         USER
                     @endauth
