@@ -16,23 +16,30 @@ return new class extends Migration
             $table->string('name')->nullable(false);
             // whether the submission type is a file or text like a link
             $table->boolean('is_file')->nullable(false);
+            // A comma separated string that contains the accepted file types
+            // that looks something like:
+            //
+            // video,audio,document
+            //
+            // The order of the words does not matter.
+            $table->string('filetypes')->nullable();
             $table->timestamps();
         });
 
         DB::table('competition_types')->insert(
 
             [
-                ['id' => 1, 'name' => 'Podcast', 'is_file' => true],
-                ['id' => 2, 'name' => 'Link', 'is_file' => false],
-                ['id' => 3, 'name' => 'Code', 'is_file' => true],
-                ['id' => 4, 'name' => 'Video', 'is_file' => true],
-                ['id' => 5, 'name' => 'Photo', 'is_file' =>  true],
-                ['id' => 6, 'name' => 'Text', 'is_file' => false],
-                ['id' => 7, 'name' => 'Recipe', 'is_file' => false],
-                ['id' => 8, 'name' => 'Quote', 'is_file' => false],
-                ['id' => 9, 'name' => 'Essay', 'is_file' => false],
-                ['id' => 10, 'name' => 'Quiz', 'is_file' => false],
-                ['id' => 11, 'name' => 'YouTube link', 'is_file' => false],
+                ['id' => 1, 'name' => 'Podcast', 'is_file' => true, 'filetypes' => 'audio,video'],
+                ['id' => 2, 'name' => 'Link', 'is_file' => false, 'filetypes' => null],
+                ['id' => 3, 'name' => 'Code', 'is_file' => false, 'filetypes' => null],
+                ['id' => 4, 'name' => 'Video', 'is_file' => true, 'filetypes' => 'video'],
+                ['id' => 5, 'name' => 'Photo', 'is_file' =>  true, 'filetypes' => 'image'],
+                ['id' => 6, 'name' => 'Text', 'is_file' => false, 'filetypes' => null],
+                ['id' => 7, 'name' => 'Recipe', 'is_file' => true, 'filetypes' => 'document'],
+                ['id' => 8, 'name' => 'Quote', 'is_file' => false, 'filetypes' => null],
+                ['id' => 9, 'name' => 'Essay', 'is_file' => false, 'filetypes' => null],
+                ['id' => 10, 'name' => 'Quiz', 'is_file' => false, 'filetypes' => null],
+                ['id' => 11, 'name' => 'YouTube link', 'is_file' => false, 'filetypes' => false],
             ]);
     }
 
