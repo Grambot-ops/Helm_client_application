@@ -1,4 +1,17 @@
 <div>
+    <x-dialog-modal wire:model="showApplyConfirmationModal">
+        <x-slot name="title">Confirmation</x-slot>
+
+        <x-slot name="content">
+            Are you sure you want to apply for this competition?
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-button wire:click="apply" class="bg-tm-blue text-white px-4 py-2 mr-2">Confirm</x-button>
+            <x-secondary-button @click="$wire.showApplyConfirmationModal = false" class="px-4 py-2">Cancel</x-secondary-button>
+        </x-slot>
+    </x-dialog-modal>
+
     <x-slot name="description">Thomas More Competition Platform</x-slot>
 
     <x-slot name="title">Competitions</x-slot>
@@ -71,10 +84,11 @@
                                 </button>
                             </a>
                             @if( date('Y-m-d') < $competition->start_date)
-                            <button
-                                class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                Apply
-                            </button>
+                                <button
+                                    wire:click="applyConfirmation({{ $competition->id }})"
+                                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                                    Apply
+                                </button>
                             @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date)
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
