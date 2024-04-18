@@ -11,4 +11,6 @@ class EmailForm extends Form
     public $subject = null;
     #[Validate('required', as: 'message of the email')]
     public $message = null;
+    #[Validate('required', as: 'selected competition')]
+    public $competitionId = null;
 }
