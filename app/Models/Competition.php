@@ -18,7 +18,15 @@ class Competition extends Model
         );
     }
 
-    protected $appends = ['closed'];
+    // Whether this competition is liked by the current user
+    protected function isLiked(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => $this->likes()->where('user_id', auth()->user()->id)->exists(),
+        );
+    }
+
+    protected $appends = ['closed', 'is_liked'];
     protected $fillable = ['accepted', 'declined'];
 
     public function changelogs()
