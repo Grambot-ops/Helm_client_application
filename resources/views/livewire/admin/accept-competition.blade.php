@@ -9,7 +9,7 @@
                         picture="{{ $proposal->path_to_photo }}"
                         description="{{ $proposal->description }}">
                 <div class="m-auto">
-                    <a href="{{ route('accept-competition', ['id' => urlencode($proposal->id)]) }}">
+                    <a href="{{ route('admin.accept-competition', ['id' => urlencode($proposal->id)]) }}">
                     <button class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-8 my-2 rounded">
                             See more info
                     </button>

@@ -1,5 +1,5 @@
 <?php
-
+//"competition type" should be named "submission type"
 namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\TypeForm;
@@ -61,6 +61,9 @@ class ManageCompetitionTypes extends Component
 
     public function createType()
     {
+        if ($this->newType == ""){
+            return;
+        }
         $validatedData = $this->validate([
             'newType' => 'required|unique:competition_types,name',
         ], [
@@ -73,7 +76,7 @@ class ManageCompetitionTypes extends Component
 
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The type <b><i>{$this->form->name}</i></b> has been added",
+            'html' => "The type <b><i>{$this->newType}</i></b> has been added",
             'icon' => 'success',
         ]);
     }

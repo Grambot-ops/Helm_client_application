@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\CategoryForm;
-use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -61,6 +59,9 @@ class ManageCompetitionCategories extends Component
 
     public function createCategory()
     {
+        if ($this->newCategory == ""){
+            return;
+        }
         $validatedData = $this->validate([
             'newCategory' => 'required|unique:competition_categories,name',
         ], [
@@ -70,10 +71,9 @@ class ManageCompetitionCategories extends Component
         CompetitionCategory::create([
             'name' => trim($validatedData['newCategory'])
         ]);
-
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The record <b><i>{$this->form->name}</i></b> has been added",
+            'html' => "The category <b><i>{$this->newCategory}</i></b> has been added",
             'icon' => 'success',
         ]);
     }
@@ -107,7 +107,7 @@ class ManageCompetitionCategories extends Component
 
         $categories = $query->paginate($this->perPage);
 
-        return view('livewire.manage-competition-categories', compact('categories'));
+        return view('livewire.admin.manage-competition-categories', compact('categories'));
     }
 
     public function resort($column)
