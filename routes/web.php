@@ -9,6 +9,7 @@ use App\Livewire\Admin\Users;
 use App\Livewire\Dashboard;
 use App\Livewire\Organiser\SendAnnouncement;
 use App\Livewire\Ranking;
+use App\Livewire\UploadEndProduct;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::view('settings', 'profile.show')->name('settings');
     Route::get('ranking', Ranking::class)->name('ranking');
+    Route::get('upload', UploadEndProduct::class)->name('upload');
 
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function() {
         Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');

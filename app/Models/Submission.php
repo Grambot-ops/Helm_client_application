@@ -12,6 +12,7 @@ class Submission extends Model
     protected $fillable = [
         'participation_id', // Add competition_id to fillable property
         'delivery_type_id',
+        'title',
         'path',
         'link',
         'description',

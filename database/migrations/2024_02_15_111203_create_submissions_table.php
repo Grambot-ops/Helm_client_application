@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             /* TODO: add DTR */
             $table->foreignId('participation_id')->nullable(false)->constrained();
-            $table->string('title')->nullable(false)->default("This competition has no name");
+            $table->string('title')->nullable(false)->default("This submission has no name");
             $table->string('path')->nullable();
             $table->string('link')->nullable();
             $table->text('description')->nullable();
