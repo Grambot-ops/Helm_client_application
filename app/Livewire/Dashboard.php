@@ -15,15 +15,15 @@ class Dashboard extends Component
     public $name;
     public $category = '%';
     public $likedOnly = false;
+    public $ownOnly = false;
     public $competition;
     public $showApplyConfirmationModal = false;
-
 
     public function updated($property, $value)
     {
         // $property: The name of the current property being updated
         // $value: The value about to be set to the property
-        if (in_array($property, ['name', 'category', 'liked']))
+        if (in_array($property, ['name', 'category', 'liked','own']))
             $this->getErrorBag();
     }
     #[Layout('layouts.tmcp', ['title' => 'Competitions', 'description' => 'Thomas More Competition Platform'])]
@@ -38,6 +38,13 @@ class Dashboard extends Component
             $query->whereIn('id', function ($query) {
                 $query->select('competition_id')
                     ->from('likes')
+                    ->where('user_id',Auth::id());
+            });
+        }
+        if ($this->ownOnly) {
+            $query->whereIn('id', function ($query) {
+                $query->select('id')
+                    ->from('competitions')
                     ->where('user_id',Auth::id());
             });
         }
@@ -84,6 +91,12 @@ class Dashboard extends Component
         ]);
 
 
+
+    public function toggleOwnOnly()
+    {
+        $this->ownOnly = !$this->ownOnly;
+    }
+      
     }
     public function applyConfirmation(Competition $competition)
     {
