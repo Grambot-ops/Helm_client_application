@@ -21,6 +21,19 @@ class Dashboard extends Component
     public $showApplyConfirmationModal = false;
     public $status = -1;
 
+    public function mount()
+    {
+        // Message to be shown after redirection
+        if(session()->get('message')) {
+            $is_error = session()->get('error');
+            $this->dispatch('swal:toast', [
+                'background' => $is_error ? 'danger' : 'success',
+                'html' => session()->get('message'),
+                'icon' => $is_error ? 'warning' : 'success',
+            ]);
+        }
+    }
+
     public function updated($property, $value)
     {
         // $property: The name of the current property being updated
