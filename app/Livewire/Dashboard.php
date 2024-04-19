@@ -8,6 +8,7 @@ use App\Models\Participation;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use UnhandledMatchError;
 
 class Dashboard extends Component
 {
@@ -17,6 +18,7 @@ class Dashboard extends Component
     public $likedOnly = false;
     public $competition;
     public $showApplyConfirmationModal = false;
+    public $status = -1;
 
 
     public function updated($property, $value)
@@ -41,6 +43,29 @@ class Dashboard extends Component
                     ->where('user_id',Auth::id());
             });
         }
+
+        switch($this->status) {
+            // None chosen
+            case -1:
+                break;
+            // Open
+            case 0:
+                $query->where('start_date', '<', now());
+                $query->where('submission_date', '>', now());
+                break;
+            // Open for voting
+            case 1:
+                $query->where('end_date', '>', now());
+                $query->where('submission_date', '<', now());
+                break;
+            // Closed
+            case 2:
+                $query->where('end_date', '<', now());
+                break;
+            default:
+                throw new UnhandledMatchError("No such competition status.");
+        }
+
         $competitions = $query->get();
         return view('livewire.dashboard', compact('competitions', 'allCategories'));
     }

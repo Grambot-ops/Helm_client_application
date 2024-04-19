@@ -19,26 +19,14 @@
     <h1 class="text-center text-3xl mb-4 font-bold">@if($likedOnly == True) Saved @endif Competition</h1>
 
     <div class="container mx-auto px-14">
-        <div class="grid grid-rows-3 grid-flow-col gap-4">
-            <div class="row-span-3">
-                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
-                    Propose Competition
-                </button>
-                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
-                    View own competitions
-                </button>
-                <br>
-                <button wire:click="toggleLikedOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-5">
-                    Saved competitions
-                </button>
-            </div>
-            <div class="grid grid-cols-8 gap-4">
-                <div class="col-span-10 md:col-span-5 lg:col-span-3">
+        <div class="px-2 lg:flex flex-row-reverse justify-center items-end mb-16 bg-white/80 py-2 rounded rounded-lg border-2">
+            <div class="md:flex justify-center space-x-2 my-2">
+                <div class="lg:ms-8">
                     <x-label for="name" value="Filter"/>
                     <div class="relative">
                         <x-input id="name" type="text"
                                  wire:model.live.debounce.500ms="name"
-                                 class="block mt-1 w-full" placeholder="Filter Title Or Description"/>
+                                 class="block mt-1 w-full" placeholder="Search competition"/>
                         <button
                             @click="$wire.set('name', '')"
                             class="w-5 absolute right-4 top-3">
@@ -46,13 +34,12 @@
                         </button>
                     </div>
                 </div>
-
-                <div class="col-span-5 md:col-span-2 lg:col-span-2">
+                <div>
                     <x-label for="category" value="Category"/>
                     <x-tmk.form.select id="category"
                                        wire:model.live="category"
                                        class="block mt-1 w-full">
-                        <option value="%">All Categories</option>
+                        <option value="%">Category</option>
                         @foreach($allCategories as $g)
                             <option value="{{ $g->id }}">
                                 {{ $g->name }}
@@ -60,6 +47,30 @@
                         @endforeach
                     </x-tmk.form.select>
                 </div>
+                <div>
+                    <x-label for="status" value="Status"/>
+                    <x-tmk.form.select id="status"
+                                       wire:model.live="status"
+                                       class="block mt-1 w-full">
+                        <option value="-1">Status</option>
+                        @foreach(['Open', 'Open for voting', 'Closed'] as $key => $state)
+                            <option value="{{ $key }}">
+                                {{ $state }}
+                            </option>
+                        @endforeach
+                    </x-tmk.form.select>
+                </div>
+            </div>
+            <div class="md:flex space-x-2 justify-center items-center">
+                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                    Propose a competition
+                </button>
+                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                    View own competitions
+                </button>
+                <button wire:click="toggleLikedOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                    Saved competitions
+                </button>
             </div>
         </div>
         {{-- No records found --}}
