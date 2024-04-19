@@ -43,7 +43,7 @@ class Dashboard extends Component
                     ->where('user_id',Auth::id());
             });
         }
-      
+
         switch($this->status) {
             // None chosen
             case -1:
@@ -73,7 +73,7 @@ class Dashboard extends Component
                     ->where('user_id',Auth::id());
             });
         }
-      
+
         $competitions = $query->get();
         return view('livewire.dashboard', compact('competitions', 'allCategories'));
     }
@@ -115,14 +115,12 @@ class Dashboard extends Component
             'html' => "You have applied!",
             'icon' => 'success',
         ]);
-
+    }
 
 
     public function toggleOwnOnly()
     {
         $this->ownOnly = !$this->ownOnly;
-    }
-      
     }
     public function applyConfirmation(Competition $competition)
     {
