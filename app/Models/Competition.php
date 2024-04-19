@@ -11,7 +11,7 @@ class Competition extends Model
 {
     use HasFactory;
 
-    protected $appends = ['closed', 'open', 'vote', 'upload'];
+    protected $appends = ['closed', 'open', 'vote', 'upload', 'is_liked'];
     protected $fillable = ['accepted', 'declined'];
 
     public function getClosedAttribute(): bool
@@ -33,6 +33,13 @@ class Competition extends Model
         return $this->attributes['start_date'] < Carbon::now() && Carbon::now() < $this->attributes['submission_date'];
     }
 
+    // Whether this competition is liked by the current user
+    protected function isLiked(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => $this->likes()->where('user_id', auth()->user()->id)->exists(),
+        );
+    }
 
     public function changelogs()
     {
