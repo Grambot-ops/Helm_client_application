@@ -12,6 +12,7 @@ class Submission extends Model
     protected $fillable = [
         'participation_id', // Add competition_id to fillable property
         'delivery_type_id',
+        'title',
         'path',
         'link',
         'description',
@@ -20,11 +21,6 @@ class Submission extends Model
     public function votes()
     {
         return $this->hasMany(Vote::class);
-    }
-
-    public function delivery_type()
-    {
-        return $this->belongsTo(DeliveryType::class);
     }
 
     public function participation()
