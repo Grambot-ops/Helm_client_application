@@ -7,7 +7,9 @@ use App\Livewire\Admin\ManageCompetitionTypes;
 use App\Livewire\Admin\ManageNotifications;
 use App\Livewire\Admin\Users;
 use App\Livewire\Dashboard;
+use App\Livewire\Organiser\SendAnnouncement;
 use App\Livewire\Ranking;
+use App\Livewire\UploadEndProduct;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +29,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::view('settings', 'profile.show')->name('settings');
     Route::get('ranking', Ranking::class)->name('ranking');
+    Route::get('upload', UploadEndProduct::class)->name('upload');
 
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function() {
         Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');
@@ -34,5 +37,8 @@ Route::middleware(['auth'])->group(function() {
         Route::get('manage-competition-types', ManageCompetitionTypes::class)->name('comptyp');
         Route::get('users', Users::class)->name('users');
         Route::get('accept-competition', AcceptCompetition::class)->name('accept-competition');
+    });
+    Route::middleware(['organiser'])->group(function () {
+        Route::get('announcement', SendAnnouncement::class)->name('announcement');
     });
 });

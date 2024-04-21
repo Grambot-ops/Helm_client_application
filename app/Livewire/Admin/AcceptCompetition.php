@@ -44,7 +44,7 @@ class AcceptCompetition extends Component
             $proposal = Competition::where('id', $id)->firstOrFail();
 
             if($proposal->accepted || $proposal->declined)
-                abort(419, "This proposal has already been accepted/declined!");
+                $this->redirectRoute('dashboard');
 
             return view('livewire.competition-info', compact('proposal'));
         }
