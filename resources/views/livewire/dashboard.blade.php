@@ -167,9 +167,8 @@
                                     @endif
                             @endif
                         </div>
-                        <button
-                            class="text-gray-400 {{ $competition->is_liked ? 'text-yellow-500' : '' }} hover:text-yellow-300 transition border-gray-300">
-                            <x-phosphor-star-duotone class="inline-block w-7 h-7"/>
+                        <button wire:click="toggleLiked({{ $competition->id }})" class="text-gray-400 hover:text-yellow-300 transition border-gray-300">
+                            <x-phosphor-star-duotone class="inline-block w-7 h-7 {{ $competition->liked ? 'text-yellow-300' : '' }}"/>
                         </button>
                     </x-tmk.card>
                 @endif
