@@ -34,6 +34,7 @@ class Dashboard extends Component
                 'icon' => $is_error ? 'warning' : 'success',
             ]);
         }
+        $this->loadCompetitions();
     }
 
     public function updated($property, $value)
@@ -92,11 +93,6 @@ class Dashboard extends Component
 
         $competitions = $query->get();
         return view('livewire.dashboard', compact('competitions', 'allCategories'));
-    }
-
-    public function mount()
-    {
-        $this->loadCompetitions();
     }
 
     public function toggleLiked($competitionId)
