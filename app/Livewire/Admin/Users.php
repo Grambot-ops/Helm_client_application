@@ -14,19 +14,21 @@ use Livewire\WithPagination;
 class Users extends Component
 {
     use WithPagination;
+
     public $search;
     public $perPage = 5;
     public $showModal = false;
     public UserForm $form;
+
     #[Layout('layouts.tmcp', ['title' => 'Manage Users',])]
     public function render()
     {
-        $userRoles = UserRole::with('roles')->get();
-        \Log::info($userRoles);
+        $userRoles = UserRole::with('role')->get();
+        $roles = Role::all();
         $users = User::orderBy('id')
             ->searchName($this->search)
             ->paginate($this->perPage);
-        return view('livewire.admin.users', compact('users', 'userRoles'));
+        return view('livewire.admin.users', compact('users', 'userRoles', 'roles'));
     }
 
     public function updated($propertyName, $propertyValue)
@@ -50,6 +52,8 @@ class Users extends Component
     {
         $this->resetErrorBag();
         $this->form->fill($user);
+
+
         if ($this->form->active == 1)
             $this->form->active = true;
         else
@@ -77,4 +81,29 @@ class Users extends Component
             'html' => "The user <b><i>{$user->name}</i></b> has been deleted",
         ]);
     }
+
+    public function addRoleToUser(Role $role, $userId)
+    {
+        // Retrieve the user by ID
+        $existingUserRole = UserRole::where('user_id', $userId)
+            ->where('role_id', $role->id)
+            ->first();
+
+        // If the role is already associated with the user, remove it
+        if ($existingUserRole) {
+            $existingUserRole->delete();
+        } else {
+            // If the role is not associated with the user, add it
+            $userRole = new UserRole();
+            $userRole->user_id = $userId;
+            $userRole->role_id = $role->id;
+            $userRole->save();
+        }
+    }
+    public function isChecked($roleId)
+    {
+        // Check if the role is associated with the user
+        return $this->form->user->user_roles->contains('role_id', $roleId);
+    }
+
 }
