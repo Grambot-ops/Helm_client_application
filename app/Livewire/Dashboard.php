@@ -13,7 +13,6 @@ use UnhandledMatchError;
 
 class Dashboard extends Component
 {
-    public $competitions;
     public $buttonDisabled = false;
     public $name;
     public $category = '%';
@@ -91,7 +90,7 @@ class Dashboard extends Component
             });
         }
 
-        $competitions = $query->get();
+        $competitions = $this->loadCompetitions();
         return view('livewire.dashboard', compact('competitions', 'allCategories'));
     }
 
@@ -168,10 +167,11 @@ class Dashboard extends Component
                 $query->where('user_id', Auth::id());
             });
         }
-        $this->competitions = $query->get();
-        $this->competitions->each(function ($competition) {
+        $competitions = $query->get();
+        $competitions->each(function ($competition) {
             $competition->liked = $competition->likes()->where('user_id', Auth::id())->exists();
         });
+        return $competitions;
     }
 
     public function toggleLikedOnly()
