@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function() {
     Route::view('settings', 'profile.show')->name('settings');
     Route::get('ranking', Ranking::class)->name('ranking');
     Route::get('upload', UploadEndProduct::class)->name('upload');
+    Route::get('propose-competition', \App\Livewire\ProposeCompetition::class)->name('propose-competition');
 
     Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function() {
         Route::get('manage-competition-categories', ManageCompetitionCategories::class)->name('compcat');

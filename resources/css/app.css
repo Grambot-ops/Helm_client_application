@@ -10,3 +10,8 @@
     height: 32vh;
     object-fit: cover;
 }
+
+.textarea-competition {
+    resize: none;
+    overflow: hidden;
+}

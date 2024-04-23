@@ -12,7 +12,7 @@ class Competition extends Model
     use HasFactory;
 
     protected $appends = ['closed', 'open', 'vote', 'upload', 'is_liked'];
-    protected $fillable = ['accepted', 'declined'];
+    protected $guarded = [];
 
     public function getClosedAttribute(): bool
     {
