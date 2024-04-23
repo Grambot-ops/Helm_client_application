@@ -157,7 +157,12 @@ class Dashboard extends Component
             });
         }
 
+
         $competitions = $query->get();
+
+        $competitions->each(function ($competition) {
+            $competition->liked = $competition->likes()->where('user_id', Auth::id())->exists();
+        });
         return $competitions;
     }
 
