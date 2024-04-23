@@ -63,7 +63,7 @@
             </div>
             <div class="md:flex space-x-2 justify-center items-center">
                 <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
-                    Propose a competition
+                    <a href="{{ route('propose-competition') }}">Propose Competition</a>
                 </button>
                 <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
                     View own competitions
