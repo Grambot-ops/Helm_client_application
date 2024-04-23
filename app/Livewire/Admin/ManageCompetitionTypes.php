@@ -1,10 +1,11 @@
 <?php
-
+//"competition type" should be named "submission type"
 namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\TypeForm;
 use App\Models\Competition;
 use App\Models\CompetitionType;
+use App\Models\Submission;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -18,9 +19,21 @@ class ManageCompetitionTypes extends Component
     public $orderAsc = true;
     public $search;
     public $perPage = 5;
-    public $newType;
     public $showModal = false;
     public TypeForm $form;
+
+
+    // add new competition
+    public $showNewModal = false;
+    public bool $newTypeIsFile;
+    public $newType;
+
+    public $acceptedFileTypes = [
+        'image' => false,
+        'video' => false,
+        'audio' => false,
+        'document' => false,
+    ];
 
     public function updated($propertyName)
     {
@@ -62,20 +75,35 @@ class ManageCompetitionTypes extends Component
     public function createType()
     {
         $validatedData = $this->validate([
-            'newType' => 'required|unique:competition_types,name',
+            'newType' => 'required|bail|filled|unique:competition_types,name',
         ], [
             'newType.unique' => 'The type name has already been taken.',
         ]);
 
+        // This is the worst kind of serialization I have ever written
+        $formats = '';
+        foreach($this->acceptedFileTypes as $key => $fileType) {
+            if($fileType)
+                $formats .= $key . ',';
+        }
+        $formats = rtrim($formats, ',');
+
+        if(!$this->newTypeIsFile)
+            $formats = null;
+
         CompetitionType::create([
-            'name' => trim($validatedData['newType'])
+            'name' => trim($validatedData['newType']),
+            'is_file' => $this->newTypeIsFile,
+            'filetypes' => $formats,
         ]);
 
         $this->dispatch('swal:toast', [
             'background' => 'success',
-            'html' => "The type <b><i>{$this->form->name}</i></b> has been added",
+            'html' => "The type <b><i>{$this->newType}</i></b> has been added",
             'icon' => 'success',
         ]);
+
+        $this->showNewModal = false;
     }
     public function updateType(CompetitionType $type)
     {
@@ -107,7 +135,9 @@ class ManageCompetitionTypes extends Component
 
         $types = $query->paginate($this->perPage);
 
-        return view('livewire.admin.manage-competition-types', compact('types'));
+        $pretty_names = CompetitionType::getFileTypes();
+
+        return view('livewire.admin.manage-competition-types', compact('types', 'pretty_names'));
     }
 
     public function resort($column)

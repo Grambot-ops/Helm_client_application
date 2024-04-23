@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Participation extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'competition_id', // Add competition_id to fillable property
+        'user_id',
+        'ranking',
+        'disqualified',
+    ];
 
     public function user()
     {
@@ -16,7 +22,7 @@ class Participation extends Model
 
     public function submissions()
     {
-        $this->hasMany(Submission::class);
+        return $this->hasMany(Submission::class);
     }
 
     public function competition()
