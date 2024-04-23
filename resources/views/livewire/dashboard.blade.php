@@ -53,7 +53,7 @@
                                        wire:model.live="status"
                                        class="block mt-1 w-full">
                         <option value="-1">Status</option>
-                        @foreach(['Open', 'Open for voting', 'Closed'] as $key => $state)
+                        @foreach(['Open', 'Upload', 'Open for voting', 'Closed'] as $key => $state)
                             <option value="{{ $key }}">
                                 {{ $state }}
                             </option>
