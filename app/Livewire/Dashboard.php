@@ -13,7 +13,6 @@ use UnhandledMatchError;
 
 class Dashboard extends Component
 {
-    public $competitions;
     public $buttonDisabled = false;
     public $name;
     public $category = '%';
@@ -50,48 +49,9 @@ class Dashboard extends Component
     public function render()
     {
         $allCategories = CompetitionCategory::all();
-        $query = Competition::orderBy('start_date')
-            ->searchTitleOrDescription($this->name)
-            ->where('competition_category_id', 'like', $this->category);
-        if ($this->likedOnly) {
-            $query->whereIn('id', function ($query) {
-                $query->select('competition_id')
-                    ->from('likes')
-                    ->where('user_id', Auth::id());
-            });
-        }
 
-        switch($this->status) {
-            // None chosen
-            case -1:
-                break;
-            // Open
-            case 0:
-                $query->where('start_date', '<', now());
-                $query->where('submission_date', '>', now());
-                break;
-            // Open for voting
-            case 1:
-                $query->where('end_date', '>', now());
-                $query->where('submission_date', '<', now());
-                break;
-            // Closed
-            case 2:
-                $query->where('end_date', '<', now());
-                break;
-            default:
-                throw new UnhandledMatchError("No such competition status.");
-        }
 
-        if ($this->ownOnly) {
-            $query->whereIn('id', function ($query) {
-                $query->select('id')
-                    ->from('competitions')
-                    ->where('user_id',Auth::id());
-            });
-        }
-
-        $competitions = $query->get();
+        $competitions = $this->loadCompetitions();
         return view('livewire.dashboard', compact('competitions', 'allCategories'));
     }
 
@@ -157,21 +117,56 @@ class Dashboard extends Component
     public function loadCompetitions()
     {
         $query = Competition::orderBy('start_date')
-            ->where(function ($query) {
-                $query->where('title', 'like', '%' . $this->name . '%')
-                    ->orWhere('description', 'like', '%' . $this->name . '%');
-            })
+            ->searchTitleOrDescription($this->name)
             ->where('competition_category_id', 'like', $this->category);
-
         if ($this->likedOnly) {
-            $query->whereHas('likes', function ($query) {
-                $query->where('user_id', Auth::id());
+            $query->whereIn('id', function ($query) {
+                $query->select('competition_id')
+                    ->from('likes')
+                    ->where('user_id', Auth::id());
             });
         }
-        $this->competitions = $query->get();
-        $this->competitions->each(function ($competition) {
+
+        switch($this->status) {
+            // None chosen
+            case -1:
+                break;
+            case 0:
+                $query->where('start_date', '>', now());
+                break;
+            // Open
+            case 1:
+                $query->where('start_date', '<', now());
+                $query->where('submission_date', '>', now());
+                break;
+            // Open for voting
+            case 2:
+                $query->where('end_date', '>', now());
+                $query->where('submission_date', '<', now());
+                break;
+            // Closed
+            case 3:
+                $query->where('end_date', '<', now());
+                break;
+            default:
+                throw new UnhandledMatchError("No such competition status.");
+        }
+
+        if ($this->ownOnly) {
+            $query->whereIn('id', function ($query) {
+                $query->select('id')
+                    ->from('competitions')
+                    ->where('user_id',Auth::id());
+            });
+        }
+
+
+        $competitions = $query->get();
+
+        $competitions->each(function ($competition) {
             $competition->liked = $competition->likes()->where('user_id', Auth::id())->exists();
         });
+        return $competitions;
     }
 
     public function toggleLikedOnly()
