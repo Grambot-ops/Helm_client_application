@@ -1,7 +1,63 @@
 <div>
     <x-slot name="subtitle">Manage notifications</x-slot>
     <div class="pb-6">
-        <h1 class="text-center text-3xl mb-4 font-bold">Submissions for competition "{{ $competition->title }}"</h1>
+        <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg">
+            <h1 class="pt-5">Choose the top 3 winners</h1>
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 my-1 bg-white">
+                <form wire:submit.prevent="assignPlaces" class="pb-10">
+                    <div class="space-y-4 flex w-full">
+                        <div class="p-4 m-2">
+                            <x-label for="firstPlace" value="FirstPlace"/>
+                            <x-tmk.form.select id="firstPlace"
+                                               wire:model="firstPlace"
+                                               class="block mt-1 w-full"
+                                               :disabled="$firstPlace || $placesSaved">
+                                <option value="%">FirstPlace</option>
+                                @foreach($usersWithSubmissions as $user)
+                                    <option value="{{ $user->id }}">
+                                        {{ $user->name }} {{ $user->surname }}
+                                    </option>
+                                @endforeach
+                            </x-tmk.form.select>
+                            First place: {{ $firstPlace  }}
+                        </div>
+                        <div class="p-4 m-2 mb-0.5">
+                            <x-label for="secondPlace" value="SecondPlace"/>
+                            <x-tmk.form.select id="secondPlace"
+                                               wire:model="secondPlace"
+                                               class="block mt-1 w-full"
+                                               :disabled="$secondPlace || $placesSaved">
+                                <option value="%">SecondPlace</option>
+                                @foreach($usersWithSubmissions as $user)
+                                    <option value="{{ $user->id }}">
+                                        {{ $user->name }} {{ $user->surname }}
+                                    </option>
+                                @endforeach
+                            </x-tmk.form.select>
+                            Second place: {{  $secondPlace  }}
+                        </div>
+                        <div class="p-4 m-2 mb-0.5">
+                            <x-label for="thirdPlace" value="ThirdPlace"/>
+                            <x-tmk.form.select id="thirdPlace"
+                                               wire:model="thirdPlace"
+                                               class="block mt-1 w-full"
+                                               :disabled="$thirdPlace || $placesSaved">
+                                <option value="%">ThirdPlace</option>
+                                @foreach($usersWithSubmissions as $user)
+                                    <option value="{{ $user->id }}">
+                                        {{ $user->name }} {{ $user->surname }}
+                                    </option>
+                                @endforeach
+                            </x-tmk.form.select>
+                            Third place: {{  $thirdPlace}}
+                        </div>
+                    </div>
+                    <x-button type="submit" class="float-right">Save Places</x-button>
+                </form>
+            </div>
+        </div>
+
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             @if(count($submissions))
                 <x-tmk.card-container>
