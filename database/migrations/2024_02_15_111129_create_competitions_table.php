@@ -69,7 +69,7 @@ return new class extends Migration
                     'id' => 3,
                     'competition_category_id' => 7,
                     'competition_type_id' => 7,
-                    'user_id' => 9,
+                    'user_id' => 1,
                     'title' => 'Cyber Security Clash',
                     'by_vote' => false,
                     'path_to_photo' => '/assets/competitions/CyberSecurityClash.webp',
