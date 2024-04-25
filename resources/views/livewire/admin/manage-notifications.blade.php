@@ -2,10 +2,14 @@
     <x-slot name="subtitle">Manage notifications</x-slot>
 
     <div class="bg-white py-24 sm:py-32">
-
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Manage notifications</h1>
+            <x-button class="bg-tm-blue hover:bg-tm-darker-blue focus:bg-tm-darker-blue"
+                      @click="$wire.showNewModal = true">
+                Add new notification
+            </x-button>
             <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+
                 @foreach($notifications as $noti)
                 <article class="flex max-w-xl flex-col items-start justify-between border-e-2">
                     <div class="group relative">
@@ -33,6 +37,32 @@
             </div>
         </div>
     </div>
+        <x-dialog-modal wire:model="showNewModal">
+            <x-slot name="title">
+                Add new notification
+            </x-slot>
+            <x-slot name="content">
+                <div class="flex-grow">
+                    <h3>Title</h3>
+                    <x-input id="notiTitle" type="text" placeholder="Title" wire:model="title"
+                             class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:border-blue-400 placeholder-gray-500"/>
+                    <br>
+                    <h3 class="mt-2">Description</h3>
+                    <x-tmk.form.textarea rows="6" class="w-full mb-1" id="description" type="text" placeholder="description" wire:model="description">
+                    </x-tmk.form.textarea>
+                    <p class="mt-2">Time before competition that the notification will be sent</p>
+                    <x-input class="w-full mb-3" id="interval" type="text" placeholder="interval" wire:model="interval"/>
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-button wire:click="createNotification()" class="bg-tm-blue hover:bg-tm-darker-blue mx-2">
+                    Add new notification
+                </x-button>
+                <x-secondary-button @click="$wire.showNewModal = false">
+                    Cancel
+                </x-secondary-button>
+            </x-slot>
+        </x-dialog-modal>
     <x-dialog-modal wire:model.blur="showModalEdit">
     <x-slot name="title">
         <h2>Edit notification</h2>
