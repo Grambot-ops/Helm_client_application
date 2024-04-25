@@ -7,7 +7,7 @@
                     <p>Email: info.geel@thomasmore.be</p>
                     <p>Phone: +32 014 72 13 00</p>
                 </div>
-                <div class="mr-10 mb-2 md:-0">
+                <div class="mr-10 mb-2 lg:mr-0 lg:text-left md:mr-0 md:ml-16 md:text-right">
                     <h5 class="text-lg font-bold mb-2">Address</h5>
                     <p>Kleinhoefstraat 4</p>
                     <p>2440 Geel</p>
