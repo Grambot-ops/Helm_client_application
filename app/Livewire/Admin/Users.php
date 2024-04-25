@@ -58,6 +58,7 @@ class Users extends Component
             $this->form->active = true;
         else
             $this->form->active = false;
+
         $this->showModal = true;
     }
 
@@ -84,26 +85,24 @@ class Users extends Component
 
     public function addRoleToUser(Role $role, $userId)
     {
-        // Retrieve the user by ID
+
         $existingUserRole = UserRole::where('user_id', $userId)
             ->where('role_id', $role->id)
             ->first();
 
-        // If the role is already associated with the user, remove it
         if ($existingUserRole) {
             $existingUserRole->delete();
         } else {
-            // If the role is not associated with the user, add it
             $userRole = new UserRole();
             $userRole->user_id = $userId;
             $userRole->role_id = $role->id;
             $userRole->save();
         }
     }
-    public function isChecked($roleId)
+
+    public function checkIfChecked(Role $role, $userId): bool
     {
-        // Check if the role is associated with the user
-        return $this->form->user->user_roles->contains('role_id', $roleId);
+        return true;
     }
 
 }
