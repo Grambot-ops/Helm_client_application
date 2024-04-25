@@ -23,18 +23,21 @@ class Ranking extends Component
             ->first();
         $participations = Participation::where('competition_id', $id)
             ->with(['submissions', 'user'])
-            ->get();
-
+            ->with('submissions.votes')
+            ->get()
+            ->groupBy('user_id');
         foreach ($participations as $participation) {
             $votesCount = 0;
-            foreach ($participation->submissions as $submission) {
-                $votesCount += $submission->votes->count();
+            foreach ($participation as $participationItem) {
+                if ($participationItem->submissions != null)
+                    foreach ($participationItem->submissions as $submission)
+                        $votesCount += $submission->votes->count();
             }
             $participation->votes_count = $votesCount;
         }
         $participations = $participations->sortByDesc('votes_count');
         $podium = $participations->map(function ($participation) {
-            return $participation->user;
+            return $participation->first()->user;
         })->take(3);
         $i = 1;
         return view('livewire.ranking', compact('competition', 'participations', 'i', 'podium'));
