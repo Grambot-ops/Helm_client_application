@@ -78,13 +78,15 @@
                             <div class="px-6 py-4">
                                 <div class="justify-between flex">
                                     <div class="font-bold text-xl mb-2">{{$submission->participation->user->name }} {{$submission->participation->user->surname }}</div>
-                                    <div class="font-bold mt-1">
+                                    <div class="font-bold mb-2">
                                         <x-button wire:click="openInfo({{$submission}})" class="bg-transparent hover:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-05" href="#">
-                                            <x-phosphor-info class="inline-block w-6 h-6 mb-1 text-blue-400"/>
+                                            <x-phosphor-info class="inline-block w-5 h-5 text-blue-400"/>
                                         </x-button>
+                                        @if(auth()->user()->admin||auth()->user()->id==$competition->organiser_id)
                                         <x-button wire:click="openDelete({{$submission}})" class="bg-transparent hover:bg-transparent active:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-0.5" href="#">
-                                            <x-phosphor-trash class="inline-block w-6 h-6 mb-1 text-red-600"/>
+                                            <x-phosphor-trash class="inline-block w-5 h-5 text-red-600"/>
                                         </x-button>
+                                        @endif
                                     </div>
                                 </div>
                                 <p class="text-blue-300 text-sm mb-2">
@@ -93,6 +95,13 @@
                                 <p class="text-gray-700 text-base">
                                     {{ $submission->description }}
                                 </p>
+                                <br>
+                                <label>
+                                    <span class="text-gray-700 text-base font-bold">Vote for submission: </span>
+                                    <input type="checkbox" class="toggle-checkbox w-5 h-5 rounded-full bg-white
+                                        border-4 appearance-none cursor-pointer" wire:model="checked"
+                                           wire:change="vote({{$submission}})" {{ $submission->votes->contains('user_id', auth()->id()) ? 'checked' : '' }}>
+                                </label>
                             </div>
                         </div>
                     @endforeach

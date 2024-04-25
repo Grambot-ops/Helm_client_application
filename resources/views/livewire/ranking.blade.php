@@ -7,8 +7,10 @@
         <rect width="100" height="150" x="100" y="50" fill="gold"></rect>
         <rect width="100" height="50" x="200" y="150" fill="orange"></rect>
         {{$i=1}}
+        {{$j=0}}
+
         @foreach($podium as $place)
-            <text x={{$i*100}} y="190" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            <text x={{$i*100}} y={{50+$j*50}} textLength="90">
                 @if($place)
                     {{$place->name}} {{$place->surname}}
                 @else
@@ -20,7 +22,10 @@
             @else
                 {{$i=2}}
             @endif
+            {{$j++}}
         @endforeach
+
+
         {{$i=1}}
     </svg>
     <x-tmk.section>
@@ -40,7 +45,7 @@
             @foreach($participations as $participation)
                 <tr class="border-b border-gray-300">
                     <td>{{$i++}}</td>
-                    <td>{{$participation->user->name}} {{$participation->user->surname}}</td>
+                    <td>{{$participation->first()->user->name}} {{$participation->first()->user->surname}}</td>
                     <td>{{$participation->votes_count}}</td>
                 </tr>
             @endforeach

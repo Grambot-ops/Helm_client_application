@@ -53,7 +53,7 @@
                                        wire:model.live="status"
                                        class="block mt-1 w-full">
                         <option value="-1">Status</option>
-                        @foreach(['Open', 'Open for voting', 'Closed'] as $key => $state)
+                        @foreach(['Open', 'Upload', 'Open for voting', 'Closed'] as $key => $state)
                             <option value="{{ $key }}">
                                 {{ $state }}
                             </option>
@@ -63,9 +63,9 @@
             </div>
             <div class="md:flex space-x-2 justify-center items-center">
                 <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
-                    Propose a competition
+                    <a href="{{ route('propose-competition') }}">Propose Competition</a>
                 </button>
-                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                <button wire:click="toggleOwnOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
                     View own competitions
                 </button>
                 <button wire:click="toggleLikedOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
@@ -117,10 +117,13 @@
                                     Apply
                                     </button>
                                 @endif
-                            @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date)
+                            @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date
+                            && $competition->participations()->where('user_id', auth()->user()->id)->exists())
                                 <button
                                     class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    Submit
+                                    <a href="{{ route('upload', ['id' => $competition->id]) }}">
+                                        Submit
+                                    </a>
                                 </button>
                             @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
                                 <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
@@ -153,18 +156,6 @@
                                         </a>
                                     </button>
                                 @endif
-                            @elseif( $competition->start_date < date('Y-m-d') && date('Y-m-d') < $competition->submission_date)
-                                    @if( $competition->user_id == Auth::id())
-                                        <button
-                                            class="bg-tm-blue hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
-                                            Manage
-                                        </button>
-                                    @else
-                                        <button
-                                            class="bg-tm-blue hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                            Upload
-                                        </button>
-                                    @endif
                             @endif
                         </div>
                         <button wire:click="toggleLiked({{ $competition->id }})" class="text-gray-400 hover:text-yellow-300 transition border-gray-300">

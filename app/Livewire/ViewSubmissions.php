@@ -6,6 +6,7 @@ use App\Models\Competition;
 use App\Models\Participation;
 use App\Models\Submission;
 use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -148,5 +149,19 @@ class ViewSubmissions extends Component
         // show info about a modal that doesn't exist anymore, causing Livewire
         // to throw a 404
         $this->submissionToShowInfo = null;
+    }
+
+    public function vote(Submission $submission)
+    {
+        // The code to check if the maximum number of votes has been reached can be added here if needed
+
+        // If the user has already voted, delete the vote
+        if ($submission->votes->contains('user_id', auth()->id())) {
+            $submission->votes()->where('user_id', auth()->id())->delete();
+        } else {
+            $vote = new Vote;
+            $vote->user_id = auth()->id();
+            $submission->votes()->save($vote);
+        }
     }
 }

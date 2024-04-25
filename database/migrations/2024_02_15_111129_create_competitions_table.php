@@ -26,7 +26,7 @@ return new class extends Migration
             $table->dateTime('start_date')->nullable(false);
             $table->dateTime('end_date')->nullable(false);
             $table->dateTime('submission_date')->nullable(false);
-            $table->boolean('accepted')->nullable(false);
+            $table->boolean('accepted')->default(false)->nullable(false);
             $table->boolean('declined')->default(false)->nullable(false);
             $table->timestamps();
         });

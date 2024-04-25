@@ -41,13 +41,17 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }} {{ $user->surname }}</td>
                     <td>
-                        @forelse($user->user_roles as $userRole)
-                            @if($userRole->roles)
-                                {{ $userRole->roles->name }}
+                        @forelse($user->user_roles as $key => $userRole)
+                            @if($userRole->role)
+                                {{ $userRole->role->name }}
+                                @if (!$loop->last)
+                                    |
+                                @endif
                             @endif
                         @empty
                             No role
                         @endforelse
+
                     </td>
                     <td>
                         @if($user->active)
@@ -114,6 +118,18 @@
                     <x-input id="active" type="checkbox"
                              wire:model="form.active"
                              class="mt-1 block"/>
+                    <x-label for="roles" value="Roles" class="mt-4"/>
+                        <ul>
+                            @foreach($roles as $role)
+                                <li>
+                                    <x-input id="roles" type="checkbox"
+                                             wire:change="addRoleToUser({{$role}}, {{$form->id}})"
+                                    ></x-input>
+                                    {{ $role->name }}
+                                </li>
+
+                            @endforeach
+                        </ul>
                 </div>
             </div>
         </x-slot>

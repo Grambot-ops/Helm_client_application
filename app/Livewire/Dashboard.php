@@ -131,18 +131,21 @@ class Dashboard extends Component
             // None chosen
             case -1:
                 break;
-            // Open
             case 0:
+                $query->where('start_date', '>', now());
+                break;
+            // Open
+            case 1:
                 $query->where('start_date', '<', now());
                 $query->where('submission_date', '>', now());
                 break;
             // Open for voting
-            case 1:
+            case 2:
                 $query->where('end_date', '>', now());
                 $query->where('submission_date', '<', now());
                 break;
             // Closed
-            case 2:
+            case 3:
                 $query->where('end_date', '<', now());
                 break;
             default:
@@ -157,7 +160,12 @@ class Dashboard extends Component
             });
         }
 
+
         $competitions = $query->get();
+
+        $competitions->each(function ($competition) {
+            $competition->liked = $competition->likes()->where('user_id', Auth::id())->exists();
+        });
         return $competitions;
     }
 
