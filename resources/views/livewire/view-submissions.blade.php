@@ -2,6 +2,7 @@
     <x-slot name="subtitle">Manage notifications</x-slot>
     <div class="pb-6">
         <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
+        @if($competition->user_id == Auth::id())
         <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg">
             <h1 class="pt-5">Choose the top 3 winners</h1>
             <div class="mx-auto max-w-7xl px-6 lg:px-8 my-1 bg-white">
@@ -12,8 +13,11 @@
                             <x-tmk.form.select id="firstPlace"
                                                wire:model="firstPlace"
                                                class="block mt-1 w-full"
-                                               :disabled="$firstPlace || $placesSaved">
-                                <option value="%">FirstPlace</option>
+                                               :disabled="$firstPlace || $placesSaved"
+                                               onchange="disableSelectedUsers(this.value, 'firstPlace')">
+                                <option value="%">@if($placesSaved)
+                                        {{  $firstPlace  }}
+                                    @else FirstPlace @endif</option>
                                 @foreach($usersWithSubmissions as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }} {{ $user->surname }}
@@ -27,8 +31,11 @@
                             <x-tmk.form.select id="secondPlace"
                                                wire:model="secondPlace"
                                                class="block mt-1 w-full"
-                                               :disabled="$secondPlace || $placesSaved">
-                                <option value="%">SecondPlace</option>
+                                               :disabled="$secondPlace || $placesSaved"
+                                               onchange="disableSelectedUsers(this.value, 'firstPlace')">
+                                <option value="%">@if($placesSaved)
+                                        {{  $secondPlace  }}
+                                    @else SecondPlace @endif</option>
                                 @foreach($usersWithSubmissions as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }} {{ $user->surname }}
@@ -42,8 +49,11 @@
                             <x-tmk.form.select id="thirdPlace"
                                                wire:model="thirdPlace"
                                                class="block mt-1 w-full"
-                                               :disabled="$thirdPlace || $placesSaved">
-                                <option value="%">ThirdPlace</option>
+                                               :disabled="$thirdPlace || $placesSaved"
+                                               onchange="disableSelectedUsers(this.value, 'firstPlace')">
+                                <option value="%">@if($placesSaved)
+                                        {{  $thirdPlace  }}
+                                    @else ThirdPlace @endif</option>
                                 @foreach($usersWithSubmissions as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }} {{ $user->surname }}
@@ -57,6 +67,7 @@
                 </form>
             </div>
         </div>
+        @endif
 
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             @if(count($submissions))
@@ -144,3 +155,10 @@
         </x-slot>
     </x-dialog-modal>
 </div>
+<script>
+    function disableSelectedUsers(selectedUserId, dropdownId) {
+        // Disable the selected user in other dropdowns
+        $('select').not('#' + dropdownId).find('option').removeAttr('disabled');
+        $('select').not('#' + dropdownId).find('option[value="' + selectedUserId + '"]').attr('disabled', 'disabled');
+    }
+</script>

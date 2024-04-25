@@ -34,12 +34,23 @@ class ViewSubmissions extends Component
         $this->competition = Competition::where('id', $id)
             ->firstOrFail();
 
-        $this->firstPlace = $this->competition->first_place;
-        $this->secondPlace = $this->competition->second_place;
-        $this->thirdPlace = $this->competition->third_place;
+        if (Participation::where('ranking', 1)
+            ->where('competition_id', $this->competition->id) // Change 3 to the ID of your competition
+            ->exists()){
+            $firstPlaceParticipation = Participation::where('competition_id', $this->competition->id)
+                ->where('ranking', 1)
+                ->first();
+            $this->firstPlace = $firstPlaceParticipation->user->name . ' ' . $firstPlaceParticipation->user->surname;
 
-        // Check if places have been saved
-        if ($this->firstPlace || $this->secondPlace || $this->thirdPlace) {
+            $secondPlaceParticipation = Participation::where('competition_id', $this->competition->id)
+                ->where('ranking', 2)
+                ->first();
+            $this->secondPlace = $secondPlaceParticipation->user->name . ' ' . $secondPlaceParticipation->user->surname;
+
+            $thirdPlaceParticipation = Participation::where('competition_id', $this->competition->id)
+                ->where('ranking', 3)
+                ->first();
+            $this->thirdPlace = $thirdPlaceParticipation->user->name . ' ' . $thirdPlaceParticipation->user->surname;
             $this->placesSaved = true;
         }
     }
