@@ -30,7 +30,7 @@ class Announcement extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('tmcp@thomasmore.be', 'TMC Platform'),
+            from: new Address('annoucements@tmcplatform.be', 'TMC Platform'),
             subject: $this->details['subject'],
         );
     }
