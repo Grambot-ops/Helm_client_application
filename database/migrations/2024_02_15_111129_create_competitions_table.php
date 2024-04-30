@@ -28,6 +28,7 @@ return new class extends Migration
             $table->dateTime('submission_date')->nullable(false);
             $table->boolean('accepted')->default(false)->nullable(false);
             $table->boolean('declined')->default(false)->nullable(false);
+            $table->string('company')->nullable();
             $table->timestamps();
         });
         DB::table('competitions')->insert(
@@ -48,6 +49,7 @@ return new class extends Migration
                     'end_date' => '2024-6-1',
                     'submission_date' => '2023-11-1',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 2,
@@ -64,6 +66,8 @@ return new class extends Migration
                     'end_date' => '2024-9-29',
                     'submission_date' => '2024-5-11',
                     'accepted' => true,
+                    'company' => 'Netropolix',
+
                 ],
                 [
                     'id' => 3,
@@ -80,6 +84,7 @@ return new class extends Migration
                     'end_date' => '2024-4-29',
                     'submission_date' => '2023-11-14',
                     'accepted' => true,
+                    'company' => 'Thomas More',
                 ],
                 [
                     'id' => 4,
@@ -96,6 +101,7 @@ return new class extends Migration
                     'end_date' => '2024-6-15',
                     'submission_date' => '2023-12-15',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 5,
@@ -112,6 +118,7 @@ return new class extends Migration
                     'end_date' => '2024-12-13',
                     'submission_date' => '2023-7-13',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 6,
@@ -128,6 +135,7 @@ return new class extends Migration
                     'end_date' => '2024-3-13',
                     'submission_date' => '2024-1-21',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 7,
@@ -144,6 +152,7 @@ return new class extends Migration
                     'end_date' => '2024-10-20',
                     'submission_date' => '2023-10-19',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 8,
@@ -160,6 +169,7 @@ return new class extends Migration
                     'end_date' => '2024-3-27',
                     'submission_date' => '2023-12-28',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 9,
@@ -176,6 +186,7 @@ return new class extends Migration
                     'end_date' => '2024-12-19',
                     'submission_date' => '2024-9-20',
                     'accepted' => true,
+                    'company' => null,
                 ],
                 [
                     'id' => 10,
@@ -192,6 +203,7 @@ return new class extends Migration
                     'end_date' => '2026-12-25',
                     'submission_date' => '2025-6-20',
                     'accepted' => true,
+                    'company' => null,
                 ],
 
             ]);

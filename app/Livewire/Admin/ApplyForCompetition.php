@@ -14,12 +14,15 @@ class ApplyForCompetition extends Component
     #[Layout('layouts.tmcp', ['title' => 'apply', 'description' => 'Apply for competition',])]
     public $buttonDisabled = false;
     public $competition;
+    public $participation;
     public function mount(Request $request)
     {
 
         $id = urldecode($request->query('id'));
         $this->competition = Competition::where('id', $id)->firstOrFail();
-    }
+        $this->participation = Participation::where('competition_id', $this->competition->id)
+            ->where('user_id', auth()->id())
+            ->first();    }
 
     public function apply()
     {
@@ -52,7 +55,12 @@ class ApplyForCompetition extends Component
 
     public function render()
     {
-        return view('livewire.see-more-info');
+        return view('livewire.see-more-info', [
+            'competition' => $this->competition,
+            'applicationDate' => $this->participation->application_date,
+            'submissionDate' => $this->participation->submission_date,
+        ]);
     }
+
 }
 
