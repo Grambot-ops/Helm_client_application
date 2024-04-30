@@ -9,61 +9,64 @@
                 <form wire:submit.prevent="assignPlaces" class="pb-10">
                     <div class="space-y-4 flex w-full">
                         <div class="p-4 m-2">
-                            <x-label for="firstPlace" value="FirstPlace"/>
+                            <x-label for="firstPlace" value="Select first place"/>
                             <x-tmk.form.select id="firstPlace"
-                                               wire:model="firstPlace"
+                                               wire:model.live="firstPlace"
                                                class="block mt-1 w-full"
-                                               :disabled="$firstPlace || $placesSaved"
-                                               onchange="disableSelectedUsers(this.value, 'firstPlace')">
-                                <option value="%">@if($placesSaved)
+                                               :disabled="$placesSaved">
+                                <option value="">@if($placesSaved)
                                         {{  $firstPlace  }}
-                                    @else FirstPlace @endif</option>
+                                    @endif</option>
                                 @foreach($usersWithSubmissions as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }} {{ $user->surname }}
                                     </option>
                                 @endforeach
                             </x-tmk.form.select>
-                            First place: {{ $firstPlace  }}
                         </div>
                         <div class="p-4 m-2 mb-0.5">
-                            <x-label for="secondPlace" value="SecondPlace"/>
+                            <x-label for="secondPlace" value="Select second place"/>
                             <x-tmk.form.select id="secondPlace"
-                                               wire:model="secondPlace"
+                                               wire:model.live="secondPlace"
                                                class="block mt-1 w-full"
-                                               :disabled="$secondPlace || $placesSaved"
-                                               onchange="disableSelectedUsers(this.value, 'firstPlace')">
-                                <option value="%">@if($placesSaved)
+                                               :disabled="$placesSaved">
+                                <option value="">@if($placesSaved)
                                         {{  $secondPlace  }}
-                                    @else SecondPlace @endif</option>
+                                    @endif</option>
                                 @foreach($usersWithSubmissions as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }} {{ $user->surname }}
                                     </option>
                                 @endforeach
                             </x-tmk.form.select>
-                            Second place: {{  $secondPlace  }}
                         </div>
                         <div class="p-4 m-2 mb-0.5">
-                            <x-label for="thirdPlace" value="ThirdPlace"/>
+                            <x-label for="thirdPlace" value="Select third place"/>
                             <x-tmk.form.select id="thirdPlace"
-                                               wire:model="thirdPlace"
+                                               wire:model.live="thirdPlace"
                                                class="block mt-1 w-full"
-                                               :disabled="$thirdPlace || $placesSaved"
-                                               onchange="disableSelectedUsers(this.value, 'firstPlace')">
-                                <option value="%">@if($placesSaved)
+                                               :disabled="$placesSaved">
+                                <option value="">@if($placesSaved)
                                         {{  $thirdPlace  }}
-                                    @else ThirdPlace @endif</option>
+                                    @endif</option>
                                 @foreach($usersWithSubmissions as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }} {{ $user->surname }}
                                     </option>
                                 @endforeach
                             </x-tmk.form.select>
-                            Third place: {{  $thirdPlace}}
                         </div>
                     </div>
-                    <x-button type="submit" class="float-right">Save Places</x-button>
+                    @if($placesSaved || ($this->firstPlace == "" || $this->secondPlace == "" || $this->thirdPlace == ""))
+                        <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                    @else
+                        @if(($this->firstPlace == $this->secondPlace) || ($this->firstPlace == $this->thirdPlace) || ($this->secondPlace == $this->thirdPlace))
+                            <p class="text-red-600">You're not allowed to pick the same person for multiple places</p>
+                            <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                        @else
+                            <x-button type="submit" class="float-right">Save Places</x-button>
+                        @endif
+                    @endif
                 </form>
             </div>
         </div>
@@ -164,10 +167,3 @@
         </x-slot>
     </x-dialog-modal>
 </div>
-<script>
-    function disableSelectedUsers(selectedUserId, dropdownId) {
-        // Disable the selected user in other dropdowns
-        $('select').not('#' + dropdownId).find('option').removeAttr('disabled');
-        $('select').not('#' + dropdownId).find('option[value="' + selectedUserId + '"]').attr('disabled', 'disabled');
-    }
-</script>
