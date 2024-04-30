@@ -37,7 +37,7 @@ class Ranking extends Component
         }
         $participations = $participations->sortByDesc('votes_count');
         $podium = $participations->map(function ($participation) {
-            return $participation->first()->user;
+            return $participation;
         })->take(3);
         $i = 1;
         return view('livewire.ranking', compact('competition', 'participations', 'i', 'podium'));
