@@ -84,7 +84,7 @@ return new class extends Migration
                     'prize' => 'A subscription to a cybersecurity magazine',
                     'description' => 'Dive into the world of cybersecurity. Protect and defend against digital threats!',
                     'start_date' => '2023-4-23',
-                    'end_date' => '2024-4-29',
+                    'end_date' => '2024-8-29',
                     'submission_date' => '2023-11-14',
                     'accepted' => true,
                     'number_of_votes_allowed' => 1,

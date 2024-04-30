@@ -92,11 +92,6 @@ class ViewSubmissions extends Component
 
     public function assignPlaces()
     {
-        $this->competition->update([
-            'first_place' => $this->firstPlace,
-            'second_place' => $this->secondPlace,
-            'third_place' => $this->thirdPlace,
-        ]);
         // Update the ranking for the user selected in the first place dropdown
         if ($this->firstPlace) {
             $participation = Participation::where('user_id', $this->firstPlace)
