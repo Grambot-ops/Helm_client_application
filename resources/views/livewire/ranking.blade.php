@@ -10,9 +10,9 @@
         {{$j=0}}
 
         @foreach($podium as $place)
-            <text x={{$i*100}} y={{50+$j*50}} textLength="90">
-                @if($place)
-                    {{$place->name}} {{$place->surname}}
+            <text x={{$i*100}} y={{50+$j*50}} >
+                @if($place->votes_count > 0)
+                    {{$place->first()->user->name}} {{$place->first()->user->surname}}
                 @else
                     No votes
                 @endif
