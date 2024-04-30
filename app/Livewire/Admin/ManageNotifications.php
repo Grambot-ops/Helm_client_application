@@ -73,4 +73,12 @@ class ManageNotifications extends Component
         $this->showModalEdit = false;
     }
 
+    public function deleteNoti(Notification $noti){
+        $noti->delete();
+        $this->dispatch('swal:toast', [
+            'background' => 'success',
+            'html' => "The notifictation has been deleted",
+        ]);
+    }
+
 }

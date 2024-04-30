@@ -23,17 +23,26 @@
                     <div class="relative mt-8 flex items-center gap-x-4">
                         <div class="text-sm leading-6">
                             <p class="font-semibold text-gray-900">
-
                                 <x-button wire:click="openEdit({{$noti->id}})" class="bg-tm-blue" href="#">
-                                    <span class="absolute inset-0"></span>
+
                                     Edit
                                 </x-button>
                             </p>
                         </div>
+                        <div class="text-sm leading-6">
+                        <x-button
+                            wire:click="deleteNoti({{$noti}})"
+                            wire:confirm="Are you sure you want to delete this notification?"
+                            class="text-gray-400 hover:text-red-100 hover:bg-red-500 transition">
+                            <x-phosphor-trash-duotone class="inline-block w-5 h-5"/>
+                        </x-button>
+                        </div>
+                    </div>
+                    <div class="relative mt-8 flex items-center gap-x-4">
+
                     </div>
                 </article>
                 @endforeach
-                <!-- More posts... -->
             </div>
         </div>
     </div>
