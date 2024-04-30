@@ -14,4 +14,11 @@
 | Member        | Stef Pelkmans  | r0739242@student.thomasmore.be   | UmbralPrime              |
 | Member        | Nathan D'Hoore  | r0916741@student.thomasmore.be   | NathanDhoore1              |
 
+## Login credentials
+
+| Role  | Email | Password |
+|:------|:------|:---------|
+| Admin | admin@vcoa.tmcplatform.be | admin |
+| User  | user@vcoa.tmcplatform.be | password |
+
 ## URL: [https://myDomain.be](https://myDomain.be)
