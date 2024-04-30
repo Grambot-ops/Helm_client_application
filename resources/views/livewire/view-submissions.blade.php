@@ -99,7 +99,8 @@
                                 <label>
                                     <span class="text-gray-700 text-base font-bold">Vote for submission: </span>
                                     <input type="checkbox" class="toggle-checkbox w-5 h-5 rounded-full bg-white
-                                        border-4 appearance-none cursor-pointer" wire:model="checked"
+                                        border-4 appearance-none cursor-pointer"
+                                           wire:model="checked.{{ $submission->id }}"
                                            wire:change="vote({{$submission}})" {{ $submission->votes->contains('user_id', auth()->id()) ? 'checked' : '' }}>
                                 </label>
                             </div>

@@ -17,6 +17,7 @@ class ViewSubmissions extends Component
     public $showModalInfo = false;
     public $submissionToDelete;
     public $submissionToShowInfo;
+    public $checked = [];
 
     public $competition;
     public $firstPlace;
@@ -34,6 +35,18 @@ class ViewSubmissions extends Component
         // Get competition
         $this->competition = Competition::where('id', $id)
             ->firstOrFail();
+        $submissions = Submission::whereIn(
+            'participation_id',
+            Participation::select('id')
+                ->where('competition_id', $this->competition->id)
+                ->get()
+        )->get();
+        foreach ($submissions as $submission) {
+            if ($submission->votes->contains('user_id', auth()->user()->id))
+                $this->checked[$submission->id] = true;
+            else
+                $this->checked[$submission->id] = false;
+        }
 
         if (Participation::where('ranking', 1)
             ->where('competition_id', $this->competition->id) // Change 3 to the ID of your competition
@@ -153,12 +166,34 @@ class ViewSubmissions extends Component
 
     public function vote(Submission $submission)
     {
-        // The code to check if the maximum number of votes has been reached can be added here if needed
-
         // If the user has already voted, delete the vote
         if ($submission->votes->contains('user_id', auth()->id())) {
             $submission->votes()->where('user_id', auth()->id())->delete();
         } else {
+            $amount_votes = $submission->participation->competition->number_of_votes_allowed;
+            $submissions = $submissions = Submission::whereIn(
+                'participation_id',
+                Participation::select('id')
+                    ->where('competition_id', $this->competition->id)
+                    ->get()
+            )->get();
+            $amount_user_votes = 0;
+            foreach ($submissions as $countVote) {
+                if ($countVote->votes->contains('user_id', auth()->id())) {
+                    $amount_user_votes++;
+                }
+            }
+            if ($amount_user_votes >= $amount_votes) {
+                $this->dispatch('swal:toast',
+                    [
+                        'background' => 'error',
+                        'html' => "You have already voted {$amount_votes} time(s)",
+                        'icon' => 'error'
+                    ]
+                );
+                $this->checked[$submission->id] = false;
+                return;
+            }
             $vote = new Vote;
             $vote->user_id = auth()->id();
             $submission->votes()->save($vote);
