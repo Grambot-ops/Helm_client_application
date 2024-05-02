@@ -15,7 +15,6 @@ class ApplyForCompetition extends Component
     public $buttonDisabled = false;
     public $competition;
     public $participation;
-    public $userApplied = false;
 
     public function mount(Request $request)
     {
@@ -58,12 +57,10 @@ class ApplyForCompetition extends Component
 
     public function render()
     {
-        $userApplied = $this->participation !== null;
         return view('livewire.see-more-info', [
             'competition' => $this->competition,
             'applicationDate' => $this->participation->application_date,
             'submissionDate' => $this->participation->submission_date,
-            'userApplied' => $userApplied,
         ]);
     }
 
