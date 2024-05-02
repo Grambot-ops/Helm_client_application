@@ -8,7 +8,8 @@
 
         <x-slot name="footer">
             <x-button wire:click="apply" class="bg-tm-blue text-white px-4 py-2 mr-2">Confirm</x-button>
-            <x-secondary-button @click="$wire.showApplyConfirmationModal = false" class="px-4 py-2">Cancel</x-secondary-button>
+            <x-secondary-button @click="$wire.showApplyConfirmationModal = false" class="px-4 py-2">Cancel
+            </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
     {{--
@@ -17,7 +18,8 @@
         with all the classes that I use in my components to trick Tailwind into
         using them. The `invisible` class will tell it not to show it.
         --}}
-    <div class="text-tm-orange border-tm-orange border-tm-darker-orange border-tm-darker-blue text-tm-blue border-tm-blue border-2 invisible">
+    <div
+        class="text-tm-orange border-tm-orange border-tm-darker-orange border-tm-darker-blue text-tm-blue border-tm-blue border-2 invisible">
     </div>
 
     <x-slot name="description">Thomas More Competition Platform</x-slot>
@@ -42,7 +44,8 @@
     </div>
 
     <div class="mx-auto px-14">
-        <div class="xl:flex flex-row-reverse justify-center lg:justify-between px-4 items-end mb-16 bg-white/80 py-2 rounded rounded-lg border-2">
+        <div
+            class="xl:flex flex-row-reverse justify-center lg:justify-between px-4 items-end mb-16 bg-white/80 py-2 rounded rounded-lg border-2">
             <div class="md:flex justify-center py-2 space-x-2">
                 <div class="">
                     <div class="relative">
@@ -128,11 +131,19 @@
                                         Manage
                                     </button>
                                 @else
-                                    <button
-                                        wire:click="applyConfirmation({{ $competition->id }})"
-                                        class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    Apply
-                                    </button>
+                                    @if($competition->participations()->where('user_id', auth()->user()->id)->exists())
+                                        <button
+                                            class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
+                                            disabled>
+                                            Applied
+                                        </button>
+                                    @else
+                                        <button
+                                            wire:click="applyConfirmation({{ $competition->id }})"
+                                            class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                                            Apply
+                                        </button>
+                                    @endif
                                 @endif
                             @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date
                             && $competition->participations()->where('user_id', auth()->user()->id)->exists())
