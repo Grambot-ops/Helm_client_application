@@ -24,9 +24,9 @@
 
     <x-slot name="title">Competitions</x-slot>
 
-    <div class="px-16 m-auto">
-        <div class="flex justify-between">
-            <h1 class="text-3xl mb-4 font-bold">
+    <div class="lg:px-16 m-auto">
+        <div class="flex space-x-2 justify-between">
+            <h1 class="text-3xl w-max mb-4 font-bold">
                 @if($likedOnly)
                     Saved competitions
                 @elseif ($ownOnly)
@@ -41,9 +41,9 @@
         </div>
     </div>
 
-    <div class="mx-auto px-14">
+    <div class="mx-auto lg:px-14">
         <div class="xl:flex flex-row-reverse justify-center lg:justify-between px-4 items-end mb-16 bg-white/80 py-2 rounded rounded-lg border-2">
-            <div class="md:flex justify-center py-2 space-x-2">
+            <div class="md:flex justify-center py-2 md:space-x-2">
                 <div class="">
                     <div class="relative">
                         <x-input id="name" type="text"
@@ -81,7 +81,7 @@
                     </x-tmk.form.select>
                 </div>
             </div>
-            <div class="xs:flex w-max mx-auto lg:mx-1 space-x-2 justify-center items-center">
+            <div class="flex flex-col sm:flex-row w-max mx-auto xl:mx-1 space-x-2 justify-center items-center">
                 <x-tmk.button activated="{{ $ownOnly }}" wire:click="toggleOwnOnly">
                     View own competitions
                 </x-tmk.button>
