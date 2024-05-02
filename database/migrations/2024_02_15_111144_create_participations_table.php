@@ -52,7 +52,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 4,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 1,
                     'ranking' => 0,
                     'disqualified' => false,
@@ -61,7 +61,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 5,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 9,
                     'ranking' => 0,
                     'disqualified' => false,
@@ -70,7 +70,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 6,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 3,
                     'ranking' => 0,
                     'disqualified' => false,
@@ -79,7 +79,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 7,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 7,
                     'ranking' => 0,
                     'disqualified' => false,
@@ -88,7 +88,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 8,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 8,
                     'ranking' => 0,
                     'disqualified' => true,
@@ -97,7 +97,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 9,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 2,
                     'ranking' => 0,
                     'disqualified' => false,
@@ -106,7 +106,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 10,
-                    'competition_id' => 3,
+                    'competition_id' => 5,
                     'user_id' => 4,
                     'ranking' => 0,
                     'disqualified' => true,
