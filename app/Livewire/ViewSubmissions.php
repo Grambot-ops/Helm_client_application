@@ -55,16 +55,22 @@ class ViewSubmissions extends Component
                 ->where('ranking', 1)
                 ->first();
             $this->firstPlace = $firstPlaceParticipation->user->name . ' ' . $firstPlaceParticipation->user->surname;
-
-            $secondPlaceParticipation = Participation::where('competition_id', $this->competition->id)
-                ->where('ranking', 2)
-                ->first();
-            $this->secondPlace = $secondPlaceParticipation->user->name . ' ' . $secondPlaceParticipation->user->surname;
-
-            $thirdPlaceParticipation = Participation::where('competition_id', $this->competition->id)
-                ->where('ranking', 3)
-                ->first();
-            $this->thirdPlace = $thirdPlaceParticipation->user->name . ' ' . $thirdPlaceParticipation->user->surname;
+            if (Participation::where('ranking', 2)
+                ->where('competition_id', $this->competition->id) // Change 3 to the ID of your competition
+                ->exists()) {
+                $secondPlaceParticipation = Participation::where('competition_id', $this->competition->id)
+                    ->where('ranking', 2)
+                    ->first();
+                $this->secondPlace = $secondPlaceParticipation->user->name . ' ' . $secondPlaceParticipation->user->surname;
+                if (Participation::where('ranking', 3)
+                    ->where('competition_id', $this->competition->id) // Change 3 to the ID of your competition
+                    ->exists()) {
+                    $thirdPlaceParticipation = Participation::where('competition_id', $this->competition->id)
+                        ->where('ranking', 3)
+                        ->first();
+                    $this->thirdPlace = $thirdPlaceParticipation->user->name . ' ' . $thirdPlaceParticipation->user->surname;
+                }
+            }
             $this->placesSaved = true;
         }
     }
