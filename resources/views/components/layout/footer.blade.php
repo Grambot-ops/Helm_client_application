@@ -1,5 +1,5 @@
 <footer class="w-full px-4 py-6 text-lg border-t flex flex-wrap justify-between items-center text-white bg-tm-orange">
-    <div class="container mx-auto lg:px-28  px-4 md:px-16 sm:px-16 flex flex-wrap justify-between w-full">
+    <div class="container lg:px-16 mx-auto sm:px-4 flex flex-wrap justify-between w-full">
         <div class="flex flex-wrap w-full md:w-auto">
             <div class="flex flex-wrap w-full md:w-auto text-white">
                 <div class="mr-10 mb-2 md:mb-0">
