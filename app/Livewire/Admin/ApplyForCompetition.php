@@ -55,6 +55,11 @@ class ApplyForCompetition extends Component
 
     public function render()
     {
+        if ($this->participation == null) {
+            $this->participation = new Participation();
+            $this->participation->application_date = null;
+            $this->participation->submission_date = null;
+        }
         return view('livewire.see-more-info', [
             'competition' => $this->competition,
             'applicationDate' => $this->participation->application_date,
