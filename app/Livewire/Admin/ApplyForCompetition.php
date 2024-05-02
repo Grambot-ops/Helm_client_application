@@ -15,6 +15,7 @@ class ApplyForCompetition extends Component
     public $buttonDisabled = false;
     public $competition;
     public $participation;
+
     public function mount(Request $request)
     {
 
@@ -22,7 +23,8 @@ class ApplyForCompetition extends Component
         $this->competition = Competition::where('id', $id)->firstOrFail();
         $this->participation = Participation::where('competition_id', $this->competition->id)
             ->where('user_id', auth()->id())
-            ->first();    }
+            ->first();
+    }
 
     public function apply()
     {
@@ -55,6 +57,11 @@ class ApplyForCompetition extends Component
 
     public function render()
     {
+        if ($this->participation == null) {
+            $this->participation = new Participation();
+            $this->participation->application_date = null;
+            $this->participation->submission_date = null;
+        }
         return view('livewire.see-more-info', [
             'competition' => $this->competition,
             'applicationDate' => $this->participation->application_date,

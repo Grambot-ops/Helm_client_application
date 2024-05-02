@@ -2,9 +2,17 @@
     <x-slot name="subtitle">Manage notifications</x-slot>
     <div class="pb-6">
         <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
-        @if($competition->user_id == Auth::id())
+        @if($competition->user_id == Auth::id() && !$competition->by_vote)
         <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg">
-            <h1 class="pt-5">Choose the top 3 winners</h1>
+            <h1 class="pt-5">Choose the
+                @if(count($usersWithSubmissions) == 1)
+                    Choose the winner
+                @elseif(count($usersWithSubmissions) == 2)
+                    Choose the 2 winners
+                @else
+                    Choose the top 3 winners
+                @endif
+            </h1>
             <div class="mx-auto max-w-7xl px-6 lg:px-8 my-1 bg-white">
                 <form wire:submit.prevent="assignPlaces" class="pb-10">
                     <div class="space-y-4 flex w-full">
@@ -24,6 +32,7 @@
                                 @endforeach
                             </x-tmk.form.select>
                         </div>
+                        @if(count($usersWithSubmissions) > 1)
                         <div class="p-4 m-2 mb-0.5">
                             <x-label for="secondPlace" value="Select second place"/>
                             <x-tmk.form.select id="secondPlace"
@@ -40,6 +49,8 @@
                                 @endforeach
                             </x-tmk.form.select>
                         </div>
+                        @endif
+                        @if(count($usersWithSubmissions) > 2)
                         <div class="p-4 m-2 mb-0.5">
                             <x-label for="thirdPlace" value="Select third place"/>
                             <x-tmk.form.select id="thirdPlace"
@@ -56,15 +67,35 @@
                                 @endforeach
                             </x-tmk.form.select>
                         </div>
+                        @endif
                     </div>
-                    @if($placesSaved || ($this->firstPlace == "" || $this->secondPlace == "" || $this->thirdPlace == ""))
-                        <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
-                    @else
-                        @if(($this->firstPlace == $this->secondPlace) || ($this->firstPlace == $this->thirdPlace) || ($this->secondPlace == $this->thirdPlace))
-                            <p class="text-red-600">You're not allowed to pick the same person for multiple places</p>
+                    @if(count($usersWithSubmissions) > 2)
+                        @if($placesSaved || ($this->firstPlace == "" || $this->secondPlace == "" || $this->thirdPlace == ""))
                             <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
                         @else
-                            <x-button type="submit" class="float-right">Save Places</x-button>
+                            @if(($this->firstPlace == $this->secondPlace) || ($this->firstPlace == $this->thirdPlace) || ($this->secondPlace == $this->thirdPlace))
+                                <p class="text-red-600">You're not allowed to pick the same person for multiple places</p>
+                                <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                            @else
+                                <x-button type="submit" class="float-right">Save Places</x-button>
+                            @endif
+                        @endif
+                    @elseif(count($usersWithSubmissions) == 2)
+                        @if($placesSaved || ($this->firstPlace == "" || $this->secondPlace == ""))
+                            <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                        @else
+                            @if($this->firstPlace == $this->secondPlace)
+                                <p class="text-red-600">You're not allowed to pick the same person for multiple places</p>
+                                <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                            @else
+                                <x-button type="submit" class="float-right">Save Places</x-button>
+                            @endif
+                        @endif
+                    @else
+                        @if($placesSaved || ($this->firstPlace == ""))
+                            <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Place</x-button>
+                        @else
+                            <x-button type="submit" class="float-right">Save Place</x-button>
                         @endif
                     @endif
                 </form>
@@ -99,6 +130,7 @@
                                     {{ $submission->description }}
                                 </p>
                                 <br>
+                                @if($competition->by_vote)
                                 <label>
                                     <span class="text-gray-700 text-base font-bold">Vote for submission: </span>
                                     <input type="checkbox" class="toggle-checkbox w-5 h-5 rounded-full bg-white
@@ -106,6 +138,7 @@
                                            wire:model="checked.{{ $submission->id }}"
                                            wire:change="vote({{$submission}})" {{ $submission->votes->contains('user_id', auth()->id()) ? 'checked' : '' }}>
                                 </label>
+                                @endif
                             </div>
                         </div>
                     @endforeach

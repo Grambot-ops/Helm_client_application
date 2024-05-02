@@ -120,6 +120,12 @@
                 Submit
             </button>
         </a>
+    @elseif($competition->participations()->where('user_id', auth()->user()->id)->exists())
+        <button
+            class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
+            disabled>
+            Applied
+        </button>
     @else
         <button wire:click="apply" wire:target="apply"
                 @if($buttonDisabled)
