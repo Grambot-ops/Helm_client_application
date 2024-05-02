@@ -82,7 +82,12 @@
             {{$i=1}}
         </svg>
         <x-tmk.section>
+            @if($podium->count()<1)
+                <p>No ranking available yet. When the competition admin has chosen the winners, they will appear
+                    here.</p>
+            @else
             <p>This ranking has been determined by the competition administrator.</p>
+            @endif
         </x-tmk.section>
     @endif
 </div>
