@@ -239,8 +239,8 @@
         <div></div>
         <div>
             @if(is_null($this->form->id))
-                @if($termsOfAgreement)
                 <a href="#">
+                @if($termsOfAgreement)
                     <button
                         class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
                         wire:click="createCompetition()">
