@@ -17,7 +17,7 @@ class UserForm extends Form
     public $email = null;
     #[Validate('required|bool', as: 'is this user active?')]
     public $active = null;
-
+    public $role = null;
     public function read($user)
     {
         $this->id = $user->id;
@@ -25,6 +25,7 @@ class UserForm extends Form
         $this->surname = $user->surname;
         $this->email = $user->email;
         $this->active = $user->active;
+        $this->role = $user->role;
     }
 
     public function update(User $user)
@@ -39,6 +40,7 @@ class UserForm extends Form
             'surname' => $this->surname,
             'active' => $this->active,
             'email' => $this->email,
+            'role' => $this->role
         ]);
     }
 }

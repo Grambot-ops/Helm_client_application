@@ -123,12 +123,13 @@
                         @foreach($roles as $role)
                             <li>
                                 <x-input id="role_{{ $role->id }}" type="checkbox"
-                                         wire:model="selectedRoles.{{ $role->id }}"
+                                         wire:model="checkedRoles.{{ $role->id }}"
                                          wire:change="addRoleToUser({{ $role->id }}, {{ $form->id }})"
                                 ></x-input>
                                 {{ $role->name }}
                             </li>
                         @endforeach
+
                     </ul>
 
 
