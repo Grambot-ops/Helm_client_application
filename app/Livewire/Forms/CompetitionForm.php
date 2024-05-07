@@ -36,8 +36,10 @@ class CompetitionForm extends Form
     public $by_vote = null;
     #[Validate('required', as: 'prize')]
     public $prize = null;
-
     public $photo;
+    public $company = null;
+    public $number_of_votes_allowed;
+    public $number_of_uploads;
 
 
     public function read(Competition $competition)
@@ -83,6 +85,9 @@ class CompetitionForm extends Form
             'submission_date' => $this->submission_date,
             'rules' => $this->_rules,
             'prize' => $this->prize,
+            'number_of_votes_allowed' => $this->number_of_votes_allowed,
+            'company' => $this->company,
+            'number_of_uploads' => $this->number_of_uploads,
         ]);
     }
     // delete the selected record

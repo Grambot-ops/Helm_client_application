@@ -30,6 +30,11 @@
                          wire:model="form.description"
                          placeholder=""/>
 
+    <p class="mt-5 ml-3">Company</p>
+    <x-input class="w-full"
+             wire:model="form.company"
+             placeholder=""/>
+
     <div class="grid grid-cols-3 gap-5 mt-7">
         <div>
             <p class="mb-2">Select an image</p>
@@ -101,19 +106,32 @@
              wire:model="form._rules"
              placeholder=""/>
 
-    <p class="mt-7 ml-3">Prizes <span class="text-[#fa6432]">*</span></p>
+    <p class="mt-5 ml-3">Prizes <span class="text-[#fa6432]">*</span></p>
     <x-input class="w-full"
              wire:model="form.prize"
              placeholder=""/>
 
+    <p class="mt-5 ml-3">Number of submissions</p>
+    <x-input class="w-full"
+             wire:model="form.number_of_uploads"
+             placeholder=""/>
+
     <p class="mt-7 ml-3">Winner criteria <span class="text-[#fa6432]">*</span></p>
     <div class="mb-7">
-        <x-input type="radio" id="by-vote" name="by-vote-selection" value="1" wire:model="form.by_vote"></x-input>
+        <x-input type="radio" id="by-vote" name="by-vote-selection" value="1" wire:model.live="form.by_vote"></x-input>
         <label for="by-vote">by vote</label>
         <br>
-        <x-input type="radio" id="by-selection" name="by-vote-selection" value="0" wire:model="form.by_vote"></x-input>
+        <x-input type="radio" id="by-selection" name="by-vote-selection" value="0" wire:model.live="form.by_vote"></x-input>
         <label for="by-selection">by selection</label>
     </div>
+
+    @if($form->by_vote == 1)
+        <p class="mt-5 ml-3">Number of votes allowed</p>
+        <x-input class="w-full"
+                 wire:model="form.number_of_votes_allowed"
+                 placeholder=""/>
+    @endif
+
     <hr>
     <p class="mt-7 ml-3">Terms of Agreement <span class="text-[#fa6432]">*</span></p>
     <div class="mb-7">

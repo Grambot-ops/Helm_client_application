@@ -30,6 +30,8 @@ class ProposeCompetition extends Component
     #[Layout('layouts.tmcp', ['title' => 'Propose Competition', 'description' => 'Thomas More Competition Platform'])]
     public function render()
     {
+        $this->form->number_of_votes_allowed = 1;
+        $this->form->number_of_uploads = 3;
         $competition_types = CompetitionType::orderBy('name')->get();
         $competition_categories = CompetitionCategory::orderBy('name')->get();
         return view('livewire.propose-competition', compact('competition_types', 'competition_categories'));
