@@ -2,9 +2,9 @@
     <x-slot name="subtitle">Manage notifications</x-slot>
     <div class="pb-6">
         <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
-        @if($competition->user_id == Auth::id() && !$competition->by_vote)
+        @if($competition->user_id == Auth::id() && !$competition->by_vote && $competition->submission_date < date('Y-m-d'))
         <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg">
-            <h1 class="pt-5">Choose the
+            <h1 class="pt-5">
                 @if(count($usersWithSubmissions) == 1)
                     Choose the winner
                 @elseif(count($usersWithSubmissions) == 2)
@@ -190,6 +190,9 @@
                         <p class="py-3">
                             Description: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->description : ''  }}</span>
                         </p>
+                            <p class="py-3">
+                                Link: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}</span>
+                            </p>
                     </div>
                     <div>
                         <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
