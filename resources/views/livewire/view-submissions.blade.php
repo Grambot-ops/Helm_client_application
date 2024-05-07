@@ -166,6 +166,9 @@
                 </div>
                 <div>
                     <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+                    <x-button wire:click="disqualifyParticipant"
+                              wire:confirm="Are you sure you want to disqualify this participant? All the submissions by this user for this competitions will also be disqualified!"
+                              class="bg-red-500 hover:bg-red-700 active:bg-red-700">Disqualify</x-button>
                 </div>
             </div>
         </x-slot>
