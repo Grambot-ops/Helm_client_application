@@ -30,6 +30,13 @@ return new class extends Migration
             $table->boolean('declined')->default(false)->nullable(false);
             $table->integer('number_of_votes_allowed')->default(1)->nullable(false);
             $table->integer('number_of_uploads')->default(3)->nullable(false);
+            // A comma separated string that contains the accepted file types
+            // that looks something like:
+            //
+            // video,audio,document
+            //
+            // The order of the words does not matter.
+            $table->string('filetypes')->nullable();
             $table->string('company')->nullable();
             $table->timestamps();
         });

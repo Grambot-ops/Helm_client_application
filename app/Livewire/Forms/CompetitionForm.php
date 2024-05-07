@@ -41,6 +41,15 @@ class CompetitionForm extends Form
     public $number_of_votes_allowed;
     public $number_of_uploads;
 
+    public bool $newTypeIsFile = false;
+
+    public $acceptedFileTypes = [
+        'image' => false,
+        'video' => false,
+        'audio' => false,
+        'document' => false,
+    ];
+
 
     public function read(Competition $competition)
     {
@@ -72,6 +81,16 @@ class CompetitionForm extends Form
             $this->path_to_photo = '/assets/card-top.jpg';
         }
 
+        $formats = '';
+        foreach($this->acceptedFileTypes as $key => $fileType) {
+            if($fileType)
+                $formats .= $key . ',';
+        }
+        $formats = rtrim($formats, ',');
+
+        if(!$this->newTypeIsFile)
+            $formats = null;
+
         Competition::create([
             'competition_category_id' => $this->competition_category_id,
             'competition_type_id' => $this->competition_type_id,
@@ -87,6 +106,7 @@ class CompetitionForm extends Form
             'prize' => $this->prize,
             'number_of_votes_allowed' => $this->number_of_votes_allowed,
             'company' => $this->company,
+            'filetypes' => $formats,
             'number_of_uploads' => $this->number_of_uploads,
         ]);
     }

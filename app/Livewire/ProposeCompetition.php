@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\CompetitionForm;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionType;
+use App\Models\Competition;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -34,6 +35,7 @@ class ProposeCompetition extends Component
         $this->form->number_of_uploads = 3;
         $competition_types = CompetitionType::orderBy('name')->get();
         $competition_categories = CompetitionCategory::orderBy('name')->get();
-        return view('livewire.propose-competition', compact('competition_types', 'competition_categories'));
+        $pretty_names = Competition::getFileTypes();
+        return view('livewire.propose-competition', compact('competition_types', 'competition_categories', 'pretty_names'));
     }
 }
