@@ -67,6 +67,16 @@ class CompetitionForm extends Form
         $this->submission_date = $competition->submission_date;
     }
 
+    // update the selected record
+    public function update(Competition $competition) {
+        $this->validate();
+        $competition->update([
+            'start_date' => $this->start_date,
+            'submission_date' => $this->submission_date,
+            'end_date' => $this->end_date,
+        ]);
+    }
+
     // create a new record
     public function create()
     {
