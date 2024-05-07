@@ -25,15 +25,7 @@ class ManageCompetitionTypes extends Component
 
     // add new competition
     public $showNewModal = false;
-    public bool $newTypeIsFile;
     public $newType;
-
-    public $acceptedFileTypes = [
-        'image' => false,
-        'video' => false,
-        'audio' => false,
-        'document' => false,
-    ];
 
     public function updated($propertyName)
     {
@@ -80,21 +72,9 @@ class ManageCompetitionTypes extends Component
             'newType.unique' => 'The type name has already been taken.',
         ]);
 
-        // This is the worst kind of serialization I have ever written
-        $formats = '';
-        foreach($this->acceptedFileTypes as $key => $fileType) {
-            if($fileType)
-                $formats .= $key . ',';
-        }
-        $formats = rtrim($formats, ',');
-
-        if(!$this->newTypeIsFile)
-            $formats = null;
-
         CompetitionType::create([
             'name' => trim($validatedData['newType']),
             'is_file' => $this->newTypeIsFile,
-            'filetypes' => $formats,
         ]);
 
         $this->dispatch('swal:toast', [
@@ -135,9 +115,8 @@ class ManageCompetitionTypes extends Component
 
         $types = $query->paginate($this->perPage);
 
-        $pretty_names = CompetitionType::getFileTypes();
 
-        return view('livewire.admin.manage-competition-types', compact('types', 'pretty_names'));
+        return view('livewire.admin.manage-competition-types', compact('types'));
     }
 
     public function resort($column)

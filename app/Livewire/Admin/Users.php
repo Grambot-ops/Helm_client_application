@@ -19,7 +19,15 @@ class Users extends Component
     public $perPage = 5;
     public $showModal = false;
     public UserForm $form;
+    public $checkedRoles = [];
 
+
+    public $roles; // Define the $roles property
+
+    public function mount()
+    {
+        $this->roles = Role::all();
+    }
     #[Layout('layouts.tmcp', ['title' => 'Manage Users',])]
     public function render()
     {
@@ -54,10 +62,17 @@ class Users extends Component
         $this->form->fill($user);
 
 
+
         if ($this->form->active == 1)
             $this->form->active = true;
         else
             $this->form->active = false;
+
+        $userRoles = UserRole::where('user_id', $this->form->id)->pluck('role_id')->toArray();
+        foreach ($this->roles as $role) {
+            $this->checkedRoles[$role->id] = in_array($role->id, $userRoles);
+        }
+
         $this->showModal = true;
     }
 
@@ -84,26 +99,33 @@ class Users extends Component
 
     public function addRoleToUser(Role $role, $userId)
     {
-        // Retrieve the user by ID
+
         $existingUserRole = UserRole::where('user_id', $userId)
             ->where('role_id', $role->id)
             ->first();
 
-        // If the role is already associated with the user, remove it
         if ($existingUserRole) {
             $existingUserRole->delete();
         } else {
-            // If the role is not associated with the user, add it
             $userRole = new UserRole();
             $userRole->user_id = $userId;
             $userRole->role_id = $role->id;
             $userRole->save();
         }
     }
-    public function isChecked($roleId)
+
+    public function checkChecked(int $roleId, int $userId): bool
     {
-        // Check if the role is associated with the user
-        return $this->form->user->user_roles->contains('role_id', $roleId);
+
+        if(UserRole::where("user_id",$userId)
+            ->where('role_id', $roleId)
+            ->first()){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 }

@@ -119,17 +119,20 @@
                              wire:model="form.active"
                              class="mt-1 block"/>
                     <x-label for="roles" value="Roles" class="mt-4"/>
-                        <ul>
-                            @foreach($roles as $role)
-                                <li>
-                                    <x-input id="roles" type="checkbox"
-                                             wire:change="addRoleToUser({{$role}}, {{$form->id}})"
-                                    ></x-input>
-                                    {{ $role->name }}
-                                </li>
+                    <ul>
+                        @foreach($roles as $role)
+                            <li>
+                                <x-input id="role_{{ $role->id }}" type="checkbox"
+                                         wire:model="checkedRoles.{{ $role->id }}"
+                                         wire:change="addRoleToUser({{ $role->id }}, {{ $form->id }})"
+                                ></x-input>
+                                {{ $role->name }}
+                            </li>
+                        @endforeach
 
-                            @endforeach
-                        </ul>
+                    </ul>
+
+
                 </div>
             </div>
         </x-slot>

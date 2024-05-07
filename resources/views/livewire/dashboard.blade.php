@@ -110,19 +110,22 @@
                                 picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
                                 hashtags="{{ $competition->competition_category->name }}">
                         <div>
-                            <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
                                 @if( $competition->user_id == Auth::id())
-                                    <button
-                                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
-                                        Manage submissions
-                                    </button>
+                                    <a href="{{ route('propose-competition', ['id' => urlencode($competition->id)]) }}">
+                                        <button
+                                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                                            Manage competition
+                                        </button>
+                                    </a>
                                 @else
-                                    <button
-                                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                        See more info
-                                    </button>
+                                    <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
+                                        <button
+                                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
+                                            See more info
+                                        </button>
+                                    </a>
                                 @endif
-                            </a>
+
                             @if( date('Y-m-d') < $competition->start_date)
                                 @if( $competition->user_id == Auth::id())
                                     <button
