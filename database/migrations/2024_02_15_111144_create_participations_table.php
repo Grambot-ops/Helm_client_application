@@ -43,7 +43,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 3,
-                    'competition_id' => 5,
+                    'competition_id' => 3,
                     'user_id' => 3,
                     'ranking' => 0,
                     'disqualified' => false,
@@ -52,7 +52,7 @@ return new class extends Migration {
                 ],
                 [
                     'id' => 4,
-                    'competition_id' => 5,
+                    'competition_id' => 3,
                     'user_id' => 1,
                     'ranking' => 0,
                     'disqualified' => false,
