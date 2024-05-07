@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('accepted')->default(false)->nullable(false);
             $table->boolean('declined')->default(false)->nullable(false);
             $table->integer('number_of_votes_allowed')->default(1)->nullable(false);
+            $table->integer('number_of_uploads')->default(3)->nullable(false);
             $table->string('company')->nullable();
             $table->timestamps();
         });

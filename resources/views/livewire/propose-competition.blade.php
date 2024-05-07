@@ -22,7 +22,7 @@
 
     <p class="mt-7 ml-3">Title <span class="text-[#fa6432]">*</span></p>
     <x-input class="w-full"
-             wire:model.live="form.title"
+             wire:model="form.title"
              placeholder=""/>
 
     <p class="mt-5 ml-3">Description <span class="text-[#fa6432]">*</span></p>
@@ -30,79 +30,112 @@
                          wire:model="form.description"
                          placeholder=""/>
 
-    <div class="grid grid-cols-4 gap-5 mt-7">
-        <div></div>
-        <div>
-            <p>Competition type <span class="text-[#fa6432]">*</span></p>
-            <x-tmk.form.select wire:model="form.competition_type_id" id="competition_type_id" class="w-full">
-                <option value="">Select a competition type</option>
-                @foreach($competition_types as $competitionType)
-                    <option value="{{ $competitionType->id }}">{{ $competitionType->name }}</option>
-                @endforeach
-            </x-tmk.form.select>
-        </div>
-        <div>
-            <p>Competition category</p>
-            <x-tmk.form.select wire:model="form.competition_category_id" id="competition_category_id" class="w-full">
-                <option value="">Select a competition category</option>
-                @foreach($competition_categories as $competitionCategory)
-                    <option value="{{ $competitionCategory->id }}">{{ $competitionCategory->name }}</option>
-                @endforeach
-            </x-tmk.form.select>
-        </div>
-        <div></div>
-    </div>
+    <p class="mt-5 ml-3">Company</p>
+    <x-input class="w-full"
+             wire:model="form.company"
+             placeholder=""/>
 
-    <div class="grid grid-cols-4 gap-5 mt-10 text-center">
+    <div class="grid grid-cols-3 gap-5 mt-7">
         <div>
             <p class="mb-2">Select an image</p>
-            <img src="/assets/placeholder-image.svg" alt="competition image" class="border-8 border-gray-500">
+            <!-- Placeholder Image -->
+            <a id="imageLink" href="#">
+                <img id="placeholderImage" src="/assets/placeholder-image.svg" alt="competition image" onclick="uploadImage()" class="border-8 border-gray-500">
+            </a>
+
+            <script>
+                // Function to handle the click event and trigger the file upload dialog
+                function uploadImage() {
+                    document.getElementById('imageInput').click();
+                }
+            </script>
+
+            <!-- Hidden input element for file upload -->
+            <input type="file" id="imageInput" wire:model="form.photo" style="display: none;">
         </div>
-        <div>
-            <p class="mb-2">Start Date <span class="text-[#fa6432]">*</span></p>
-            <x-input class="w-full"
-                     wire:model="form.start_date"
-                     placeholder=""
-                     type="date"/>
-        </div>
-        <div>
-            <p class="mb-2">Submission Date <span class="text-[#fa6432]">*</span></p>
-            <x-input class="w-full"
-                     wire:model="form.submission_date"
-                     placeholder=""
-                     type="date"/>
-        </div>
-        <div>
-            <p class="mb-2">End Date <span class="text-[#fa6432]">*</span></p>
-            <x-input class="w-full"
-                     wire:model="form.end_date"
-                     placeholder=""
-                     type="date"/>
+        <div class="col-span-2">
+            <div class="grid grid-cols-2 gap-5">
+                <div>
+                    <p class="mb-2">Competition type <span class="text-[#fa6432]">*</span></p>
+                    <x-tmk.form.select wire:model="form.competition_type_id" id="competition_type_id" class="w-full">
+                        <option value="">Select a competition type</option>
+                        @foreach($competition_types as $competitionType)
+                            <option value="{{ $competitionType->id }}">{{ $competitionType->name }}</option>
+                        @endforeach
+                    </x-tmk.form.select>
+                </div>
+                <div>
+                    <p class="mb-2">Competition category</p>
+                    <x-tmk.form.select wire:model="form.competition_category_id" id="competition_category_id" class="w-full">
+                        <option value="">Select a competition category</option>
+                        @foreach($competition_categories as $competitionCategory)
+                            <option value="{{ $competitionCategory->id }}">{{ $competitionCategory->name }}</option>
+                        @endforeach
+                    </x-tmk.form.select>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-5 mt-16">
+                <div>
+                    <p class="mb-2">Start Date <span class="text-[#fa6432]">*</span></p>
+                    <x-input class="w-full"
+                             wire:model="form.start_date"
+                             placeholder=""
+                             type="date"/>
+                </div>
+                <div>
+                    <p class="mb-2">Submission Date <span class="text-[#fa6432]">*</span></p>
+                    <x-input class="w-full"
+                             wire:model="form.submission_date"
+                             placeholder=""
+                             type="date"/>
+                </div>
+                <div>
+                    <p class="mb-2">End Date <span class="text-[#fa6432]">*</span></p>
+                    <x-input class="w-full"
+                             wire:model="form.end_date"
+                             placeholder=""
+                             type="date"/>
+                </div>
+            </div>
         </div>
     </div>
+
 
     <p class="mt-7 ml-3">Rules</p>
     <x-input class="w-full"
              wire:model="form._rules"
              placeholder=""/>
 
-    <p class="mt-7 ml-3">Prizes <span class="text-[#fa6432]">*</span></p>
+    <p class="mt-5 ml-3">Prizes <span class="text-[#fa6432]">*</span></p>
     <x-input class="w-full"
              wire:model="form.prize"
              placeholder=""/>
 
+    <p class="mt-5 ml-3">Number of submissions</p>
+    <x-input class="w-full"
+             wire:model="form.number_of_uploads"
+             placeholder=""/>
+
     <p class="mt-7 ml-3">Winner criteria <span class="text-[#fa6432]">*</span></p>
     <div class="mb-7">
-        <x-input type="radio"></x-input>
-        <label for="">By vote</label>
+        <x-input type="radio" id="by-vote" name="by-vote-selection" value="1" wire:model.live="form.by_vote"></x-input>
+        <label for="by-vote">by vote</label>
         <br>
-        <x-input type="radio"></x-input>
-        <label for="">By selection</label>
+        <x-input type="radio" id="by-selection" name="by-vote-selection" value="0" wire:model.live="form.by_vote"></x-input>
+        <label for="by-selection">by selection</label>
     </div>
+
+    @if($form->by_vote == 1)
+        <p class="mt-5 ml-3">Number of votes allowed</p>
+        <x-input class="w-full"
+                 wire:model="form.number_of_votes_allowed"
+                 placeholder=""/>
+    @endif
+
     <hr>
     <p class="mt-7 ml-3">Terms of Agreement <span class="text-[#fa6432]">*</span></p>
     <div class="mb-7">
-        <x-input type="radio"></x-input>
+        <x-input type="checkbox" wire:model.live="termsOfAgreement"></x-input>
         <label for="">I confirm that this competitions agree with Thomas More's competitions terms and acknowledge that
             the competition could be denied if the terms are not met.</label>
     </div>
@@ -112,11 +145,19 @@
         <div></div>
         <div></div>
         <div>
-            <button
-                class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
-                wire:click="createCompetition()">
-                propose competition
-            </button>
+            @if($termsOfAgreement)
+                    <button
+                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
+                        wire:click="createCompetition()">
+                        propose competition
+                    </button>
+            @else
+                <button
+                    class="bg-gray-300 opacity-50 transition font-bold py-2 px-4 rounded mb-2 border-2 border-gray-300"
+                    wire:click="createCompetition()" disabled>
+                    propose competition
+                </button>
+            @endif
         </div>
         <div>
             <button class="font-bold py-2 px-4 rounded mb-2 border-2">

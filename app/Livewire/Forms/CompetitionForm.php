@@ -4,13 +4,19 @@ namespace App\Livewire\Forms;
 
 use App\Models\Competition;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Image;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class CompetitionForm extends Form
 {
+    use WithFileUploads;
+
     public $id = null;
-    #[Validate('required|min:3')]
+    #[Validate('required|min:3', as: 'title')]
     public $title = null;
     #[Validate('required', as: 'description')]
     public $description = null;
@@ -30,6 +36,10 @@ class CompetitionForm extends Form
     public $by_vote = null;
     #[Validate('required', as: 'prize')]
     public $prize = null;
+    public $photo;
+    public $company = null;
+    public $number_of_votes_allowed;
+    public $number_of_uploads;
 
 
     public function read(Competition $competition)
@@ -39,7 +49,7 @@ class CompetitionForm extends Form
         $this->competition_type_id = $competition->competition_type_id;
         $this->title = $competition->title;
         $this->_rules = $competition->rules;
-        $this->by_vote = true;
+        $this->by_vote = $competition->by_vote;
         $this->path_to_photo = $competition->path_to_photo;
         $this->prize = $competition->prize;
         $this->description = $competition->description;
@@ -52,12 +62,22 @@ class CompetitionForm extends Form
     public function create()
     {
         $this->validate();
+
+        if ($this->photo) {
+            $originalPhoto = Image::make($this->photo)->encode('jpg', 75);
+            $this->path_to_photo = 'competition-pictures/' . Str::random(10) . '.jpg';
+            Storage::disk('public')->put($this->path_to_photo, $originalPhoto);
+            $this->path_to_photo = '/storage/' . $this->path_to_photo;
+        } else {
+            $this->path_to_photo = '/assets/card-top.jpg';
+        }
+
         Competition::create([
             'competition_category_id' => $this->competition_category_id,
             'competition_type_id' => $this->competition_type_id,
             'user_id' => auth()->user()->id,
             'title' => $this->title,
-            'by_vote' => true,
+            'by_vote' => $this->by_vote,
             'path_to_photo' => $this->path_to_photo,
             'description' => $this->description,
             'start_date' => $this->start_date,
@@ -65,6 +85,9 @@ class CompetitionForm extends Form
             'submission_date' => $this->submission_date,
             'rules' => $this->_rules,
             'prize' => $this->prize,
+            'number_of_votes_allowed' => $this->number_of_votes_allowed,
+            'company' => $this->company,
+            'number_of_uploads' => $this->number_of_uploads,
         ]);
     }
     // delete the selected record
