@@ -137,6 +137,19 @@
                              type="date"/>
                 </div>
             </div>
+            <div class="my-2">
+                <x-label for="is_file" value="File submission" />
+                <x-checkbox id="is_file" wire:model="form.newTypeIsFile" />
+                <div class="mt-3" x-show="$wire.form.newTypeIsFile">
+                    <p>Specify accepted filetypes</p>
+                    @foreach($form->acceptedFileTypes as $key => $filetype)
+                        <div class="my-1">
+                            <x-checkbox class="me-2" wire:model="form.acceptedFileTypes.{{ $key }}" />
+                            <label>{{ $pretty_names[$key] }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 
@@ -227,6 +240,7 @@
         <div>
             @if(is_null($this->form->id))
                 @if($termsOfAgreement)
+                <a href="#">
                     <button
                         class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
                         wire:click="createCompetition()">
@@ -239,6 +253,7 @@
                         propose competition
                     </button>
                 @endif
+                </a>
             @else
                 <button
                     class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"

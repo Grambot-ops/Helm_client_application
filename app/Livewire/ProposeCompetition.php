@@ -7,6 +7,7 @@ use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionType;
 use Illuminate\Http\Request;
+use App\Models\Competition;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -56,6 +57,7 @@ class ProposeCompetition extends Component
         }
         $competition_types = CompetitionType::orderBy('name')->get();
         $competition_categories = CompetitionCategory::orderBy('name')->get();
-        return view('livewire.propose-competition', compact('competition_types', 'competition_categories'));
+        $pretty_names = Competition::getFileTypes();
+        return view('livewire.propose-competition', compact('competition_types', 'competition_categories', 'pretty_names'));
     }
 }

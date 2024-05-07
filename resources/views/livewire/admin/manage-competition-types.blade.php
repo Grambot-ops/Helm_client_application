@@ -35,7 +35,7 @@
                 <th>
                     Submission type
                 </th>
-                <th>File upload</th>
+                <th></th>
                 <th></th>
                 <th>
                     <x-tmk.form.select id="perPage"
@@ -56,17 +56,8 @@
                     <td>{{ $type->id }}</td>
                     <td>{{ $type->name }}</td>
                     <td>{{ count($type->competitions) }}</td>
-                    <td>{{ $type->is_file ? 'Yes' : 'No' }}</td>
-                    {{-- with this kind of code I should NEVER be allowed to write again... --}}
+                    <td></td>
                     <td>
-                        @if($type->filetypes)
-                            @php
-                                $exploded = explode(',', $type->filetypes)
-                            @endphp
-                            @foreach($exploded as $key => $filetype)
-                                {{ $pretty_names[$filetype] }} {{ ($key != count($exploded) - 1) ? ',' : '' }}
-                            @endforeach
-                        @endif
                     </td>
                     <td>
                         <div class=" text-right border border-gray-300 rounded-md overflow-hidden m-2 grid grid-cols-2 h-10">
@@ -148,19 +139,6 @@
                          wire:model="newType"
                          class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:border-blue-400 placeholder-gray-500"/>
                 <x-input-error for="newType" class="mt-2 text-red-500"/>
-            </div>
-            <div class="my-2">
-                <x-label for="is_file" value="File submission" />
-                <x-checkbox id="is_file" wire:model="newTypeIsFile" />
-                <div class="mt-3" x-show="$wire.newTypeIsFile">
-                    <p>Specify accepted filetypes</p>
-                    @foreach($acceptedFileTypes as $key => $filetype)
-                        <div class="my-1">
-                            <x-checkbox class="me-2" wire:model="acceptedFileTypes.{{ $key }}" />
-                            <label>{{ $pretty_names[$key] }}</label>
-                        </div>
-                    @endforeach
-                </div>
             </div>
         </x-slot>
         <x-slot name="footer">
