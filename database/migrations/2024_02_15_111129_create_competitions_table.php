@@ -28,6 +28,8 @@ return new class extends Migration
             $table->dateTime('submission_date')->nullable(false);
             $table->boolean('accepted')->default(false)->nullable(false);
             $table->boolean('declined')->default(false)->nullable(false);
+            $table->integer('number_of_votes_allowed')->default(1)->nullable(false);
+            $table->string('company')->nullable();
             $table->timestamps();
         });
         DB::table('competitions')->insert(
@@ -48,6 +50,9 @@ return new class extends Migration
                     'end_date' => '2024-6-1',
                     'submission_date' => '2023-11-1',
                     'accepted' => true,
+
+                    'number_of_votes_allowed' => 2,
+                    'company' => null,
                 ],
                 [
                     'id' => 2,
@@ -64,12 +69,14 @@ return new class extends Migration
                     'end_date' => '2024-9-29',
                     'submission_date' => '2024-5-11',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 3,
+                    'company' => 'Netropolix',
                 ],
                 [
                     'id' => 3,
                     'competition_category_id' => 7,
                     'competition_type_id' => 7,
-                    'user_id' => 9,
+                    'user_id' => 1,
                     'title' => 'Cyber Security Clash',
                     'by_vote' => false,
                     'path_to_photo' => '/assets/competitions/CyberSecurityClash.webp',
@@ -77,9 +84,11 @@ return new class extends Migration
                     'prize' => 'A subscription to a cybersecurity magazine',
                     'description' => 'Dive into the world of cybersecurity. Protect and defend against digital threats!',
                     'start_date' => '2023-4-23',
-                    'end_date' => '2024-4-29',
+                    'end_date' => '2024-8-29',
                     'submission_date' => '2023-11-14',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 1,
+                    'company' => 'Thomas More',
                 ],
                 [
                     'id' => 4,
@@ -96,6 +105,8 @@ return new class extends Migration
                     'end_date' => '2024-6-15',
                     'submission_date' => '2023-12-15',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 2,
+                    'company' => null,
                 ],
                 [
                     'id' => 5,
@@ -112,6 +123,8 @@ return new class extends Migration
                     'end_date' => '2024-12-13',
                     'submission_date' => '2023-7-13',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 3,
+                    'company' => null,
                 ],
                 [
                     'id' => 6,
@@ -128,6 +141,8 @@ return new class extends Migration
                     'end_date' => '2024-3-13',
                     'submission_date' => '2024-1-21',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 1,
+                    'company' => null,
                 ],
                 [
                     'id' => 7,
@@ -144,6 +159,8 @@ return new class extends Migration
                     'end_date' => '2024-10-20',
                     'submission_date' => '2023-10-19',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 2,
+                    'company' => null,
                 ],
                 [
                     'id' => 8,
@@ -160,6 +177,8 @@ return new class extends Migration
                     'end_date' => '2024-3-27',
                     'submission_date' => '2023-12-28',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 1,
+                    'company' => null,
                 ],
                 [
                     'id' => 9,
@@ -176,6 +195,8 @@ return new class extends Migration
                     'end_date' => '2024-12-19',
                     'submission_date' => '2024-9-20',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 1,
+                    'company' => null,
                 ],
                 [
                     'id' => 10,
@@ -192,6 +213,8 @@ return new class extends Migration
                     'end_date' => '2026-12-25',
                     'submission_date' => '2025-6-20',
                     'accepted' => true,
+                    'number_of_votes_allowed' => 2,
+                    'company' => null,
                 ],
 
             ]);

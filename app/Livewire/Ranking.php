@@ -21,24 +21,39 @@ class Ranking extends Component
             ->with('participations.submissions.votes')
             ->with('participations.user')
             ->first();
-        $participations = Participation::where('competition_id', $id)
-            ->with(['submissions', 'user'])
-            ->with('submissions.votes')
-            ->get()
-            ->groupBy('user_id');
-        foreach ($participations as $participation) {
-            $votesCount = 0;
-            foreach ($participation as $participationItem) {
-                if ($participationItem->submissions != null)
-                    foreach ($participationItem->submissions as $submission)
-                        $votesCount += $submission->votes->count();
+        if ($competition->by_vote) {
+            $participations = Participation::where('competition_id', $id)
+                ->with(['submissions', 'user'])
+                ->with('submissions.votes')
+                ->get()
+                ->groupBy('user_id');
+            foreach ($participations as $participation) {
+                $votesCount = 0;
+                foreach ($participation as $participationItem) {
+                    if ($participationItem->submissions != null)
+                        foreach ($participationItem->submissions as $submission)
+                            $votesCount += $submission->votes->count();
+                }
+                $participation->votes_count = $votesCount;
             }
-            $participation->votes_count = $votesCount;
+            $participations = $participations->sortByDesc('votes_count');
+        } else {
+            $participants = Participation::where('competition_id', $id)
+                ->with(['submissions', 'user'])
+                ->get();
+            $topParticipations = collect();
+            foreach ($participants as $participation) {
+                if ($participation->ranking > 0)
+                    $topParticipations->add($participation);
+            }
+            if ($topParticipations != null)
+                $participations = $topParticipations->sortBy('ranking');
+
         }
-        $participations = $participations->sortByDesc('votes_count');
         $podium = $participations->map(function ($participation) {
-            return $participation->first()->user;
+            return $participation;
         })->take(3);
+        //dd($podium);
         $i = 1;
         return view('livewire.ranking', compact('competition', 'participations', 'i', 'podium'));
     }

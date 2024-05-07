@@ -8,21 +8,45 @@
 
         <x-slot name="footer">
             <x-button wire:click="apply" class="bg-tm-blue text-white px-4 py-2 mr-2">Confirm</x-button>
-            <x-secondary-button @click="$wire.showApplyConfirmationModal = false" class="px-4 py-2">Cancel</x-secondary-button>
+            <x-secondary-button @click="$wire.showApplyConfirmationModal = false" class="px-4 py-2">Cancel
+            </x-secondary-button>
         </x-slot>
     </x-dialog-modal>
+    {{--
+        HACK: this tag does nothing. But Tailwind does not want to compile the
+        classes that I use in my components, so I just am going to stuff it
+        with all the classes that I use in my components to trick Tailwind into
+        using them. The `invisible` class will tell it not to show it.
+        --}}
+    <div
+        class="text-tm-orange border-tm-orange border-tm-darker-orange border-tm-darker-blue text-tm-blue border-tm-blue border-2 invisible">
+    </div>
 
     <x-slot name="description">Thomas More Competition Platform</x-slot>
 
     <x-slot name="title">Competitions</x-slot>
 
-    <h1 class="text-center text-3xl mb-4 font-bold">@if($likedOnly == True) Saved @endif @if($ownOnly == True) My Own @endif Competition @if($ownOnly == True)'s @endif</h1>
+    <div class="lg:px-16 m-auto">
+        <div class="flex space-x-2 justify-between">
+            <h1 class="text-3xl w-max mb-4 font-bold">
+                @if($likedOnly)
+                    Saved competitions
+                @elseif ($ownOnly)
+                    My competitions
+                @else
+                    Competitions
+                @endif
+            </h1>
+            <x-tmk.button href="{{ route('propose-competition') }}" orange="true">
+                Propose a competition
+            </x-tmk.button>
+        </div>
+    </div>
 
-    <div class="container mx-auto px-14">
-        <div class="px-2 lg:flex flex-row-reverse justify-center items-end mb-16 bg-white/80 py-2 rounded rounded-lg border-2">
-            <div class="md:flex justify-center space-x-2 my-2">
-                <div class="lg:ms-8">
-                    <x-label for="name" value="Filter"/>
+    <div class="mx-auto lg:px-14">
+        <div class="xl:flex flex-row-reverse justify-center lg:justify-between px-4 items-end mb-16 bg-white/80 py-2 rounded rounded-lg border-2">
+            <div class="md:flex justify-center py-2 md:space-x-2">
+                <div class="">
                     <div class="relative">
                         <x-input id="name" type="text"
                                  wire:model.live.debounce.500ms="name"
@@ -35,7 +59,6 @@
                     </div>
                 </div>
                 <div>
-                    <x-label for="category" value="Category"/>
                     <x-tmk.form.select id="category"
                                        wire:model.live="category"
                                        class="block mt-1 w-full">
@@ -48,7 +71,6 @@
                     </x-tmk.form.select>
                 </div>
                 <div>
-                    <x-label for="status" value="Status"/>
                     <x-tmk.form.select id="status"
                                        wire:model.live="status"
                                        class="block mt-1 w-full">
@@ -61,22 +83,19 @@
                     </x-tmk.form.select>
                 </div>
             </div>
-            <div class="md:flex space-x-2 justify-center items-center">
-                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
-                    <a href="{{ route('propose-competition') }}">Propose Competition</a>
-                </button>
-                <button wire:click="toggleOwnOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+            <div class="flex flex-col sm:flex-row w-max mx-auto xl:mx-1 space-x-2 justify-center items-center">
+                <x-tmk.button activated="{{ $ownOnly }}" wire:click="toggleOwnOnly">
                     View own competitions
-                </button>
-                <button wire:click="toggleLikedOnly" class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded mb-2">
+                </x-tmk.button>
+                <x-tmk.button activated="{{$likedOnly}}" wire:click="toggleLikedOnly">
                     Saved competitions
-                </button>
+                </x-tmk.button>
             </div>
         </div>
         {{-- No records found --}}
         @if($competitions->isEmpty())
             <x-tmk.alert type="danger" class="w-full">
-                Can't find any competitions with <b>'{{ $name }}'</b> as a search-term
+                No search results found.
             </x-tmk.alert>
         @endif
         <x-tmk.card-container>
@@ -111,11 +130,19 @@
                                         Manage
                                     </button>
                                 @else
-                                    <button
-                                        wire:click="applyConfirmation({{ $competition->id }})"
-                                        class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    Apply
-                                    </button>
+                                    @if($competition->participations()->where('user_id', auth()->user()->id)->exists())
+                                        <button
+                                            class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
+                                            disabled>
+                                            Applied
+                                        </button>
+                                    @else
+                                        <button
+                                            wire:click="applyConfirmation({{ $competition->id }})"
+                                            class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                                            Apply
+                                        </button>
+                                    @endif
                                 @endif
                             @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date
                             && $competition->participations()->where('user_id', auth()->user()->id)->exists())
