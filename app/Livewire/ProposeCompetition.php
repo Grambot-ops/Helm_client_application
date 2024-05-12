@@ -7,7 +7,6 @@ use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionType;
 use Illuminate\Http\Request;
-use App\Models\Competition;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\Component;
