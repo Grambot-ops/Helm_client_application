@@ -86,6 +86,7 @@ class ViewSubmissions extends Component
             'participation_id',
             Participation::select('id')
                 ->where('competition_id', $this->competition->id)
+                ->where('disqualified', false)
                 ->get()
         )->get();
 
