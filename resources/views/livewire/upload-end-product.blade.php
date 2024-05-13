@@ -18,7 +18,7 @@
                 <x-tmk.form.textarea :rows="6" :cols="20" id="description" wire:model="description" />
             </div>
             <div>
-                @if($competition->competition_type->is_file)
+                @if($this->mimetype)
                     <p class="mb-4">Accepted formats: {{ $this->mimetype }}</p>
                     @error('uploaded') <p class="text-red-400">{{ $message }}</p> @enderror
                     <input type="file" id="file_input" wire:model="uploaded" required/>
