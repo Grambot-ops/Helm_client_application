@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
             $table->integer('ranking')->nullable(false);
             $table->boolean('disqualified')->nullable(false);
-            $table->dateTime('application_date')->nullable();
+            $table->dateTime('application_date')->default(now())->nullable();
             $table->dateTime('submission_date')->nullable();
             $table->timestamps();
         });
@@ -108,6 +108,15 @@ return new class extends Migration {
                     'id' => 10,
                     'competition_id' => 5,
                     'user_id' => 4,
+                    'ranking' => 0,
+                    'disqualified' => true,
+                    'application_date' => '2023-08-30 00:00:00',
+                    'submission_date' => null,
+                ],
+                [
+                    'id' => 9,
+                    'competition_id' => 9,
+                    'user_id' => 41,
                     'ranking' => 0,
                     'disqualified' => true,
                     'application_date' => '2023-08-30 00:00:00',
