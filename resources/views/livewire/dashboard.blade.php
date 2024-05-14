@@ -112,13 +112,12 @@
                                 user_id="{{ $competition->user_id }}"
                                 by_vote="{{ $competition->by_vote }}">
                         <div>
-                                    <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
-                                        <button
-                                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
-                                            See more info
-                                        </button>
-                                    </a>
-
+                            <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
+                                <button
+                                    class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
+                                    See more info
+                                </button>
+                            </a>
                             @if( date('Y-m-d') < $competition->start_date)
                                     @if($competition->participations()->where('user_id', auth()->user()->id)->exists())
                                         <button

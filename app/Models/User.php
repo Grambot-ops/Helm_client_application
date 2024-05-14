@@ -31,6 +31,7 @@ class User extends Authenticatable
         'active',
         'surname',
         'username',
+        'profile_photo_path'
     ];
 
     /**
