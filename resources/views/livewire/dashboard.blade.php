@@ -108,31 +108,18 @@
                                 upload="{{ $competition->upload }}"
                                 description="{{ $competition->description }}"
                                 picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
-                                hashtags="{{ $competition->competition_category->name }}">
+                                hashtags="{{ $competition->competition_category->name }}"
+                                user_id="{{ $competition->user_id }}"
+                                by_vote="{{ $competition->by_vote }}">
                         <div>
-                                @if( $competition->user_id == Auth::id())
-                                    <a href="{{ route('propose-competition', ['id' => urlencode($competition->id)]) }}">
-                                        <button
-                                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
-                                            Manage competition
-                                        </button>
-                                    </a>
-                                @else
                                     <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
                                         <button
                                             class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 my-2 rounded">
                                             See more info
                                         </button>
                                     </a>
-                                @endif
 
                             @if( date('Y-m-d') < $competition->start_date)
-                                @if( $competition->user_id == Auth::id())
-                                    <button
-                                        class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                        Manage
-                                    </button>
-                                @else
                                     @if($competition->participations()->where('user_id', auth()->user()->id)->exists())
                                         <button
                                             class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
@@ -146,46 +133,31 @@
                                             Apply
                                         </button>
                                     @endif
-                                @endif
+
                             @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date
                             && $competition->participations()->where('user_id', auth()->user()->id)->exists())
-                                <button
-                                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    <a href="{{ route('upload', ['id' => $competition->id]) }}">
+                                <a href="{{ route('upload', ['id' => $competition->id]) }}">
+                                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                         Submit
-                                    </a>
                                 </button>
+                                </a>
+
                             @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
+                                @if( $competition->by_vote)
                                 <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
-                                    @if( $competition->user_id == Auth::id())
-                                        <button
-                                            class="bg-yellow-600 hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                            Determine Winners
-                                        </button>
-                                    @else
                                         <button
                                             class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                             Vote
                                         </button>
-                                    @endif
                                 </a>
+                                @endif
                             @elseif( $competition->end_date < date('Y-m-d'))
-
-                                @if( $competition->user_id == Auth::id())
-                                    <button
-                                        class="bg-tm-blue hover:bg-yellow-600 transition text-white font-bold py-2 px-4 rounded">
-                                        <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
-                                           Ranking
-                                        </a>
-                                    </button>
-                                @else
                                     <button
                                         class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                         <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
                                             Ranking
                                         </a>
                                     </button>
-                                @endif
                             @endif
                         </div>
                         <button wire:click="toggleLiked({{ $competition->id }})" class="text-gray-400 hover:text-yellow-300 transition border-gray-300">

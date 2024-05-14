@@ -163,7 +163,7 @@ return new class extends Migration
                     'competition_type_id' => 2,
                     'user_id' => 4,
                     'title' => 'App Design Derby',
-                    'by_vote' => true,
+                    'by_vote' => false,
                     'path_to_photo' => '/assets/competitions/AppDesignDerby.png',
                     'rules' => 'Design a mobile application that addresses a specific problem or enhances user experience.',
                     'prize' => 'A feature in a popular tech magazine',

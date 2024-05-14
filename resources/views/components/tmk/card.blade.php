@@ -9,6 +9,8 @@
     'hashtags' => [],
     'picture' => '',
     'hashtags' => '',
+    'user_id' => '',
+    'by_vote' => '',
 ])
 
 <div class="w-full rounded overflow-hidden shadow-lg">
@@ -25,9 +27,21 @@
                     <x-phosphor-lock-simple-open class="inline-block w-6 h-6 mb-1"/>
                 </div>
             @elseif($vote)
-                <div class="text-yellow-600 font-bold mt-1">votes open
-                    <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
-                </div>
+                @if($by_vote)
+                        <div class="text-yellow-600 font-bold mt-1">votes open
+                            <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                        </div>
+                @else
+                    @if($user_id == Auth::id())
+                        <div class="text-yellow-600 font-bold mt-1">choose winners
+                            <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                        </div>
+                    @else
+                        <div class="text-yellow-600 font-bold mt-1">pending winners
+                            <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                        </div>
+                    @endif
+                @endif
             @elseif($upload)
                 <div class="text-blue-300 font-bold mt-1">upload
                     <x-phosphor-upload-simple class="inline-block w-6 h-6 mb-1"/>
