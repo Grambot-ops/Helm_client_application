@@ -19,18 +19,27 @@
                 <strong class="text-black">Company:</strong> {{ $competition->company }}
             </div>
             @if( $competition->user_id == Auth::id())
-                <a href="{{ route('propose-competition', ['id' => urlencode($competition->id)]) }}">
-                    <button
-                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
-                        Manage competition
-                    </button>
-                </a>
-                <a href="{{ route('announcement') }}">
-                    <button
-                        class="bg-tm-blue hover:bg-tm-darker-blue text-white font-bold py-2 px-4 rounded ">
-                        Send announcement
-                    </button>
-                </a>
+                @if( $competition->submission_date > date('Y-m-d'))
+                    <a href="{{ route('propose-competition', ['id' => urlencode($competition->id)]) }}">
+                        <button
+                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                            Manage competition
+                        </button>
+                    </a>
+                @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date && !$competition->by_vote)
+                    <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
+                        <button
+                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                            Determine Winners
+                        </button>
+                    </a>
+                @endif
+                    <a href="{{ route('announcement') }}">
+                        <button
+                            class="bg-tm-blue hover:bg-tm-darker-blue text-white font-bold py-2 px-4 rounded ">
+                            Send announcement
+                        </button>
+                    </a>
                 <div class="border-t border-gray-100"></div>
             @endif
         </div>
@@ -121,7 +130,7 @@
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
         <p class="mb-7 text-md text-black">{{ $competition->prize }}</p>
     </div>
-    @if( $competition->submission_date < date('Y-m-d'))
+    @if( $competition->submission_date < date('Y-m-d') )
         <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}"
            class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
             <button>
