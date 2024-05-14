@@ -39,6 +39,7 @@ class ViewSubmissions extends Component
             'participation_id',
             Participation::select('id')
                 ->where('competition_id', $this->competition->id)
+                ->where('disqualified', false)
                 ->get()
         )->get();
         foreach ($submissions as $submission) {
@@ -86,11 +87,13 @@ class ViewSubmissions extends Component
             'participation_id',
             Participation::select('id')
                 ->where('competition_id', $this->competition->id)
+                ->where('disqualified', false)
                 ->get()
         )->get();
 
         $usersWithSubmissions = User::whereHas('participations.submissions', function ($query) use ($competition) {
-            $query->where('participations.competition_id', $competition->id);
+            $query->where('participations.competition_id', $competition->id)
+            ->where('participations.disqualified', false);
         })->select('id', 'name', 'surname')->distinct()->get();
 
         return view('livewire.view-submissions', compact('competition', 'submissions', 'usersWithSubmissions'));
@@ -151,6 +154,16 @@ class ViewSubmissions extends Component
         ]);
         $this->submissionToDelete = null;
         $this->showModalDelete = false;
+    }
+    public function disqualifyParticipant(){
+        $this->submissionToDelete->participation->update(['disqualified' => true]);
+        $this->dispatch('swal:toast', [
+            'background' => 'success',
+            'html' => "The User <b><i>{$this->submissionToDelete->participation->user->name}</i></b> has been disqualified",
+        ]);
+        $this->submissionToDelete = null;
+        $this->showModalDelete = false;
+        return redirect(request()->header('Referer'));
     }
 
     public function openInfo(Submission $submission){

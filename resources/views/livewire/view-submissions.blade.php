@@ -2,9 +2,9 @@
     <x-slot name="subtitle">Manage notifications</x-slot>
     <div class="pb-6">
         <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
-        @if($competition->user_id == Auth::id() && !$competition->by_vote)
+        @if($competition->user_id == Auth::id() && !$competition->by_vote && $competition->submission_date < date('Y-m-d'))
         <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg">
-            <h1 class="pt-5">Choose the
+            <h1 class="pt-5">
                 @if(count($usersWithSubmissions) == 1)
                     Choose the winner
                 @elseif(count($usersWithSubmissions) == 2)
@@ -116,7 +116,7 @@
                                         <x-button wire:click="openInfo({{$submission}})" class="bg-transparent hover:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-05" href="#">
                                             <x-phosphor-info class="inline-block w-5 h-5 text-blue-400"/>
                                         </x-button>
-                                        @if(auth()->user()->admin||auth()->user()->id==$competition->organiser_id)
+                                        @if((auth()->user()->admin && !$placesSaved) || (auth()->user()->id==$competition->organiser_id && !$placesSaved))
                                         <x-button wire:click="openDelete({{$submission}})" class="bg-transparent hover:bg-transparent active:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-0.5" href="#">
                                             <x-phosphor-trash class="inline-block w-5 h-5 text-red-600"/>
                                         </x-button>
@@ -166,6 +166,9 @@
                 </div>
                 <div>
                     <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+                    <x-button wire:click="disqualifyParticipant"
+                              wire:confirm="Are you sure you want to disqualify this participant? All the submissions by this user for this competitions will also be disqualified!"
+                              class="bg-red-500 hover:bg-red-700 active:bg-red-700">Disqualify</x-button>
                 </div>
             </div>
         </x-slot>
@@ -190,6 +193,9 @@
                         <p class="py-3">
                             Description: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->description : ''  }}</span>
                         </p>
+                            <p class="py-3">
+                                Link: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}</span>
+                            </p>
                     </div>
                     <div>
                         <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">

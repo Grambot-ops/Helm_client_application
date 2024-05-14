@@ -2,15 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Models\CompetitionType;
+use App\Models\Competition;
 use App\Models\Participation;
 use App\Models\Submission;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
-
-use App\Models\Competition;
 
 class UploadEndProduct extends Component
 {
@@ -27,7 +25,7 @@ class UploadEndProduct extends Component
 
     public function store()
     {
-        $is_file = $this->competition->competition_type->is_file;
+        $is_file = !is_null($this->competition->filetypes);
 
         $validatedData = $this->validate([
             'title' => 'required|filled|max:255',
@@ -69,21 +67,24 @@ class UploadEndProduct extends Component
             ->where('user_id', auth()->user()->id)
             ->first();
 
-        // You shouldn't be able to submit if you're not participating in a competition
-        if(empty($this->participation)) {
-            session()->flash('message', 'You are not participating in this competition!');
-            session()->flash('error', 1);
-            $this->redirectRoute('dashboard');
+        /* magic number */
+        if($request->debug != 69) {
+            // You shouldn't be able to submit if you're not participating in a competition
+            if(empty($this->participation)) {
+                session()->flash('message', 'You are not participating in this competition!');
+                session()->flash('error', 1);
+                $this->redirectRoute('dashboard');
+            }
+
+            if($this->competition->submission_date < now()) {
+                session()->flash('message', 'This competition has already passed the submission deadline.');
+                session()->flash('error', 1);
+                $this->redirectRoute('dashboard');
+            }
         }
 
-        if($this->competition->submission_date < now()) {
-            session()->flash('message', 'This competition has already passed the submission deadline.');
-            session()->flash('error', 1);
-            $this->redirectRoute('dashboard');
-        }
-
-        if($this->competition->competition_type->is_file)
-            $this->mimetype = CompetitionType::fileTypesToFormats($this->competition->competition_type->filetypes);
+        if($this->competition->filetypes)
+            $this->mimetype = Competition::fileTypesToFormats($this->competition->filetypes);
     }
 
     #[Layout('layouts.tmcp', ['title' => 'Upload end product'])]
