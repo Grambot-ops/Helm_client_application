@@ -18,6 +18,21 @@
             <div class="mb-4 text-lg">
                 <strong class="text-black">Company:</strong> {{ $competition->company }}
             </div>
+            @if( $competition->user_id == Auth::id())
+                <a href="{{ route('propose-competition', ['id' => urlencode($competition->id)]) }}">
+                    <button
+                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                        Manage competition
+                    </button>
+                </a>
+                <a href="{{ route('announcement') }}">
+                    <button
+                        class="bg-tm-blue hover:bg-tm-darker-blue text-white font-bold py-2 px-4 rounded ">
+                        Send announcement
+                    </button>
+                </a>
+                <div class="border-t border-gray-100"></div>
+            @endif
         </div>
     </div>
     <div class="bg-white rounded-lg shadow-md p-4 mb-4">
