@@ -108,7 +108,7 @@
                 <x-tmk.card-container>
                     @foreach($submissions as $submission)
                         <div class="w-full rounded overflow-hidden shadow-lg" wire:key="submission-{{ $submission->id }}">
-                            <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+                            <img class="w-full" src="{{  URL::asset($submission->path ?? '/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
                             <div class="px-6 py-4">
                                 <div class="justify-between flex">
                                     <div class="font-bold text-xl mb-2">{{$submission->participation->user->name }} {{$submission->participation->user->surname }}</div>
@@ -194,7 +194,7 @@
                             Description: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->description : ''  }}</span>
                         </p>
                             <p class="py-3">
-                                Link: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}</span>
+                                Link: <span class="font-bold text-blue-300"> <a href="{{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}"> {{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}</a></span>
                             </p>
                     </div>
                     <div>
