@@ -113,15 +113,6 @@ return new class extends Migration {
                     'application_date' => '2023-08-30 00:00:00',
                     'submission_date' => null,
                 ],
-                [
-                    'id' => 9,
-                    'competition_id' => 9,
-                    'user_id' => 41,
-                    'ranking' => 0,
-                    'disqualified' => true,
-                    'application_date' => '2023-08-30 00:00:00',
-                    'submission_date' => null,
-                ],
             ]);
     }
 
