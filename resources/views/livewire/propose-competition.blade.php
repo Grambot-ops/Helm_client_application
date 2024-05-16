@@ -61,9 +61,16 @@
         <div>
             <p class="mb-2">Select an image</p>
             <!-- Placeholder Image -->
-            <a id="imageLink" href="#">
-                <img id="placeholderImage" src="/assets/placeholder-image.svg" alt="competition image" onclick="uploadImage()" class="border-8 border-gray-500">
-            </a>
+            @if($this->form->photo)
+                <a id="imageLink" href="#">
+                    <img id="placeholderImage" src="{{ $this->form->photo  }}" alt="competition image" onclick="uploadImage()" class="border-8 border-gray-500">
+                </a>
+            @else
+                <a id="imageLink" href="#">
+                    <img id="placeholderImage" src="/assets/placeholder-image.svg" alt="competition image" onclick="uploadImage()" class="border-8 border-gray-500">
+                </a>
+            @endif
+
 
             <script>
                 // Function to handle the click event and trigger the file upload dialog
@@ -234,46 +241,35 @@
 
     <hr>
 
-    <div class="grid grid-cols-7 gap-1 mt-7 text-center">
-        <div></div>
-        <div></div>
-        <div>
-            @if(is_null($this->form->id))
-                <a href="#">
+    <div class="mt-7 text-center">
+        @if(is_null($this->form->id))
+            <a href="#">
                 @if($termsOfAgreement)
                     <button
-                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
+                        class="bg-tm-orange hover:bg-tm-darker-orange m-2 transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
                         wire:click="createCompetition()">
                         propose competition
                     </button>
                 @else
                     <button
-                        class="bg-gray-300 opacity-50 transition font-bold py-2 px-4 rounded mb-2 border-2 border-gray-300"
+                        class="bg-gray-300 opacity-50 m-2 transition font-bold py-2 px-4 rounded mb-2 border-2 border-gray-300"
                         wire:click="createCompetition()" disabled>
                         propose competition
                     </button>
                 @endif
-                </a>
-            @else
-                <button
-                    class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
-                    wire:click="createCompetition()">
-                    edit competition
+            </a>
+        @else
+            <button
+                class="bg-tm-orange hover:bg-tm-darker-orange m-2 transition text-white font-bold py-2 px-4 rounded mb-2 border-2 border-tm-orange hover:border-tm-darker-orange"
+                wire:click="updateCompetition({{ $form->id }})">
+                edit competition
+            </button>
+        @endif
+            <a href="{{ route('dashboard') }}">
+                <button class="font-bold py-2 px-4 rounded m-2 mb-2 border-2">
+                    cancel
                 </button>
-            @endif
-        </div>
-        <div>
-            <button class="font-bold py-2 px-4 rounded mb-2 border-2">
-                cancel
-            </button>
-        </div>
-        <div>
-            <button class="font-bold py-2 px-4 rounded mb-2 border-2">
-                Back to homepage
-            </button>
-        </div>
-        <div></div>
-        <div></div>
+            </a>
     </div>
 </div>
 

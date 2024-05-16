@@ -30,7 +30,7 @@ class ProposeCompetition extends Component
        ]);
     }
 
-    public function updateRecord(Competition $competition)
+    public function updateCompetition(Competition $competition)
     {
         $this->form->update($competition);
         $this->dispatch('swal:toast', [
