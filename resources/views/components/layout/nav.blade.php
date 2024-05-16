@@ -24,7 +24,11 @@
                         USER
                     @endauth
                 </span>
+                @if(auth()->user()->profile_photo_path == null)
+                    <img src="{{ Storage::url('assets/profile_pictures/default.jpg') }}" alt="Profile Photo" class="rounded-full h-10 w-10 object-cover">
+                @else
                 <img src="{{ Storage::url(auth()->user()->profile_photo_path) }}" alt="Profile Photo" class="rounded-full h-10 w-10 object-cover">
+                @endif
             </button>
             <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
                 @if(auth()->user()->user_roles()->where('role_id', 3)->exists())
