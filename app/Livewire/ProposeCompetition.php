@@ -7,6 +7,7 @@ use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -30,6 +31,23 @@ class ProposeCompetition extends Component
        ]);
     }
 
+    public function mount(Request $request)
+    {
+        if($request->id == null)
+        {
+            return;
+        }
+        $this->competition = Competition::where('id', $request->id ?? 0)->first();
+
+        if($this->competition->user_id != Auth::id())
+        {
+            session()->flash('message', 'You are not the organizer of this competition.');
+            session()->flash('error', 1);
+            $this->redirectRoute('dashboard');
+            return;
+        }
+    }
+
     public function updateCompetition(Competition $competition)
     {
         $this->form->update($competition);
@@ -44,8 +62,6 @@ class ProposeCompetition extends Component
     public function render(Request $request)
     {
         $id = $request->id;
-
-        $this->competition = Competition::where('id', $id ?? 0)->first();
 
         if($this->competition) {
             $this->resetErrorBag();
