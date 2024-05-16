@@ -21,6 +21,8 @@ class Dashboard extends Component
     public $competition;
     public $showApplyConfirmationModal = false;
     public $status = -1;
+    public $participation;
+
 
     public function mount()
     {
@@ -89,12 +91,14 @@ class Dashboard extends Component
         }
 
         $this->buttonDisabled = true;
-        Participation::create([
+        $participation = Participation::create([
             'competition_id' => $this->competition->id,
             'user_id' => auth()->id(),
             'ranking' => 0,
             'disqualified' => false,
+            'application_date' => now(),
         ]);
+        $this->participation = $participation;
         $this->dispatch('swal:toast', [
             'background' => 'success',
             'html' => "You have applied!",
