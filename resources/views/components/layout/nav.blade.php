@@ -24,10 +24,7 @@
                         USER
                     @endauth
                 </span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    <path fill-rule="evenodd" d="M10 0a8 8 0 100 16 8 8 0 000-16zM0 10a10 10 0 1120 0 10 10 0 01-20 0z" clip-rule="evenodd" />
-                </svg>
+                <img src="{{ Storage::url(auth()->user()->profile_photo_path) }}" alt="Profile Photo" class="rounded-full h-10 w-10 object-cover">
             </button>
             <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
                 @if(auth()->user()->user_roles()->where('role_id', 3)->exists())
