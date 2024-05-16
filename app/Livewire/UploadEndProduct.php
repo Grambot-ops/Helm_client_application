@@ -46,6 +46,10 @@ class UploadEndProduct extends Component
             'link' => !$is_file ? $validatedData['uploaded'] : null,
         ]);
 
+        $this->participation->update([
+            'submission_date' => now(),
+        ]);
+
         session()->flash('message', 'The submission was successfully uploaded!');
 
         $this->redirectRoute('dashboard');
