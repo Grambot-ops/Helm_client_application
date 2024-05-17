@@ -16,6 +16,7 @@ class ApplyForCompetition extends Component
     public $buttonDisabled = false;
     public $competition;
     public $participation;
+    public bool $isParticipant;
     public $refreshTimeline = false;
 
     public function mount(Request $request)
@@ -25,16 +26,14 @@ class ApplyForCompetition extends Component
         $this->participation = Participation::where('competition_id', $this->competition->id)
             ->where('user_id', auth()->id())
             ->first();
+        $this->isParticipant = Participation::where('competition_id', $this->competition->id)
+            ->where('user_id', auth()->id())
+            ->exists();
     }
 
     public function apply()
     {
-
-        $isParticipant = Participation::where('competition_id', $this->competition->id)
-            ->where('user_id', auth()->id())
-            ->exists();
-
-        if ($isParticipant) {
+        if ($this->isParticipant) {
             $this->dispatch('swal:toast', [
                 'background' => 'warning',
                 'html' => "You are already a participant in this competition.",
