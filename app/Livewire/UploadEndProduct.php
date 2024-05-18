@@ -26,6 +26,7 @@ class UploadEndProduct extends Component
     public function store()
     {
         $is_file = !is_null($this->competition->filetypes);
+        $filename = null;
 
         $validatedData = $this->validate([
             'title' => 'required|filled|max:255',
@@ -33,17 +34,16 @@ class UploadEndProduct extends Component
             'uploaded' => $is_file ? "required|file|mimes:$this->mimetype|max:2048" :  "required|url",
         ]);
 
-        if($this->competition->competition_type->is_file) {
-            $fileName = time() . '_' . $validatedData['uploaded']->getClientOriginalName();
-            $validatedData['uploaded']->storeAs('uploads', $fileName);
-        }
+        if($is_file)
+            $filename = $this->uploaded->store('public/uploads');
+
 
         Submission::create([
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'participation_id' => $this->participation->id,
-            'path' => $fileName ?? null,
-            'link' => !$is_file ? $validatedData['uploaded'] : null,
+            'path' => $filename ?? null,
+            'link' => !$is_file ? $this->uploaded : null,
         ]);
 
         $this->participation->update([

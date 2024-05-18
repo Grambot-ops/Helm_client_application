@@ -137,13 +137,14 @@
                 Ranking
             </button>
         </a>
-    @elseif($competition->start_date < date('Y-m-d') && date('Y-m-d') < $competition->submission_date )
-        <a href="{{ route('upload', ['id' => urlencode($competition->id)]) }}"
-           class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-            <button>
-                Submit
-            </button>
-        </a>
+    @elseif($competition->start_date < date('Y-m-d') && date('Y-m-d') < $competition->submission_date
+               && $isParticipant)
+        <x-tmk.button href="{{ route('upload', ['id' => urlencode($competition->id)]) }}">
+            Submit
+        </x-tmk.button>
+        <x-tmk.button orange href="{{ route('own-submissions', ['id' => urlencode($competition->id)]) }}">
+            View own submissions
+        </x-tmk.button>
     @elseif($competition->participations()->where('user_id', auth()->user()->id)->exists())
         <button
             class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
