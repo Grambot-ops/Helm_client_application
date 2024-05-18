@@ -21,8 +21,7 @@
         <div class="my-4 w-full">{{ $types->links() }}</div>
         <table class="text-center w-full border border-gray-300">
             <colgroup>
-                <col class="w-20">
-                <col class="w-20">
+                <col class="w-52">
                 <col class="w-52">
                 <col class="w-52">
                 <col class="w-52">
@@ -30,10 +29,9 @@
             </colgroup>
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
-                <th>id</th>
                 <th>Name</th>
                 <th>
-                    Submission type
+                    # of competitions in type
                 </th>
                 <th></th>
                 <th></th>
@@ -53,7 +51,6 @@
             @forelse($types as $type)
                 <tr wire:key="{{ $type->id }}"
                     class="border-t border-gray-300">
-                    <td>{{ $type->id }}</td>
                     <td>{{ $type->name }}</td>
                     <td>{{ count($type->competitions) }}</td>
                     <td></td>
