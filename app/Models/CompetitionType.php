@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompetitionType extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'is_file', 'filetypes'];
+    protected $fillable = ['name', 'filetypes'];
 
     public function competitions()
     {
