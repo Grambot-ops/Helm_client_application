@@ -117,7 +117,7 @@
                                         <x-button wire:click="openInfo({{$submission}})" class="bg-transparent hover:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-05" href="#">
                                             <x-phosphor-info class="inline-block w-5 h-5 text-blue-400"/>
                                         </x-button>
-                                        @if((auth()->user()->admin && !$placesSaved) || (auth()->user()->id==$competition->organiser_id && !$placesSaved))
+                                        @if((auth()->user()->admin && !$placesSaved) || (auth()->user()->id==$competition->user_id && !$placesSaved))
                                         <x-button wire:click="openDelete({{$submission}})" class="bg-transparent hover:bg-transparent active:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-0.5" href="#">
                                             <x-phosphor-trash class="inline-block w-5 h-5 text-red-600"/>
                                         </x-button>
