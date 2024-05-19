@@ -107,7 +107,7 @@
                                 upload="{{ $competition->upload }}"
                                 description="{{ $competition->description }}"
                                 picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
-                                hashtags="{{ $competition->competition_category->name }}"
+                                hashtags="{{ $competition->competition_category->name ?? null}}"
                                 user_id="{{ $competition->user_id }}"
                                 by_vote="{{ $competition->by_vote }}">
                         <div>
