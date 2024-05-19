@@ -121,8 +121,9 @@ class Dashboard extends Component
     public function loadCompetitions()
     {
         $query = Competition::orderBy('start_date')
-            ->searchTitleOrDescription($this->name)
-            ->where('competition_category_id', 'like', $this->category);
+            ->searchTitleOrDescription($this->name);
+        if($this->category != '%')
+            $query->where('competition_category_id', 'like', $this->category);
         if ($this->likedOnly) {
             $query->whereIn('id', function ($query) {
                 $query->select('competition_id')
