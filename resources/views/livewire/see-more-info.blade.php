@@ -10,7 +10,7 @@
             <h1 class="text-3xl font-bold mb-4 text-black">{{ $competition->title }}</h1>
             <p class="text-lg mb-4">{{ $competition->description }}</p>
             <div class="mb-4 text-lg">
-                <strong class="text-black">Category:</strong> {{ $competition->competition_category->name }}
+                <strong class="text-black">Category:</strong> {{ $competition->competition_category->name ?? 'None' }}
             </div>
             <div class="mb-4 text-lg">
                 <strong class="text-black">Type:</strong> {{ $competition->competition_type->name }}

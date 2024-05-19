@@ -100,7 +100,6 @@
         @endif
         <x-tmk.card-container>
             @foreach($competitions as $competition)
-                @if($competition->accepted)
                     <x-tmk.card title="{{ $competition->title }}"
                                 closed="{{ $competition->closed }}"
                                 open="{{ $competition->open }}"
@@ -108,7 +107,7 @@
                                 upload="{{ $competition->upload }}"
                                 description="{{ $competition->description }}"
                                 picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
-                                hashtags="{{ $competition->competition_category->name }}"
+                                hashtags="{{ $competition->competition_category->name ?? null}}"
                                 user_id="{{ $competition->user_id }}"
                                 by_vote="{{ $competition->by_vote }}">
                         <div>
@@ -163,7 +162,6 @@
                             <x-phosphor-star-duotone class="inline-block w-7 h-7 {{ $competition->liked ? 'text-yellow-300' : '' }}"/>
                         </button>
                     </x-tmk.card>
-                @endif
             @endforeach
         </x-tmk.card-container>
     </div>
