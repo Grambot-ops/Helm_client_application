@@ -10,7 +10,7 @@
             <h1 class="text-3xl font-bold mb-4 text-black">{{ $competition->title }}</h1>
             <p class="text-lg mb-4">{{ $competition->description }}</p>
             <div class="mb-4 text-lg">
-                <strong class="text-black">Category:</strong> {{ $competition->competition_category->name ?? 'None' }}
+                <strong class="text-black">Category:</strong> {{ $competition->competition_category->name ?? '/' }}
             </div>
             <div class="mb-4 text-lg">
                 <strong class="text-black">Type:</strong> {{ $competition->competition_type->name }}
@@ -125,7 +125,7 @@
 
     <div class="mt-7">
         <h2 class="text-xl font-bold mb-2 text-black">Rules</h2>
-        <p class="mb-5 text-md text-black">{{ $competition->rules }}</p>
+        <p class="mb-5 text-md text-black">{{ $competition->rules ?? '/'}}</p>
 
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
         <p class="mb-7 text-md text-black">{{ $competition->prize }}</p>
