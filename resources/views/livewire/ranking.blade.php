@@ -25,7 +25,7 @@
             </defs>
         @foreach($podium as $place)
                 @if($i == 1)
-                    @if($place->ranking > 0)
+                    @if($place->votes_count > 0)
                         @if($place->first()->user->profile_photo_path==null)
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" alt="profile" height="50px" width="50px"
                                    clip-path="url(#round)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
@@ -33,12 +33,10 @@
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
                                    clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
                         @endif
-                @else
-                    No votes
-                @endif
+                    @endif
                     {{$i=0}}
                 @elseif($i==0)
-                    @if($place->ranking > 0)
+                    @if($place->votes_count > 0)
                         @if($place->first()->user->profile_photo_path==null)
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" alt="profile" height="50px" width="50px"
                                    clip-path="url(#round1)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
@@ -46,15 +44,10 @@
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
                                    clip-path="url(#round1)" href="{{$place->first()->user->profile_photo_path}}"/>
                         @endif
-                        <text x={{$i*100}} y={{95+$j*50}} >
-                            {{$place->first()->user->name}} {{$place->first()->user->surname}}
-                        </text>
-                    @else
-                        No votes
                     @endif
                 {{$i=2}}
                 @else
-                    @if($place->ranking > 0)
+                    @if($place->votes_count > 0)
                         @if($place->first()->user->profile_photo_path==null)
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" alt="profile" height="50px" width="50px"
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
@@ -62,11 +55,6 @@
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
                                    clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
                         @endif
-                        <text x={{$i*100}} y={{95+$j*50}} >
-                            {{$place->first()->user->name}} {{$place->first()->user->surname}}
-                        </text>
-                    @else
-                        No votes
                     @endif
             @endif
             {{$j++}}
@@ -86,6 +74,7 @@
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
                 <th>#</th>
+                <th>Profile picture</th>
                 <th>Name</th>
                 <th># of votes</th>
             </thead>
@@ -93,6 +82,11 @@
             @foreach($participations as $participation)
                 <tr class="border-b border-gray-300">
                     <td>{{$i++}}</td>
+                    @if($participation->first()->user->profile_photo_path==null)
+                        <td><img width="50px" src="{{asset('assets/profile_pictures/default.jpg')}}" alt=""/></td>
+                    @else
+                        <td><img width="50px" src="{{$participation->first()->user->profile_photo_path}}" alt=""/></td>
+                    @endif
                     <td>{{$participation->first()->user->name}} {{$participation->first()->user->surname}}</td>
                     <td>{{$participation->votes_count}}</td>
                 </tr>
@@ -129,10 +123,10 @@
                                    clip-path="url(#round)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round)" href="{{$place->user->profile_photo_path}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
-                            {{$place->first()->user->name}} {{$place->first()->user->surname}}
+                            {{$place->user->name}} {{$place->user->surname}}
                         </text>
                     @else
                         No votes
@@ -145,10 +139,10 @@
                                    clip-path="url(#round1)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round1)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round1)" href="{{$place->user->profile_photo_path}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
-                            {{$place->first()->user->name}} {{$place->first()->user->surname}}
+                            {{$place->user->name}} {{$place->user->surname}}
                         </text>
                     @else
                         No votes
@@ -161,10 +155,10 @@
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round2)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round2)" href="{{$place->user->profile_photo_path}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
-                            {{$place->first()->user->name}} {{$place->first()->user->surname}}
+                            {{$place->user->name}} {{$place->user->surname}}
                         </text>
                     @else
                         No votes
