@@ -11,7 +11,7 @@
         <!-- New type Input -->
         <x-button class="bg-tm-blue hover:bg-tm-darker-blue focus:bg-tm-darker-blue"
                   @click="$wire.showNewModal = true">
-            Add new competition
+            Add new submission
         </x-button>
 {{--        </div>--}}
     </x-tmk.section>
