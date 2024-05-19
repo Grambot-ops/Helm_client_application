@@ -39,8 +39,11 @@ class Competition extends Model
     public static function fileTypesToFormats(string $_filetypes): string
     {
         $formats = '';
-        foreach(explode(',', $_filetypes) as $filetype) {
+        $exploded = explode(',', $_filetypes);
+        foreach($exploded as $filetype) {
             $formats .= static::$file_formats[$filetype];
+            if($filetype != array_key_last($exploded))
+                $formats .= ',';
         }
         $formats = rtrim($formats, ',');
         return $formats;

@@ -1,6 +1,5 @@
-@php
-use Carbon\Carbon;
-@endphp
+@use('Carbon\Carbon')
+@use('App\Models\Competition')
 
 {{-- TODO: add more stuff--}}
 <div>
@@ -20,11 +19,28 @@ use Carbon\Carbon;
                 <p class="mb-2"><span class="font-bold">Submission date:</span> {{ Carbon::parse($proposal->submission_date)->format('d/m/Y') }}</p>
             </div>
 
-            <h2 class="text-xl font-bold">Rules</h2>
-            <p class="mb-2">{{ $proposal->rules }}</p>
+            <div class="pb-4">
+                <p class="mb-2"><span class="font-bold">Winning criteria:</span> {{ $proposal->by_vote ? 'By vote' : 'By selection' }} </p>
+                <p class="mb-2"><span class="font-bold">Max number of uploads:</span> {{ $proposal->number_of_uploads != 0 ? $proposal->number_of_uploads : 'Unlimited' }}</p>
+                @if($proposal->filetypes)
+                    <p class="mb-2"><span class="font-bold">Accepted filetypes:</span>
+                        {{ Competition::filetypesToFormats($proposal->filetypes) }}
+                    </p>
+                @endif
+            </div>
+
+            @if($proposal->rules)
+                <h2 class="text-xl font-bold">Rules</h2>
+                <p class="mb-2">{{ $proposal->rules }}</p>
+            @endif
 
             <h2 class="text-xl font-bold">Prize</h2>
             <p class="mb-2">{{ $proposal->prize }}</p>
+
+            @if($proposal->company)
+                <p class="mb-2"><span class="font-bold">Company:</span> {{ $proposal->company }}</p>
+            @endif
+
 
             <div class="m-auto mt-8">
                 <button
