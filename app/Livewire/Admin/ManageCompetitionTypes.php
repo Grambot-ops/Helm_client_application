@@ -74,7 +74,6 @@ class ManageCompetitionTypes extends Component
 
         CompetitionType::create([
             'name' => trim($validatedData['newType']),
-            'is_file' => $this->newTypeIsFile,
         ]);
 
         $this->dispatch('swal:toast', [
