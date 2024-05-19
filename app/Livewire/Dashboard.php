@@ -164,6 +164,8 @@ class Dashboard extends Component
             });
         }
 
+        // only show accepted competitions
+        $query->where('accepted', 1);
 
         $competitions = $query->get();
 

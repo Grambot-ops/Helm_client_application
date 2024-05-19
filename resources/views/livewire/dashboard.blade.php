@@ -100,7 +100,6 @@
         @endif
         <x-tmk.card-container>
             @foreach($competitions as $competition)
-                @if($competition->accepted)
                     <x-tmk.card title="{{ $competition->title }}"
                                 closed="{{ $competition->closed }}"
                                 open="{{ $competition->open }}"
@@ -163,7 +162,6 @@
                             <x-phosphor-star-duotone class="inline-block w-7 h-7 {{ $competition->liked ? 'text-yellow-300' : '' }}"/>
                         </button>
                     </x-tmk.card>
-                @endif
             @endforeach
         </x-tmk.card-container>
     </div>
