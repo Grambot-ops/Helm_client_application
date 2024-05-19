@@ -28,6 +28,15 @@ class UploadEndProduct extends Component
         $is_file = !is_null($this->competition->filetypes);
         $filename = null;
 
+        $submissions = Submission::where('participation_id', $this->participation->id)->count();
+        $number_of_submissions = $this->competition->number_of_uploads;
+        if($submissions >= $number_of_submissions && $number_of_submissions != 0) {
+            session()->flash('message', "You cannot submit more than {$number_of_submissions} submissions!");
+            session()->flash('error', 1);
+            $this->redirectRoute('dashboard');
+            return;
+        }
+
         $validatedData = $this->validate([
             'title' => 'required|filled|max:255',
             'description' => '',
