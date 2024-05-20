@@ -35,7 +35,7 @@
                 @if(auth()->user()->admin)
                     <a href="{{ route('admin.accept-competition') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View proposals</a>
                     <a href="{{ route('admin.compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
-                    <a href="{{ route('admin.comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage submission types</a>
+                    <a href="{{ route('admin.comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition types</a>
                     <a href="{{ route('admin.notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>
                         <a href="{{ route('admin.users') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage users</a>
                 @endif
