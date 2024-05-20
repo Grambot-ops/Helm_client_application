@@ -17,7 +17,7 @@
     <img class="w-full cards-vh" src="{{ URL::asset($picture ?? '/assets/card-top.jpg') }}" alt="Competition">
     <div class="px-6 py-4">
         <div class="justify-between flex mb-2">
-            <div class="font-bold text-xl mb-2">{{ $title }}</div>
+            <div class="font-bold text-xl mb-2">{{ Str::limit(htmlspecialchars_decode($title), 38, $end='...') }}</div>
             @if($closed)
                 <div class="text-red-800 font-bold mt-1">closed
                     <x-phosphor-lock-simple class="inline-block w-6 h-6 mb-1"/>
@@ -49,7 +49,7 @@
             @endif
         </div>
         <p class="text-gray-700 text-base">
-            {{ $description }}
+            {{ Str::limit(htmlspecialchars_decode($description), 100, $end="...") }}
         </p>
     </div>
     @if($hashtags)

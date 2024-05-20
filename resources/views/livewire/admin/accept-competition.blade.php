@@ -1,7 +1,9 @@
-<div>
-    @if(!count($proposals))
-        <h1 class="text-2xl font-bold text-center">No proposals at the moment. Please check again later!</h1>
-    @else
+<div class="lg:px-14">
+    <h1 class="font-bold text-2xl">View/accept proposals</h1>
+    <p class="mb-2">
+        {{ count($proposals) != 0 ? 'Accept or deny the proposed competitions below.' : 'No proposals at the moment. Please check again later!' }}
+    </p>
+    @if(count($proposals))
     <x-tmk.card-container>
         @foreach($proposals as $proposal)
             <x-tmk.card title="{{ $proposal->title }}"
