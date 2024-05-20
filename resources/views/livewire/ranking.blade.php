@@ -53,7 +53,7 @@
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round2)" href="{{$place->first()->user->profile_photo_path}}"/>
                         @endif
                     @endif
             @endif
@@ -170,10 +170,10 @@
         </svg>
         <x-tmk.section>
             @if($podium->count()<1)
-                <p>No ranking available yet. When the competition admin has chosen the winners, they will appear
+                <p>No ranking available yet. When the competition organiser has chosen the winners, they will appear
                     here.</p>
             @else
-            <p>This ranking has been determined by the competition administrator.</p>
+                <p>This ranking has been determined by the competition organiser.</p>
             @endif
         </x-tmk.section>
     @endif
