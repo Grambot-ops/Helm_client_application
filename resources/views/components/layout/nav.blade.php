@@ -45,6 +45,7 @@
                         <a href="{{ route('admin.users') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage users</a>
                 @endif
                 <a href="{{ route('settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                    <a href="{{ route('help') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Help</a>
                 <div class="border-t border-gray-100"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
