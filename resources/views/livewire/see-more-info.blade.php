@@ -88,7 +88,39 @@
                 <p class="text-lg text-gray-500">End date</p>
             </div>
         </div>
+        <div class="lg:hidden">
+            <ol class="border-s border-tm-darker-blue">
+                <li>
+                    <div class="flex-start flex items-center pt-3">
+                        <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
+                        <p class="text-sm text-black">{{ date('Y-m-d', strtotime($competition->start_date)) }}</p>
+                    </div>
+                    <div class="mb-6 ms-4 mt-2">
+                        <h2 class="mb-1.5 text-lg font-semibold text-black">Start Date</h2>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex-start flex items-center pt-2">
+                        <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
+                        <p class="text-sm text-black">{{ date('Y-m-d', strtotime($competition->submission_date)) }}</p>
+                    </div>
+                    <div class="mb-6 ms-4 mt-2">
+                        <h2 class="mb-1.5 text-lg font-semibold text-black">Submission Deadline</h2>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex-start flex items-center pt-2">
+                        <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
+                        <p class="text-sm text-black">{{ date('Y-m-d', strtotime($competition->end_date)) }}</p>
+                    </div>
+                    <div class="ms-4 mt-2 pb-5">
+                        <h2 class="mb-1.5 text-lg font-semibold text-black">End Date</h2>
+                    </div>
+                </li>
+            </ol>
+        </div>
     </div>
+
 
     <div class="mt-7">
         <h2 class="text-xl font-bold mb-2 text-black">Rules</h2>
@@ -106,10 +138,10 @@
                 </button>
             </a>
             <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
-            <button
-                class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                <button
+                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                     Ranking
-            </button>
+                </button>
             </a>
         @else
             <p class="text-red-600 py-2 text-xl font-bold inline-block">
@@ -118,10 +150,10 @@
         @endif
     @elseif( $competition->end_date < date('Y-m-d  h:i:sa'))
         <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
-        <button
-            class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+            <button
+                class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                 Ranking
-        </button>
+            </button>
         </a>
     @elseif($competition->start_date < date('Y-m-d h:i:sa') && date('Y-m-d h:i:sa') < $competition->submission_date
                && $isParticipant)
