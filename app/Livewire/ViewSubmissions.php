@@ -131,7 +131,12 @@ class ViewSubmissions extends Component
                 $participation->update(['ranking' => 3]);
             }
         }
-
+        $this->competition->update(['end_date' => date('Y-m-d h:i:s')]);
+        $this->dispatch('swal:toast', [
+            'background' => 'success',
+            'html' => "The winners have been chosen",
+            'icon' => 'success',
+        ]);
         $this->placesSaved = true;
 
     }

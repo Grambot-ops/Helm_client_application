@@ -29,10 +29,8 @@
                 <div class="mt-2" x-show="! photoPreview">
                     @if ($this->user->profile_photo_path)
                         <img src="{{ Storage::url($this->user->profile_photo_path) }}" alt="Profile Photo" class="rounded-full h-20 w-20 object-cover">
-
-
                     @else
-                        <img src="{{ asset('assets/profile_pictures/default.jpg') }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                        <img src="{{ Storage::url('assets/profile_pictures/default.jpg') }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
                     @endif
                 </div>
 
@@ -48,7 +46,7 @@
                     {{ __('Select A New Photo') }}
                 </x-secondary-button>
 
-                @if ($this->user->profile_photo_path && $this->user->profile_photo_path !== 'assets/profile_pictures/default.jpg')
+                @if ($this->user->profile_photo_path !== '/assets/profile_pictures/default.jpg')
                     <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Remove Photo') }}
                     </x-secondary-button>
