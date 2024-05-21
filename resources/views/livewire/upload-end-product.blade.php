@@ -12,6 +12,28 @@
                 <x-label value="Title" />
                 <x-input type="text" id="title" :cols="20" wire:model="title" class="w-full" required/>
             </div>
+            <div>
+                <x-label value="Photo" />
+                @if($this->photo)
+                    <a id="imageLink" href="#">
+                        <img id="placeholderImage" src="{{ $this->photo->temporaryUrl()  }}" alt="competition image" onclick="uploadImage()" class="border-8 mt-0.5 border-gray-500">
+                    </a>
+                @else
+                    <a id="imageLink" href="#">
+                        <img id="placeholderImage" src="/assets/placeholder-image.svg" alt="competition image" onclick="uploadImage()" class="border-8 mt-0.5 border-gray-500">
+                    </a>
+                @endif
+
+                <script>
+                    // Function to handle the click event and trigger the file upload dialog
+                    function uploadImage() {
+                        document.getElementById('imageInput').click();
+                    }
+                </script>
+
+                <!-- Hidden input element for file upload -->
+                <input type="file" id="imageInput" wire:model="photo" style="display: none;">
+            </div>
             <div class="my-2">
                 <x-input-error for="description" />
                 <x-label value="Description" />

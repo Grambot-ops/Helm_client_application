@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="me-8 my-auto">
-            <img src="{{ $submission->path_to_photo ?? asset('assets/card-top.jpg') }}" alt="{{ $submission->name }}"
+            <img src="{{ $submission->path ?? asset('assets/card-top.jpg') }}" alt="{{ $submission->name }}"
                  class="w-80 h-80 object-cover">
         </div>
     </div>
