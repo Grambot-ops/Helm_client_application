@@ -113,7 +113,7 @@
             </a>
         @else
             <p class="text-red-600 py-2 text-xl font-bold inline-block">
-                Voting is disabled for this competition, the organizer will choose the winner
+                Voting is disabled for this competition, the organiser will choose the winner
             </p>
         @endif
     @elseif( $competition->end_date < date('Y-m-d  h:i:sa'))
