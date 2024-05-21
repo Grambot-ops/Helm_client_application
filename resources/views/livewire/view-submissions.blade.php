@@ -1,6 +1,7 @@
 <div>
     <x-slot name="subtitle">Manage notifications</x-slot>
-    <div class="pb-6 text-center fa-align-center">
+    <div class="pb-6">
+        <div class="text-center">
         <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
         <a class="text-center mb-0.5" href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
             <button
@@ -8,6 +9,7 @@
                 View the current ranking
             </button>
         </a>
+        </div>
         @if($competition->user_id == Auth::id() && !$competition->by_vote && $competition->submission_date < date('Y-m-d'))
         <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg pb-1">
             <h1 class="pt-5">
