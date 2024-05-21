@@ -16,18 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $notifications = Notification::all();
-
-            foreach ($notifications as $notification) {
-                $competitions = Competition::whereDate('date', '>=', now()->addDays($notification->interval_default))->get();
-
-                foreach ($competitions as $competition) {
-                    $sendDate = $competition->date->subDays($notification->interval_default);
-                    if ($sendDate->isFuture()) {
-                        SendNotificationJob::dispatch($competition, $notification->toArray())->delay($sendDate);
-                    }
-                }
-            }
+            $notificationService = new \App\Services\CompetitionNotificationService();
+            $notificationService->sendNotifications();
         })->daily();
     }
 
