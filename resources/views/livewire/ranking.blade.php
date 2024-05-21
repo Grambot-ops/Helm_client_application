@@ -86,9 +86,11 @@
                 <tr class="border-b border-gray-300">
                     <td>{{$i++}}</td>
                     @if($participation->first()->user->profile_photo_path==null)
-                        <td><img width="50px" src="{{asset('assets/profile_pictures/default.jpg')}}" alt=""/></td>
+                        <td><img width="50px" height="50px" src="{{asset('assets/profile_pictures/default.jpg')}}"
+                                 alt=""/></td>
                     @else
-                        <td><img width="50px" src="{{Storage::url($participation->first()->user->profile_photo_path)}}"
+                        <td><img width="50px" height="50px"
+                                 src="{{Storage::url($participation->first()->user->profile_photo_path)}}"
                                  alt=""/></td>
                     @endif
                     <td>{{$participation->first()->user->name}} {{$participation->first()->user->surname}}</td>
