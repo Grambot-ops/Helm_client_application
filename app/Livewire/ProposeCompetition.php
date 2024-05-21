@@ -7,6 +7,8 @@ use App\Models\Competition;
 use App\Models\CompetitionCategory;
 use App\Models\CompetitionType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -30,14 +32,29 @@ class ProposeCompetition extends Component
        ]);
     }
 
-    public function updateRecord(Competition $competition)
+    public function mount(Request $request)
+    {
+        if($request->id == null)
+        {
+            return;
+        }
+        $this->competition = Competition::where('id', $request->id ?? 0)->first();
+
+        if($this->competition->user_id != Auth::id())
+        {
+            session()->flash('message', 'You are not the organizer of this competition.');
+            session()->flash('error', 1);
+            $this->redirectRoute('dashboard');
+            return;
+        }
+    }
+
+    public function updateCompetition(Competition $competition)
     {
         $this->form->update($competition);
-        $this->dispatch('swal:toast', [
-            'background' => 'success',
-            'html' => "The competition <b><i>{$this->form->title}</i></b> has been edited",
-            'icon' => 'success',
-        ]);
+        session()->flash('message', 'Your competition has been edited.');
+        session()->flash('success', 1);
+        $this->redirectRoute('apply', ['id' => urlencode($competition->id)]);
     }
 
     #[Layout('layouts.tmcp', ['title' => 'Propose Competition', 'description' => 'Thomas More Competition Platform'])]
@@ -45,15 +62,12 @@ class ProposeCompetition extends Component
     {
         $id = $request->id;
 
-        $this->competition = Competition::where('id', $id ?? 0)->first();
-
         if($this->competition) {
             $this->resetErrorBag();
+
             $this->form->fill($this->competition);
-        } else {
-            $this->form->number_of_votes_allowed = 1;
-            $this->form->number_of_uploads = 3;
         }
+
         $competition_types = CompetitionType::orderBy('name')->get();
         $competition_categories = CompetitionCategory::orderBy('name')->get();
         $pretty_names = Competition::getFileTypes();

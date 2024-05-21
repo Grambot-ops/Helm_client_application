@@ -1,7 +1,7 @@
-<div class="w-max m-auto">
+<div class="m-auto w-1/2">
     <div class="mb-8 w-max">
         <h1 class="text-3xl font-bold mb-2">{{ $competition->title }}</h1>
-        <p>{{ $competition->description }}</p>
+        <p>{{ Str::limit($competition->description, 103, $end="...") }}</p>
     </div>
     <div>
         <h2 class="text-xl font-bold">Your submission</h2>
@@ -10,12 +10,12 @@
             <div class="my-2">
                 <x-input-error for="title" />
                 <x-label value="Title" />
-                <x-input type="text" id="title" :cols="20" wire:model="title" required/>
+                <x-input type="text" id="title" :cols="20" wire:model="title" class="w-full" required/>
             </div>
             <div class="my-2">
                 <x-input-error for="description" />
                 <x-label value="Description" />
-                <x-tmk.form.textarea :rows="6" :cols="20" id="description" wire:model="description" />
+                <x-tmk.form.textarea :rows="8" class="w-full" id="description" wire:model="description" />
             </div>
             <div>
                 @if($this->mimetype)

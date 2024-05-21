@@ -100,7 +100,6 @@
         @endif
         <x-tmk.card-container>
             @foreach($competitions as $competition)
-                @if($competition->accepted)
                     <x-tmk.card title="{{ $competition->title }}"
                                 closed="{{ $competition->closed }}"
                                 open="{{ $competition->open }}"
@@ -108,7 +107,9 @@
                                 upload="{{ $competition->upload }}"
                                 description="{{ $competition->description }}"
                                 picture="{{ $competition->path_to_photo ?? '/assets/card-top.jpg'}}"
-                                hashtags="{{ $competition->competition_category->name }}">
+                                hashtags="{{ $competition->competition_category->name ?? null}}"
+                                user_id="{{ $competition->user_id }}"
+                                by_vote="{{ $competition->by_vote }}">
                         <div>
                             <a href="{{ route('apply', ['id' => urlencode($competition->id)]) }}">
                                 <button
@@ -116,14 +117,7 @@
                                     See more info
                                 </button>
                             </a>
-
-                            @if( date('Y-m-d') < $competition->start_date)
-                                @if( $competition->user_id == Auth::id())
-                                    <button
-                                        class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                        Manage
-                                    </button>
-                                @else
+                            @if( date('Y-m-d h:i:sa') < $competition->start_date)
                                     @if($competition->participations()->where('user_id', auth()->user()->id)->exists())
                                         <button
                                             class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
@@ -137,53 +131,37 @@
                                             Apply
                                         </button>
                                     @endif
-                                @endif
-                            @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date
+
+                            @elseif( $competition->start_date < date('Y-m-d h:i:sa') &&  date('Y-m-d h:i:sa') < $competition->submission_date
                             && $competition->participations()->where('user_id', auth()->user()->id)->exists())
-                                <button
-                                    class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                    <a href="{{ route('upload', ['id' => $competition->id]) }}">
+                                <a href="{{ route('upload', ['id' => $competition->id]) }}">
+                                <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                         Submit
-                                    </a>
                                 </button>
-                            @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
+                                </a>
+
+                            @elseif( $competition->submission_date < date('Y-m-d h:i:sa') &&  date('Y-m-d h:i:sa') < $competition->end_date)
+                                @if( $competition->by_vote)
                                 <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
-                                    @if( $competition->user_id == Auth::id())
-                                        <button
-                                            class="bg-yellow-600 hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-                                            Determine Winners
-                                        </button>
-                                    @else
                                         <button
                                             class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                             Vote
                                         </button>
-                                    @endif
                                 </a>
-                            @elseif( $competition->end_date < date('Y-m-d'))
-
-                                @if( $competition->user_id == Auth::id())
-                                    <button
-                                        class="bg-tm-blue hover:bg-yellow-600 transition text-white font-bold py-2 px-4 rounded">
-                                        <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
-                                           Ranking
-                                        </a>
-                                    </button>
-                                @else
+                                @endif
+                            @elseif( $competition->end_date < date('Y-m-d h:i:sa'))
                                     <button
                                         class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                         <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
                                             Ranking
                                         </a>
                                     </button>
-                                @endif
                             @endif
                         </div>
                         <button wire:click="toggleLiked({{ $competition->id }})" class="text-gray-400 hover:text-yellow-300 transition border-gray-300">
                             <x-phosphor-star-duotone class="inline-block w-7 h-7 {{ $competition->liked ? 'text-yellow-300' : '' }}"/>
                         </button>
                     </x-tmk.card>
-                @endif
             @endforeach
         </x-tmk.card-container>
     </div>

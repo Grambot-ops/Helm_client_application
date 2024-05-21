@@ -13,6 +13,8 @@ class Participation extends Model
         'user_id',
         'ranking',
         'disqualified',
+        'application_date',
+        'submission_date',
     ];
 
     public function user()

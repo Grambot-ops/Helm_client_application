@@ -10,6 +10,7 @@
         "blade-ui-kit/blade-icons": "^1.5",
         "codeat3/blade-phosphor-icons": "^2.0",
         "codeat3/blade-simple-icons": "^3.2",
+        "fakerphp/faker": "^1.23",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2",
         "laravel/framework": "^10.10",
@@ -17,8 +18,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.0",
-        "owenvoke/blade-fontawesome": "^2.5",
-        "fakerphp/faker": "^1.9.1"
+        "owenvoke/blade-fontawesome": "^2.5"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

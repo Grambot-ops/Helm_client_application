@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
             $table->integer('ranking')->nullable(false);
             $table->boolean('disqualified')->nullable(false);
-            $table->dateTime('application_date')->nullable();
+            $table->dateTime('application_date')->default(now())->nullable();
             $table->dateTime('submission_date')->nullable();
             $table->timestamps();
         });
@@ -29,8 +29,8 @@ return new class extends Migration {
                     'user_id' => 5,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date' => '2024-04-20 09:00:00',
-                    'submission_date' => '2024-04-25 12:00:00',
+                    'application_date' => '2023-04-20 00:00:00',
+                    'submission_date' => '2023-10-25 00:00:00',
                 ],
                 [
                     'id' => 2,
@@ -38,7 +38,7 @@ return new class extends Migration {
                     'user_id' => 2,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date' => '2024-01-25 00:00:00',
+                    'application_date' => '2023-01-25 00:00:00',
                     'submission_date' => null,
                 ],
                 [
@@ -47,8 +47,8 @@ return new class extends Migration {
                     'user_id' => 3,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date' => '2023-06-18 07:00:00',
-                    'submission_date' => '2024-02-13 23:58:59',
+                    'application_date' => '2023-03-18 00:00:00',
+                    'submission_date' => '2023-09-13 00:00:00',
                 ],
                 [
                     'id' => 4,
@@ -56,8 +56,8 @@ return new class extends Migration {
                     'user_id' => 1,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date' => '2023-07-25 09:10:07',
-                    'submission_date' => '2023-11-26 00:00:00',
+                    'application_date' => '2023-02-25 00:00:00',
+                    'submission_date' => '2023-08-26 00:00:00',
                 ],
                 [
                     'id' => 5,
@@ -65,7 +65,7 @@ return new class extends Migration {
                     'user_id' => 9,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date'=> '2023-04-25 00:00:00',
+                    'application_date'=> '2023-02-02 00:00:00',
                     'submission_date' => null,
                 ],
                 [
@@ -83,7 +83,7 @@ return new class extends Migration {
                     'user_id' => 7,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date'=> '2023-09-15 00:00:00',
+                    'application_date'=> '2023-05-15 00:00:00',
                     'submission_date' => null,
                 ],
                 [
@@ -92,7 +92,7 @@ return new class extends Migration {
                     'user_id' => 8,
                     'ranking' => 0,
                     'disqualified' => false,
-                    'application_date' => '2023-11-02 00:00:00',
+                    'application_date' => '2023-07-02 00:00:00',
                     'submission_date' => null,
                 ],
                 [
@@ -110,7 +110,7 @@ return new class extends Migration {
                     'user_id' => 4,
                     'ranking' => 0,
                     'disqualified' => true,
-                    'application_date' => '2023-08-30 00:00:00',
+                    'application_date' => '2023-05-30 00:00:00',
                     'submission_date' => null,
                 ],
             ]);

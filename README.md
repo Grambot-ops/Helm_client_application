@@ -21,4 +21,4 @@
 | Admin | admin@vcoa.tmcplatform.be | admin |
 | User  | user@vcoa.tmcplatform.be | password |
 
-## URL: [https://myDomain.be](https://myDomain.be)
+## URL: [https://vcoa.tmcplatform.be](https://vcoa.tmcplatform.be)

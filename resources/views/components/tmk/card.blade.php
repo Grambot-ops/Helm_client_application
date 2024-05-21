@@ -9,13 +9,15 @@
     'hashtags' => [],
     'picture' => '',
     'hashtags' => '',
+    'user_id' => '',
+    'by_vote' => '',
 ])
 
 <div class="w-full rounded overflow-hidden shadow-lg">
     <img class="w-full cards-vh" src="{{ URL::asset($picture ?? '/assets/card-top.jpg') }}" alt="Competition">
     <div class="px-6 py-4">
         <div class="justify-between flex mb-2">
-            <div class="font-bold text-xl mb-2">{{ $title }}</div>
+            <div class="font-bold text-xl mb-2">{{ Str::limit(htmlspecialchars_decode($title), 38, $end='...') }}</div>
             @if($closed)
                 <div class="text-red-800 font-bold mt-1">closed
                     <x-phosphor-lock-simple class="inline-block w-6 h-6 mb-1"/>
@@ -25,9 +27,21 @@
                     <x-phosphor-lock-simple-open class="inline-block w-6 h-6 mb-1"/>
                 </div>
             @elseif($vote)
-                <div class="text-yellow-600 font-bold mt-1">votes open
-                    <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
-                </div>
+                @if($by_vote)
+                        <div class="text-yellow-600 font-bold mt-1">votes open
+                            <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                        </div>
+                @else
+                    @if($user_id == Auth::id())
+                        <div class="text-yellow-600 font-bold mt-1">choose winners
+                            <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                        </div>
+                    @else
+                        <div class="text-yellow-600 font-bold mt-1">pending winners
+                            <x-phosphor-envelope-simple-open class="inline-block w-6 h-6 mb-1"/>
+                        </div>
+                    @endif
+                @endif
             @elseif($upload)
                 <div class="text-blue-300 font-bold mt-1">upload
                     <x-phosphor-upload-simple class="inline-block w-6 h-6 mb-1"/>
@@ -35,7 +49,7 @@
             @endif
         </div>
         <p class="text-gray-700 text-base">
-            {{ $description }}
+            {{ Str::limit(htmlspecialchars_decode($description), 100, $end="...") }}
         </p>
     </div>
     @if($hashtags)

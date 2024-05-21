@@ -26,6 +26,16 @@ class UploadEndProduct extends Component
     public function store()
     {
         $is_file = !is_null($this->competition->filetypes);
+        $filename = null;
+
+        $submissions = Submission::where('participation_id', $this->participation->id)->count();
+        $number_of_submissions = $this->competition->number_of_uploads;
+        if($submissions >= $number_of_submissions && $number_of_submissions != 0) {
+            session()->flash('message', "You cannot submit more than {$number_of_submissions} submissions!");
+            session()->flash('error', 1);
+            $this->redirectRoute('dashboard');
+            return;
+        }
 
         $validatedData = $this->validate([
             'title' => 'required|filled|max:255',
@@ -33,17 +43,20 @@ class UploadEndProduct extends Component
             'uploaded' => $is_file ? "required|file|mimes:$this->mimetype|max:2048" :  "required|url",
         ]);
 
-        if($this->competition->competition_type->is_file) {
-            $fileName = time() . '_' . $validatedData['uploaded']->getClientOriginalName();
-            $validatedData['uploaded']->storeAs('uploads', $fileName);
-        }
+        if($is_file)
+            $filename = $this->uploaded->store('public/uploads');
+
 
         Submission::create([
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'participation_id' => $this->participation->id,
-            'path' => $fileName ?? null,
-            'link' => !$is_file ? $validatedData['uploaded'] : null,
+            'path' => $filename ?? null,
+            'link' => !$is_file ? $this->uploaded : null,
+        ]);
+
+        $this->participation->update([
+            'submission_date' => now(),
         ]);
 
         session()->flash('message', 'The submission was successfully uploaded!');

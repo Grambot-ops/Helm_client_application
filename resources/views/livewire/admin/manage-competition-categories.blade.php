@@ -27,7 +27,6 @@
         <div class="my-4 w-full">{{ $categories->links() }}</div>
         <table class="text-center w-full border border-gray-300">
             <colgroup>
-                <col class="w-20">
                 <col class="w-52">
                 <col class="w-60">
                 <col class="w-max">
@@ -35,10 +34,9 @@
             </colgroup>
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
-                <th>id</th>
                 <th>Name</th>
                 <th>
-                    Competitions in category
+                    # of competitions in category
                 </th>
                 <th></th>
                 <th>
@@ -57,7 +55,6 @@
             @forelse($categories as $category)
                 <tr wire:key="{{ $category->id }}"
                     class="border-t border-gray-300">
-                    <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>{{ count($category->competitions) }}</td>
                     <td></td>

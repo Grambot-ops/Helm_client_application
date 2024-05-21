@@ -24,10 +24,12 @@
                         USER
                     @endauth
                 </span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    <path fill-rule="evenodd" d="M10 0a8 8 0 100 16 8 8 0 000-16zM0 10a10 10 0 1120 0 10 10 0 01-20 0z" clip-rule="evenodd" />
-                </svg>
+                @php
+                $link = auth()->user()->profile_photo_path == null
+                    ? asset('/assets/profile_pictures/default.jpg')
+                    : Storage::url(auth()->user()->profile_photo_path);
+                @endphp
+                <img src="{{ $link }}" alt="Profile Photo" class="rounded-full h-10 w-10 object-cover">
             </button>
             <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
                 @if(auth()->user()->user_roles()->where('role_id', 3)->exists())
@@ -38,7 +40,7 @@
                 @if(auth()->user()->admin)
                     <a href="{{ route('admin.accept-competition') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View proposals</a>
                     <a href="{{ route('admin.compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
-                    <a href="{{ route('admin.comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage submission types</a>
+                    <a href="{{ route('admin.comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition types</a>
                     <a href="{{ route('admin.notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>
                         <a href="{{ route('admin.users') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage users</a>
                 @endif

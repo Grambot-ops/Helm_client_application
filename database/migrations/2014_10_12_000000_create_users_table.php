@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('active')->nullable(false)->default(true);
             $table->boolean('admin')->nullable(false)->default(false);
             $table->rememberToken();
-            $table->string('profile_photo_path', 2048)->default('/assets/profile_pictures/default.jpg');
+            $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
 

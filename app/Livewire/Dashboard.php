@@ -21,6 +21,8 @@ class Dashboard extends Component
     public $competition;
     public $showApplyConfirmationModal = false;
     public $status = -1;
+    public $participation;
+
 
     public function mount()
     {
@@ -89,12 +91,14 @@ class Dashboard extends Component
         }
 
         $this->buttonDisabled = true;
-        Participation::create([
+        $participation = Participation::create([
             'competition_id' => $this->competition->id,
             'user_id' => auth()->id(),
             'ranking' => 0,
             'disqualified' => false,
+            'application_date' => now(),
         ]);
+        $this->participation = $participation;
         $this->dispatch('swal:toast', [
             'background' => 'success',
             'html' => "You have applied!",
@@ -117,8 +121,9 @@ class Dashboard extends Component
     public function loadCompetitions()
     {
         $query = Competition::orderBy('start_date')
-            ->searchTitleOrDescription($this->name)
-            ->where('competition_category_id', 'like', $this->category);
+            ->searchTitleOrDescription($this->name);
+        if($this->category != '%')
+            $query->where('competition_category_id', 'like', $this->category);
         if ($this->likedOnly) {
             $query->whereIn('id', function ($query) {
                 $query->select('competition_id')
@@ -160,6 +165,8 @@ class Dashboard extends Component
             });
         }
 
+        // only show accepted competitions
+        $query->where('accepted', 1);
 
         $competitions = $query->get();
 

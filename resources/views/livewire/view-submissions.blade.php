@@ -108,7 +108,8 @@
                 <x-tmk.card-container>
                     @foreach($submissions as $submission)
                         <div class="w-full rounded overflow-hidden shadow-lg" wire:key="submission-{{ $submission->id }}">
-                            <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+
+                            <img class="w-full cards-vh" src="{{ asset($submission->path ?? 'assets/card-top.jpg')  }}" alt="Sunset in the mountains">
                             <div class="px-6 py-4">
                                 <div class="justify-between flex">
                                     <div class="font-bold text-xl mb-2">{{$submission->participation->user->name }} {{$submission->participation->user->surname }}</div>
@@ -116,7 +117,7 @@
                                         <x-button wire:click="openInfo({{$submission}})" class="bg-transparent hover:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-05" href="#">
                                             <x-phosphor-info class="inline-block w-5 h-5 text-blue-400"/>
                                         </x-button>
-                                        @if((auth()->user()->admin && !$placesSaved) || (auth()->user()->id==$competition->organiser_id && !$placesSaved))
+                                        @if((auth()->user()->admin && !$placesSaved) || (auth()->user()->id==$competition->user_id && !$placesSaved))
                                         <x-button wire:click="openDelete({{$submission}})" class="bg-transparent hover:bg-transparent active:bg-transparent enabled:bg-transparent focus:bg-transparent px-0.5 mx-0.5" href="#">
                                             <x-phosphor-trash class="inline-block w-5 h-5 text-red-600"/>
                                         </x-button>
@@ -144,7 +145,7 @@
                     @endforeach
                 </x-tmk.card-container>
             @else
-                <p class="text-center">No submissions found for this competition.</p>
+                <p class="text-center">No submissions found for this competition found.</p>
             @endif
         </div>
     </div>
@@ -153,7 +154,7 @@
         </x-slot>
         <x-slot name="content">
             <div class="flex">
-                <div class="text-base">
+                <div class="text-base w-3/5">
                     <p class="py-3">
                         Are you sure you want to delete <span class="font-bold"> {{ $submissionToDelete ? $submissionToDelete->title : '' }} ?</span>
                     </p>
@@ -163,12 +164,15 @@
                     <p class="py-3">
                         Description: <span class="font-bold"> {{ $submissionToDelete ? $submissionToDelete->description : ''  }}</span>
                     </p>
+                    <p class="py-3">
+                        Link: <span class="font-bold text-blue-300"> <a href="{{ $submissionToDelete ? $submissionToDelete->link : ''  }}"> {{ $submissionToDelete ? $submissionToDelete->link : ''  }}</a></span>
+                    </p>
                 </div>
-                <div>
-                    <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+                <div class="w-2/5">
+                    <img class="w-full" src="{{  URL::asset($submissionToDelete->path ?? '/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
                     <x-button wire:click="disqualifyParticipant"
                               wire:confirm="Are you sure you want to disqualify this participant? All the submissions by this user for this competitions will also be disqualified!"
-                              class="bg-red-500 hover:bg-red-700 active:bg-red-700">Disqualify</x-button>
+                              class="bg-red-500 hover:bg-red-700 focus:bg-red-700 active:bg-red-700 mt-2 float-right">Disqualify</x-button>
                 </div>
             </div>
         </x-slot>
@@ -186,19 +190,19 @@
         </x-slot>
         <x-slot name="content">
                 <div class="flex">
-                    <div class="text-base">
+                    <div class="text-base w-3/5">
                         <p class="py-3">
-                            Title: <span class="font-bold text-blue-300"> {{ $submissionToShowInfo ? $submissionToShowInfo->title : ''  }}</span>
+                            Title: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->title : ''  }}</span>
                         </p>
                         <p class="py-3">
                             Description: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->description : ''  }}</span>
                         </p>
                             <p class="py-3">
-                                Link: <span class="font-bold"> {{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}</span>
+                                Link: <span class="font-bold text-blue-300"> <a href="{{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}"> {{ $submissionToShowInfo ? $submissionToShowInfo->link : ''  }}</a></span>
                             </p>
                     </div>
-                    <div>
-                        <img class="w-full" src="{{  URL::asset('/assets/card-top.jpg')  }}" alt="Sunset in the mountains">
+                    <div class="w-2/5">
+                        <img class="w-full" src="{{  asset($submissionToShowInfo->path ?? 'assets/card-top.jpg')  }}">
                     </div>
                 </div>
         </x-slot>
