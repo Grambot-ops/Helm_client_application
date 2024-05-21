@@ -21,12 +21,20 @@
 
             <div class="pb-4">
                 <p class="mb-2"><span class="font-bold">Winning criteria:</span> {{ $proposal->by_vote ? 'By vote' : 'By selection' }} </p>
-                <p class="mb-2"><span class="font-bold">Max number of uploads:</span> {{ $proposal->number_of_uploads != 0 ? $proposal->number_of_uploads : 'Unlimited' }}</p>
-                @if($proposal->filetypes)
-                    <p class="mb-2"><span class="font-bold">Accepted filetypes:</span>
-                        {{ Competition::filetypesToFormats($proposal->filetypes) }}
-                    </p>
+                @if($proposal->by_vote)
+                    <p class="mb-2"><span class="font-bold">Max number of votes:</span> {{ $proposal->number_of_votes_allowed }}</p>
                 @endif
+                <p class="mb-2"><span class="font-bold">Max number of uploads:</span> {{ $proposal->number_of_uploads != 0 ? $proposal->number_of_uploads : 'Unlimited' }}</p>
+                <p class="mb-2"><span class="font-bold">Accepted uploads:</span>
+                    @if($proposal->filetypes)
+                        @php $exploded = explode(',', Competition::filetypesToFormats($proposal->filetypes)) @endphp
+                        @foreach($exploded as $i => $filetype)
+                            {{ $filetype . (($i != array_key_last($exploded)) ? ', ' : '') }}
+                        @endforeach
+                    @else
+                        link
+                    @endif
+                </p>
             </div>
 
             @if($proposal->rules)
