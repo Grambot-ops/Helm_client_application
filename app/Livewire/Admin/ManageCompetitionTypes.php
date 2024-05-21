@@ -103,7 +103,7 @@ class ManageCompetitionTypes extends Component
         ]);
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'types', 'description' => 'Manage the types of your competitions',])]
+    #[Layout('layouts.tmcp', ['title' => 'types', 'description' => 'Manage the types of your competitions','page_author' => 'Katoo'])]
     public function render()
     {
         $query = CompetitionType::orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc');

@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Welcome extends Component
 {
-    #[Layout('layouts.tmcp', ['title' => 'Welcome'])]
+    #[Layout('layouts.tmcp', ['title' => 'Welcome','page_author' => 'Katoo'])]
     public function render()
     {
         return view('livewire.welcome');

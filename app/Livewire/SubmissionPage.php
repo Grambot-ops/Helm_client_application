@@ -22,7 +22,7 @@ class SubmissionPage extends Component
         $this->competition = $this->submission->participation->competition;
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'Submission'])]
+    #[Layout('layouts.tmcp', ['title' => 'Submission', 'page_author' => 'Yussef'])]
     public function render()
     {
         return view('livewire.submission-page');

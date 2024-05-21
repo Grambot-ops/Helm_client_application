@@ -103,7 +103,7 @@ class UploadEndProduct extends Component
             $this->mimetype = Competition::fileTypesToFormats($this->competition->filetypes);
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'Upload end product'])]
+    #[Layout('layouts.tmcp', ['title' => 'Upload end product', 'page_author' => 'Yussef'])]
     public function render(Request $request)
     {
         $competition = $this->competition;

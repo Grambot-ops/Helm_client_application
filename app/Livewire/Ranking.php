@@ -11,7 +11,7 @@ use Request;
 
 class Ranking extends Component
 {
-    #[Layout('layouts.tmcp', ['title' => 'Ranking', 'description' => 'Ranking of the competition'])]
+    #[Layout('layouts.tmcp', ['title' => 'Ranking', 'description' => 'Ranking of the competition','page_author' => 'Stef'])]
     public function render()
     {
         $id = request('id');

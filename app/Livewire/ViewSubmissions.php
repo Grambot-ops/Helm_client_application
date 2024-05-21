@@ -77,7 +77,7 @@ class ViewSubmissions extends Component
     }
 
 
-    #[Layout('layouts.tmcp', ['title' => 'Submissions', 'description' => 'all submissions from the competitions'])]
+    #[Layout('layouts.tmcp', ['title' => 'Submissions', 'description' => 'all submissions from the competitions','page_author' => 'Ian'])]
     public function render()
     {
         $competition = $this->competition;

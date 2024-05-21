@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class ApplyForCompetition extends Component
 {
-    #[Layout('layouts.tmcp', ['title' => 'apply', 'description' => 'Apply for competition',])]
+    #[Layout('layouts.tmcp', ['title' => 'apply', 'description' => 'Apply for competition','page_author' => 'Katoo'])]
     public $buttonDisabled = false;
     public $competition;
     public $participation;

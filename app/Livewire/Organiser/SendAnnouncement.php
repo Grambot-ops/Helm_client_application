@@ -19,7 +19,7 @@ class SendAnnouncement extends Component
     ];
     public EmailForm $form;
 
-    #[Layout('layouts.tmcp', ['title' => 'Announcement', 'description' => 'Send an announcement',])]
+    #[Layout('layouts.tmcp', ['title' => 'Announcement', 'description' => 'Send an announcement','page_author' => 'Stef'])]
     public function render()
     {
         $this->form->reset();
