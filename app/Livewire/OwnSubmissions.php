@@ -33,7 +33,7 @@ class OwnSubmissions extends Component
         }
     }
 
-    #[Layout('layouts.tmcp', ['title' => "View your own submissions"])]
+    #[Layout('layouts.tmcp', ['title' => "View your own submissions", 'page_author' => 'Yussef'])]
     public function render()
     {
         $submissions = Submission::where('participation_id', $this->participations->id)->get();

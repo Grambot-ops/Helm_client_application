@@ -1,3 +1,6 @@
+@props([
+    'page_author' => null,
+])
 <!doctype html>
 <html lang="en">
 <head>

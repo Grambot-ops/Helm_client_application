@@ -57,7 +57,7 @@ class ProposeCompetition extends Component
         $this->redirectRoute('apply', ['id' => urlencode($competition->id)]);
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'Propose Competition', 'description' => 'Thomas More Competition Platform'])]
+    #[Layout('layouts.tmcp', ['title' => 'Propose Competition', 'description' => 'Thomas More Competition Platform', 'page_author' => 'Niels'])]
     public function render(Request $request)
     {
         $id = $request->id;

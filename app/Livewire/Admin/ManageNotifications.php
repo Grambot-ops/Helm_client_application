@@ -18,7 +18,7 @@ class ManageNotifications extends Component
     public $interval = "";
     public $notificationType = "";
     public $editNotification = ['id' => null, 'title'=> null, 'description' => null, 'interval_default' => null, 'interval_before_date' => null];
-    #[Layout('layouts.tmcp')]
+    #[Layout('layouts.tmcp',['page_author' => 'Nathan'])]
     public function render()
     {
         $notifications = Notification::orderBy('id')

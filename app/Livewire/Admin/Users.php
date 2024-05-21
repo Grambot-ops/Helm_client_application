@@ -29,7 +29,7 @@ class Users extends Component
     {
         $this->roles = Role::all();
     }
-    #[Layout('layouts.tmcp', ['title' => 'Manage Users',])]
+    #[Layout('layouts.tmcp', ['title' => 'Manage Users','page_author' => 'Nathan'])]
     public function render()
     {
         $userRoles = UserRole::with('role')->get();

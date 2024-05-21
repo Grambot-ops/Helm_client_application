@@ -47,7 +47,7 @@ class Dashboard extends Component
             $this->getErrorBag();
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'Competitions', 'description' => 'Thomas More Competition Platform'])]
+    #[Layout('layouts.tmcp', ['title' => 'Competitions', 'description' => 'Thomas More Competition Platform', 'page_author'=> 'Ian, Niels'])]
     public function render()
     {
         $allCategories = CompetitionCategory::all();

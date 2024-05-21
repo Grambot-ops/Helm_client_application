@@ -40,7 +40,7 @@ class AcceptCompetition extends Component
         );
     }
 
-    #[Layout('layouts.tmcp', ['title' => 'Proposals', 'description' => 'Thomas More Competition Platform'])]
+    #[Layout('layouts.tmcp', ['title' => 'Proposals', 'description' => 'Thomas More Competition Platform', 'page_author' => 'Yussef'])]
     public function render(Request $request)
     {
         $id = urldecode($request->query('id'));
