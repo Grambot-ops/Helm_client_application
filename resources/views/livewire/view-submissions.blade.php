@@ -3,7 +3,7 @@
     <div class="pb-6">
         <h1 class="text-center text-3xl mb-4 font-bold">@if( $competition->user_id == Auth::id()) Your competition: "{{ $competition->title }}" @else Submissions for competition: "{{ $competition->title }}"@endif</h1>
         @if($competition->user_id == Auth::id() && !$competition->by_vote && $competition->submission_date < date('Y-m-d'))
-        <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 my-4 bg-white rounded-lg pb-1">
             <h1 class="pt-5">
                 @if(count($usersWithSubmissions) == 1)
                     Choose the winner
@@ -13,10 +13,10 @@
                     Choose the top 3 winners
                 @endif
             </h1>
-            <div class="mx-auto max-w-7xl px-6 lg:px-8 my-1 bg-white">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 my-1 bg-white pb-1">
                 <form wire:submit.prevent="assignPlaces" class="pb-10">
                     <div class="space-y-4 flex w-full">
-                        <div class="p-4 m-2">
+                        <div class="p-4 m-2 mb-0 mt-4">
                             <x-label for="firstPlace" value="Select first place"/>
                             <x-tmk.form.select id="firstPlace"
                                                wire:model.live="firstPlace"
@@ -71,29 +71,29 @@
                     </div>
                     @if(count($usersWithSubmissions) > 2)
                         @if($placesSaved || ($this->firstPlace == "" || $this->secondPlace == "" || $this->thirdPlace == ""))
-                            <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                            <x-button type="submit" class="button-grayed-places float-right" disabled>Save Places</x-button>
                         @else
                             @if(($this->firstPlace == $this->secondPlace) || ($this->firstPlace == $this->thirdPlace) || ($this->secondPlace == $this->thirdPlace))
                                 <p class="text-red-600">You're not allowed to pick the same person for multiple places</p>
-                                <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                                <x-button type="submit" class="button-grayed-places float-right" disabled>Save Places</x-button>
                             @else
-                                <x-button type="submit" class="float-right">Save Places</x-button>
+                                <x-button class="mb-5" type="submit" class="float-right">Save Places</x-button>
                             @endif
                         @endif
                     @elseif(count($usersWithSubmissions) == 2)
                         @if($placesSaved || ($this->firstPlace == "" || $this->secondPlace == ""))
-                            <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                            <x-button type="submit" class="float-right button-grayed-places" disabled>Save Places</x-button>
                         @else
                             @if($this->firstPlace == $this->secondPlace)
                                 <p class="text-red-600">You're not allowed to pick the same person for multiple places</p>
-                                <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Places</x-button>
+                                <x-button type="submit" class="float-right button-grayed-places" disabled>Save Places</x-button>
                             @else
-                                <x-button type="submit" class="float-right">Save Places</x-button>
+                                <x-button class="mb-5" type="submit" class="float-right">Save Places</x-button>
                             @endif
                         @endif
                     @else
                         @if($placesSaved || ($this->firstPlace == ""))
-                            <x-button type="submit" class="float-right bg-gray-400 hover:bg-gray-400 active:bg-gray-400" disabled>Save Place</x-button>
+                            <x-button type="submit" class="float-right button-grayed-places" disabled>Save Place</x-button>
                         @else
                             <x-button type="submit" class="float-right">Save Place</x-button>
                         @endif
@@ -125,10 +125,10 @@
                                     </div>
                                 </div>
                                 <p class="text-blue-300 text-sm mb-2">
-                                    {{ $submission->title }}
+                                    {{  Str::limit($submission->title, 50, $end="...") }}
                                 </p>
                                 <p class="text-gray-700 text-base">
-                                    {{ $submission->description }}
+                                    {{ Str::limit($submission->description, 60, $end="...") }}
                                 </p>
                                 <br>
                                 @if($competition->by_vote)
