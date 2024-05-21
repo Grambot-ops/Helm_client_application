@@ -23,13 +23,13 @@ return new class extends Migration
             $table->text('rules')->nullable();
             $table->text('prize')->nullable();
             $table->text('description')->nullable(false);
-            $table->dateTime('start_date')->nullable(false);
-            $table->dateTime('end_date')->nullable(false);
-            $table->dateTime('submission_date')->nullable(false);
+            $table->date('start_date')->nullable(false);
+            $table->date('end_date')->nullable(false);
+            $table->date('submission_date')->nullable(false);
             $table->boolean('accepted')->default(false)->nullable(false);
             $table->boolean('declined')->default(false)->nullable(false);
             $table->integer('number_of_votes_allowed')->default(1)->nullable(false);
-            $table->integer('number_of_uploads')->default(3)->nullable(false);
+            $table->integer('number_of_uploads')->nullable(false);
             // A comma separated string that contains the accepted file types
             // that looks something like:
             //
@@ -61,6 +61,7 @@ return new class extends Migration
                     'filetypes' => 'document',
                     'number_of_votes_allowed' => 2,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 2,
@@ -80,6 +81,7 @@ return new class extends Migration
                     'filetypes' => null,
                     'number_of_votes_allowed' => 3,
                     'company' => 'Netropolix',
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 3,
@@ -99,6 +101,7 @@ return new class extends Migration
                     'filetypes' => null,
                     'number_of_votes_allowed' => 1,
                     'company' => 'Thomas More',
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 4,
@@ -118,6 +121,7 @@ return new class extends Migration
                     'filetypes' => null,
                     'number_of_votes_allowed' => 2,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 5,
@@ -137,6 +141,7 @@ return new class extends Migration
                     'filetypes' => 'document',
                     'number_of_votes_allowed' => 3,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 6,
@@ -156,6 +161,7 @@ return new class extends Migration
                     'filetypes' => 'document',
                     'number_of_votes_allowed' => 1,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 7,
@@ -175,6 +181,7 @@ return new class extends Migration
                     'filetypes' => null,
                     'number_of_votes_allowed' => 2,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 8,
@@ -194,6 +201,7 @@ return new class extends Migration
                     'filetypes' => 'video,document',
                     'number_of_votes_allowed' => 1,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 9,
@@ -213,6 +221,7 @@ return new class extends Migration
                     'filetypes' => 'document',
                     'number_of_votes_allowed' => 1,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
                 [
                     'id' => 10,
@@ -232,6 +241,7 @@ return new class extends Migration
                     'filetypes' => 'document',
                     'number_of_votes_allowed' => 2,
                     'company' => null,
+                    'number_of_uploads' => 3,
                 ],
 
             ]);
