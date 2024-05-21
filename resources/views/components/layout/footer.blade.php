@@ -18,7 +18,7 @@
             <div class="mr-10 mb-2 md:mb-0">
                 <h5 class="text-lg font-bold mb-2">Team info</h5>
                 <p>Group: VCO-A</p>
-                <p>Client: Vince Colsen</p>
+                <p>Client: Vince Colson</p>
             </div>
         </div>
         <div class="flex flex-wrap w-full md:w-auto text-white items-center">
