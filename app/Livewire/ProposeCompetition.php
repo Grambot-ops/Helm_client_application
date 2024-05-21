@@ -66,6 +66,10 @@ class ProposeCompetition extends Component
             $this->resetErrorBag();
 
             $this->form->fill($this->competition);
+
+            $this->form->start_date = date('Y-m-d', strtotime($this->form->start_date));
+            $this->form->submission_date = date('Y-m-d', strtotime($this->form->submission_date));
+            $this->form->end_date = date('Y-m-d', strtotime($this->form->end_date));
         }
 
         $competition_types = CompetitionType::orderBy('name')->get();
