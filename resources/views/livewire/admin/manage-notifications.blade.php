@@ -85,7 +85,7 @@
         <x-tmk.form.textarea rows="6" class="w-full mb-3" id="description" type="text" placeholder="description" wire:model="editNotification.description">
         </x-tmk.form.textarea>
         <br>
-        <p>Time before competition that the notification will be sent</p>
+        <p>Days before competition that the notification will be sent</p>
         <x-input class="w-full mb-3" id="interval" type="text" placeholder="interval" wire:model="editNotification.interval_default"/>
     </x-slot>
     <x-slot name="footer">
