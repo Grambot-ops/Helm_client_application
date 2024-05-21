@@ -16,6 +16,17 @@
     overflow: hidden;
 }
 
+.button-grayed-places {
+    background-color: lightgray !important;
+}
+
+.button-grayed-places:hover {
+    background-color: lightgray !important;
+}
+
+.button-grayed-places:active {
+    background-color: lightgray !important;
+
 @media (max-width: 640px) {
     #rankingrightdiv {
         position: revert;
