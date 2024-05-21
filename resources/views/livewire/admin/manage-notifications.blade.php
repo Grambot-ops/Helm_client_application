@@ -24,7 +24,6 @@
                         <div class="text-sm leading-6">
                             <p class="font-semibold text-gray-900">
                                 <x-button wire:click="openEdit({{$noti->id}})" class="bg-tm-blue" href="#">
-
                                     Edit
                                 </x-button>
                             </p>
@@ -62,6 +61,18 @@
                     <p class="mt-2">Time before competition that the notification will be sent</p>
                     <x-input class="w-full mb-3" id="interval" type="text" placeholder="interval" wire:model="interval"/>
                 </div>
+                <label class="inline-flex items-center mt-3">
+                    <input type="radio" class="form-radio" value="begin" wire:model="notificationType">
+                    <span class="ml-2">Begin</span>
+                </label>
+                <label class="inline-flex items-center mt-3">
+                    <input type="radio" class="form-radio" value="end" wire:model="notificationType">
+                    <span class="ml-2">End</span>
+                </label>
+                <label class="inline-flex items-center mt-3">
+                    <input type="radio" class="form-radio" value="submission" wire:model="notificationType">
+                    <span class="ml-2">Submission</span>
+                </label>
             </x-slot>
             <x-slot name="footer">
                 <x-button wire:click="createNotification()" class="bg-tm-blue hover:bg-tm-darker-blue mx-2">
@@ -72,25 +83,37 @@
                 </x-secondary-button>
             </x-slot>
         </x-dialog-modal>
-    <x-dialog-modal wire:model.blur="showModalEdit">
-    <x-slot name="title">
-        <h2>Edit notification</h2>
-    </x-slot>
-    <x-slot name="content" class="mx-auto">
-        <p>Title</p>
-        <x-input class="w-full mb-3" id="title" type="text" placeholder="title" wire:model="editNotification.title">
-        </x-input>
-        <br>
-        <p>Description</p>
-        <x-tmk.form.textarea rows="6" class="w-full mb-3" id="description" type="text" placeholder="description" wire:model="editNotification.description">
-        </x-tmk.form.textarea>
-        <br>
-        <p>Time before competition that the notification will be sent</p>
-        <x-input class="w-full mb-3" id="interval" type="text" placeholder="interval" wire:model="editNotification.interval_default"/>
-    </x-slot>
-    <x-slot name="footer">
-        <x-secondary-button class="mr-2" wire:click="closeEdit">Cancel</x-secondary-button>
-        <x-button wire:click="editNoti({{$noti->id}})">Update notification</x-button>
-    </x-slot>
-    </x-dialog-modal>
+
+        <x-dialog-modal wire:model.blur="showModalEdit">
+            <x-slot name="title">
+                <h2>Edit notification</h2>
+            </x-slot>
+            <x-slot name="content" class="mx-auto">
+                <p>Title</p>
+                <x-input class="w-full mb-3" id="title" type="text" placeholder="Title" wire:model="editNotification.title"/>
+                <br>
+                <p>Description</p>
+                <x-tmk.form.textarea rows="6" class="w-full mb-3" id="description" type="text" placeholder="Description" wire:model="editNotification.description"/>
+                <br>
+                <p class="mb-2">Before what event should the notification be sent?</p>
+                <label>
+                    <input type="radio" wire:model="editNotification.interval_before_date" value="begin" @if($editNotification['interval_before_date'] == 'begin') checked @endif> Begin
+                </label>
+                <label>
+                    <input type="radio" wire:model="editNotification.interval_before_date" value="submission" @if($editNotification['interval_before_date'] == 'submission') checked @endif> Submission
+                </label>
+                <label>
+                    <input type="radio" wire:model="editNotification.interval_before_date" value="end" @if($editNotification['interval_before_date'] == 'end') checked @endif> End
+                </label>
+                <p class="mt-3">Days before the notifications will be sent</p>
+                <x-input class="w-full mb-3" id="interval" type="text" placeholder="Interval" wire:model="editNotification.interval_default"/>
+                <br>
+            </x-slot>
+            <x-slot name="footer">
+                <x-secondary-button class="mr-2" wire:click="closeEdit">Cancel</x-secondary-button>
+                <x-button wire:click="editNoti({{$noti->id}})">Update notification</x-button>
+            </x-slot>
+        </x-dialog-modal>
+
+
 </div>

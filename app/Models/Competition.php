@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Competition extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['competition_type_id', 'user_id'];
     protected $appends = ['closed', 'open', 'vote', 'upload', 'is_liked'];
     protected $guarded = [];
 
