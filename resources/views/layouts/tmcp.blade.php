@@ -21,7 +21,9 @@
                 {{ $slot }}
             </main>
                 <x-layout.footer>
-
+                    @if(isset($page_author))
+                        Made by {{ $page_author }}
+                    @endif
                 </x-layout.footer>
         </div>
         @stack('script')

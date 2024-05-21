@@ -15,8 +15,21 @@
             </div>
         </div>
         <div class="flex flex-wrap w-full md:w-auto text-white items-center">
-            <div class="mb-1 text-white">
-                Thomas More Competition Platform - © {{ date('Y') }}
+            <div class="mr-10 mb-2 md:mb-0">
+                <h5 class="text-lg font-bold mb-2">Team info</h5>
+                <p>Group: VCO-A</p>
+                <p>Client: Vince Colsen</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap w-full md:w-auto text-white items-center">
+            <div class="flex flex-col just">
+                <h5 class="text-lg font-bold mb-2">Copyright</h5>
+                <div class="mb-1 text-white">
+                    Thomas More Competition Platform - © {{ date('Y') }}
+                </div>
+                <div class="flex flex-wrap w-full md:w-auto text-white items-center">
+                    {{ $slot ?? '' }}
+                </div>
             </div>
         </div>
     </div>
