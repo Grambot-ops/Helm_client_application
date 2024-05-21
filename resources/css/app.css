@@ -26,4 +26,16 @@
 
 .button-grayed-places:active {
     background-color: lightgray !important;
+
+@media (max-width: 640px) {
+    #rankingrightdiv {
+        position: revert;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+    }
+    #rankingbigdiv {
+        display: inline-block;
+        position: revert;
+    }
 }

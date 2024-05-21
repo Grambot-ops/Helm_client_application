@@ -3,6 +3,8 @@
     <x-slot name="title">Ranking {{ $competition -> title}}</x-slot>
     <h1 class="text-3xl mb-4 font-bold">Ranking - {{ $competition -> title}}</h1>
     @if($competition->by_vote)
+        <div id="rankingbigdiv" class="relative flex justify-between">
+            <div>
         <svg class="mb-4" width="350" height="200" xmlns="http://www.w3.org/2000/svg">
         <rect width="100" height="100" x="0" y="100" fill="gray"/>
         <rect width="100" height="150" x="100" y="50" fill="gold"></rect>
@@ -31,7 +33,8 @@
                                    clip-path="url(#round)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round)"
+                                   href="{{Storage::url($place->first()->user->profile_photo_path)}}"/>
                         @endif
                     @endif
                     {{$i=0}}
@@ -42,7 +45,8 @@
                                    clip-path="url(#round1)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round1)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round1)"
+                                   href="{{Storage::url($place->first()->user->profile_photo_path)}}"/>
                         @endif
                     @endif
                 {{$i=2}}
@@ -53,7 +57,8 @@
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round2)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round2)"
+                                   href="{{Storage::url($place->first()->user->profile_photo_path)}}"/>
                         @endif
                     @endif
             @endif
@@ -63,6 +68,16 @@
 
         {{$i=1}}
     </svg>
+                </div>
+                <div id="rankingrightdiv" class="absolute bottom-4 right-0">
+                    <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
+                        <button
+                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                            View all submissions
+                        </button>
+                    </a>
+                </div>
+            </div>
 
     <x-tmk.section>
         <table class="text-center w-full border border-gray-300">
@@ -83,9 +98,12 @@
                 <tr class="border-b border-gray-300">
                     <td>{{$i++}}</td>
                     @if($participation->first()->user->profile_photo_path==null)
-                        <td><img width="50px" src="{{asset('assets/profile_pictures/default.jpg')}}" alt=""/></td>
+                        <td><img width="50px" height="50px" src="{{asset('assets/profile_pictures/default.jpg')}}"
+                                 alt=""/></td>
                     @else
-                        <td><img width="50px" src="{{$participation->first()->user->profile_photo_path}}" alt=""/></td>
+                        <td><img width="50px" height="50px"
+                                 src="{{Storage::url($participation->first()->user->profile_photo_path)}}"
+                                 alt=""/></td>
                     @endif
                     <td>{{$participation->first()->user->name}} {{$participation->first()->user->surname}}</td>
                     <td>{{$participation->votes_count}}</td>
@@ -95,6 +113,8 @@
         </table>
     </x-tmk.section>
     @else
+        <div id="rankingbigdiv" class="relative flex justify-between">
+            <div>
         <svg class="mb-4" width="350" height="250" xmlns="http://www.w3.org/2000/svg">
             <rect width="100" height="100" x="0" y="150" fill="gray"/>
             <rect width="100" height="150" x="100" y="100" fill="gold"></rect>
@@ -123,7 +143,7 @@
                                    clip-path="url(#round)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->user->profile_photo_path}}"/>
+                                   clip-path="url(#round)" href="{{Storage::url($place->user->profile_photo_path)}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
                             {{$place->user->name}} {{$place->user->surname}}
@@ -139,7 +159,7 @@
                                    clip-path="url(#round1)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round1)" href="{{$place->user->profile_photo_path}}"/>
+                                   clip-path="url(#round1)" href="{{Storage::url($place->user->profile_photo_path)}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
                             {{$place->user->name}} {{$place->user->surname}}
@@ -155,7 +175,7 @@
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round2)" href="{{$place->user->profile_photo_path}}"/>
+                                   clip-path="url(#round2)" href="{{Storage::url($place->user->profile_photo_path)}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
                             {{$place->user->name}} {{$place->user->surname}}
@@ -168,6 +188,17 @@
             @endforeach
             {{$i=1}}
         </svg>
+        </div>
+            <div id="rankingrightdiv" class="absolute bottom-4 right-0">
+                <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
+                    <button
+                        class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                        View all submissions
+                    </button>
+                </a>
+            </div>
+        </div>
+
         <x-tmk.section>
             @if($podium->count()<1)
                 <p>No ranking available yet. When the competition organiser has chosen the winners, they will appear
