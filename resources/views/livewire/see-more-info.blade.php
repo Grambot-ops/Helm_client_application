@@ -130,12 +130,31 @@
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
         <p class="mb-7 text-md text-black">{{ $competition->prize }}</p>
     </div>
-    @if( $competition->submission_date < date('Y-m-d h:i:sa') )
-        <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}"
-           class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
-            <button>
-                Ranking
+    @if( $competition->submission_date < date('Y-m-d h:i:sa') &&  date('Y-m-d h:i:sa') < $competition->end_date)
+        @if( $competition->by_vote)
+            <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
+                <button
+                    class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                    Vote
+                </button>
+            </a>
+            <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
+            <button
+                class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                    Ranking
             </button>
+            </a>
+        @else
+            <p class="text-red-600 py-2 text-xl font-bold inline-block">
+                Voting is disabled for this competition, the organizer will choose the winner
+            </p>
+        @endif
+    @elseif( $competition->end_date < date('Y-m-d  h:i:sa'))
+        <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
+        <button
+            class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
+                Ranking
+        </button>
         </a>
     @elseif($competition->start_date < date('Y-m-d h:i:sa') && date('Y-m-d h:i:sa') < $competition->submission_date
                && $isParticipant)
@@ -145,13 +164,18 @@
         <x-tmk.button orange href="{{ route('own-submissions', ['id' => urlencode($competition->id)]) }}">
             View own submissions
         </x-tmk.button>
+    @elseif($competition->start_date < date('Y-m-d h:i:sa') && date('Y-m-d h:i:sa') < $competition->submission_date
+           && !$isParticipant)
+        <p class="text-red-600 py-2 text-xl font-bold inline-block">
+            You can't enter anymore, the competition has started
+        </p>
     @elseif($competition->participations()->where('user_id', auth()->user()->id)->exists())
         <button
             class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
             disabled>
             Applied
         </button>
-    @else
+    @elseif($competition->start_date > date('Y-m-d h:i:sa'))
         <button wire:click="apply" wire:target="apply"
                 @if($buttonDisabled)
                     disabled
