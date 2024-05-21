@@ -7,6 +7,7 @@ use App\Livewire\Admin\ManageCompetitionTypes;
 use App\Livewire\Admin\ManageNotifications;
 use App\Livewire\Admin\Users;
 use App\Livewire\Dashboard;
+use App\Livewire\Help;
 use App\Livewire\Organiser\SendAnnouncement;
 use App\Livewire\Ranking;
 use App\Livewire\UploadEndProduct;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function() {
     Route::get('welcome', Welcome::class)->name('welcome');
+    Route::get('help', Help::class)->name('help');
     Route::get('see-more-info', ApplyForCompetition::class)->name('apply');
     Route::get('view-submissions', \App\Livewire\ViewSubmissions::class)->name('all-submissions');
     Route::get('/', Dashboard::class)->name('dashboard');
