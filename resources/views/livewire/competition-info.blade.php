@@ -9,7 +9,7 @@
             <p class="mb-2">{{ $proposal->description }}</p>
 
             <div class="pb-4">
-                <p class="mb-2"><span class="font-bold">Category:</span> {{ $proposal->competition_category ?? '/' }}</p>
+                <p class="mb-2"><span class="font-bold">Category:</span> {{ $proposal->competition_category->name ?? '/' }}</p>
                 <p class="mb-2"><span class="font-bold">Type:</span> {{ $proposal->competition_type->name }}</p>
             </div>
 
