@@ -117,7 +117,7 @@
                                     See more info
                                 </button>
                             </a>
-                            @if( date('Y-m-d') < $competition->start_date)
+                            @if( date('Y-m-d h:i:sa') < $competition->start_date)
                                     @if($competition->participations()->where('user_id', auth()->user()->id)->exists())
                                         <button
                                             class="bg-gray-400 text-white py-2 px-6 rounded inline-block cursor-not-allowed"
@@ -132,7 +132,7 @@
                                         </button>
                                     @endif
 
-                            @elseif( $competition->start_date < date('Y-m-d') &&  date('Y-m-d') < $competition->submission_date
+                            @elseif( $competition->start_date < date('Y-m-d h:i:sa') &&  date('Y-m-d h:i:sa') < $competition->submission_date
                             && $competition->participations()->where('user_id', auth()->user()->id)->exists())
                                 <a href="{{ route('upload', ['id' => $competition->id]) }}">
                                 <button class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
@@ -140,7 +140,7 @@
                                 </button>
                                 </a>
 
-                            @elseif( $competition->submission_date < date('Y-m-d') &&  date('Y-m-d') < $competition->end_date)
+                            @elseif( $competition->submission_date < date('Y-m-d h:i:sa') &&  date('Y-m-d h:i:sa') < $competition->end_date)
                                 @if( $competition->by_vote)
                                 <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
                                         <button
@@ -149,7 +149,7 @@
                                         </button>
                                 </a>
                                 @endif
-                            @elseif( $competition->end_date < date('Y-m-d'))
+                            @elseif( $competition->end_date < date('Y-m-d h:i:sa'))
                                     <button
                                         class="bg-tm-blue hover:bg-tm-darker-blue transition text-white font-bold py-2 px-4 rounded">
                                         <a href="{{ route('ranking', ['id' => urlencode($competition->id)]) }}">
