@@ -2,9 +2,9 @@
 <div>
     <x-slot name="title">Ranking {{ $competition -> title}}</x-slot>
     <h1 class="text-3xl mb-4 font-bold">Ranking - {{ $competition -> title}}</h1>
-    <div id="rankingbigdiv" class="relative flex justify-between">
-        <div>
     @if($competition->by_vote)
+        <div id="rankingbigdiv" class="relative flex justify-between">
+            <div>
         <svg class="mb-4" width="350" height="200" xmlns="http://www.w3.org/2000/svg">
         <rect width="100" height="100" x="0" y="100" fill="gray"/>
         <rect width="100" height="150" x="100" y="50" fill="gold"></rect>
@@ -68,6 +68,16 @@
 
         {{$i=1}}
     </svg>
+                </div>
+                <div id="rankingrightdiv" class="absolute bottom-4 right-0">
+                    <a href="{{ route('all-submissions', ['id' => urlencode($competition->id)]) }}">
+                        <button
+                            class="bg-tm-orange hover:bg-tm-darker-orange transition text-white font-bold py-2 px-4 rounded">
+                            View all submissions
+                        </button>
+                    </a>
+                </div>
+            </div>
 
     <x-tmk.section>
         <table class="text-center w-full border border-gray-300">
@@ -103,6 +113,8 @@
         </table>
     </x-tmk.section>
     @else
+        <div id="rankingbigdiv" class="relative flex justify-between">
+            <div>
         <svg class="mb-4" width="350" height="250" xmlns="http://www.w3.org/2000/svg">
             <rect width="100" height="100" x="0" y="150" fill="gray"/>
             <rect width="100" height="150" x="100" y="100" fill="gold"></rect>
