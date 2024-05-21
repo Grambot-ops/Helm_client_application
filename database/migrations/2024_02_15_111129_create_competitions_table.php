@@ -23,9 +23,9 @@ return new class extends Migration
             $table->text('rules')->nullable();
             $table->text('prize')->nullable();
             $table->text('description')->nullable(false);
-            $table->date('start_date')->nullable(false);
-            $table->date('end_date')->nullable(false);
-            $table->date('submission_date')->nullable(false);
+            $table->dateTime('start_date')->nullable(false);
+            $table->dateTime('end_date')->nullable(false);
+            $table->dateTime('submission_date')->nullable(false);
             $table->boolean('accepted')->default(false)->nullable(false);
             $table->boolean('declined')->default(false)->nullable(false);
             $table->integer('number_of_votes_allowed')->default(1)->nullable(false);
