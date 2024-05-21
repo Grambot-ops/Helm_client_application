@@ -10,13 +10,13 @@
             <h1 class="text-3xl font-bold mb-4 text-black">{{ $competition->title }}</h1>
             <p class="text-lg mb-4">{{ $competition->description }}</p>
             <div class="mb-4 text-lg">
-                <strong class="text-black">Category:</strong> {{ $competition->competition_category->name ?? '/' }}
+                <strong class="text-black">Category:</strong> {{ $competition->competition_category->name ?? 'N/A' }}
             </div>
             <div class="mb-4 text-lg">
                 <strong class="text-black">Type:</strong> {{ $competition->competition_type->name }}
             </div>
             <div class="mb-4 text-lg">
-                <strong class="text-black">Company:</strong> {{ $competition->company }}
+                <strong class="text-black">Company:</strong> {{ $competition->company ?? 'N/A'}}
             </div>
             @if( $competition->user_id == Auth::id())
                 @if( $competition->submission_date > date('Y-m-d h:i:sa'))
@@ -61,7 +61,7 @@
             <div class="flex flex-col items-center mb-4 sm:mb-0 mr-4">
                 <div class="w-3 h-3 bg-green-800 rounded-full"></div>
                 <p class="text-lg font-semibold mt-2">{{ date('Y-m-d', strtotime($competition->start_date)) }}</p>
-                <p class="text-lg text-gray-500">Start Date</p>
+                <p class="text-lg text-gray-500">Start date</p>
             </div>
             <div class="flex-grow border-b-2 border-black hidden sm:block"></div>
 
@@ -77,7 +77,7 @@
             <div class="flex flex-col items-center mb-4 sm:mb-0">
                 <div class="w-3 h-3 bg-yellow-600 rounded-full"></div>
                 <p class="text-lg font-semibold mt-2">{{ date('Y-m-d', strtotime($competition->submission_date)) }}</p>
-                <p class="text-lg text-gray-500">Submission Date</p>
+                <p class="text-lg text-gray-500">Submission date</p>
             </div>
 
             <div class="flex-grow border-b-2 border-black hidden sm:block"></div>
@@ -85,46 +85,14 @@
             <div class="flex flex-col items-center mb-4 sm:mb-0 ml-4">
                 <div class="w-3 h-3 bg-red-800 rounded-full"></div>
                 <p class="text-lg font-semibold mt-2">{{ date('Y-m-d', strtotime($competition->end_date)) }}</p>
-                <p class="text-lg text-gray-500">End Date</p>
+                <p class="text-lg text-gray-500">End date</p>
             </div>
-        </div>
-        <div class="lg:hidden">
-            <ol class="border-s border-tm-darker-blue">
-                <li>
-                    <div class="flex-start flex items-center pt-3">
-                        <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
-                        <p class="text-sm text-black">{{ date('Y-m-d', strtotime($competition->start_date)) }}</p>
-                    </div>
-                    <div class="mb-6 ms-4 mt-2">
-                        <h2 class="mb-1.5 text-lg font-semibold text-black">Start Date</h2>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex-start flex items-center pt-2">
-                        <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
-                        <p class="text-sm text-black">{{ date('Y-m-d', strtotime($competition->submission_date)) }}</p>
-                    </div>
-                    <div class="mb-6 ms-4 mt-2">
-                        <h2 class="mb-1.5 text-lg font-semibold text-black">Submission Deadline</h2>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex-start flex items-center pt-2">
-                        <div class="-ms-[5px] me-3 h-[9px] w-[9px] rounded-full bg-tm-blue"></div>
-                        <p class="text-sm text-black">{{ date('Y-m-d', strtotime($competition->end_date)) }}</p>
-                    </div>
-                    <div class="ms-4 mt-2 pb-5">
-                        <h2 class="mb-1.5 text-lg font-semibold text-black">End Date</h2>
-                    </div>
-                </li>
-            </ol>
         </div>
     </div>
 
-
     <div class="mt-7">
         <h2 class="text-xl font-bold mb-2 text-black">Rules</h2>
-        <p class="mb-5 text-md text-black">{{ $competition->rules ?? '/'}}</p>
+        <p class="mb-5 text-md text-black">{{ $competition->rules ?? 'N/A'}}</p>
 
         <h2 class="text-xl font-bold mb-2 text-black">Prize</h2>
         <p class="mb-7 text-md text-black">{{ $competition->prize }}</p>
