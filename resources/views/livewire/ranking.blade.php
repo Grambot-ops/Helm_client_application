@@ -33,7 +33,8 @@
                                    clip-path="url(#round)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round)"
+                                   href="{{Storage::url($place->first()->user->profile_photo_path)}}"/>
                         @endif
                     @endif
                     {{$i=0}}
@@ -44,7 +45,8 @@
                                    clip-path="url(#round1)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round1)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round1)"
+                                   href="{{Storage::url($place->first()->user->profile_photo_path)}}"/>
                         @endif
                     @endif
                 {{$i=2}}
@@ -55,7 +57,8 @@
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->first()->user->profile_photo_path}}"/>
+                                   clip-path="url(#round2)"
+                                   href="{{Storage::url($place->first()->user->profile_photo_path)}}"/>
                         @endif
                     @endif
             @endif
@@ -95,9 +98,12 @@
                 <tr class="border-b border-gray-300">
                     <td>{{$i++}}</td>
                     @if($participation->first()->user->profile_photo_path==null)
-                        <td><img width="50px" src="{{asset('assets/profile_pictures/default.jpg')}}" alt=""/></td>
+                        <td><img width="50px" height="50px" src="{{asset('assets/profile_pictures/default.jpg')}}"
+                                 alt=""/></td>
                     @else
-                        <td><img width="50px" src="{{$participation->first()->user->profile_photo_path}}" alt=""/></td>
+                        <td><img width="50px" height="50px"
+                                 src="{{Storage::url($participation->first()->user->profile_photo_path)}}"
+                                 alt=""/></td>
                     @endif
                     <td>{{$participation->first()->user->name}} {{$participation->first()->user->surname}}</td>
                     <td>{{$participation->votes_count}}</td>
@@ -137,7 +143,7 @@
                                    clip-path="url(#round)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round)" href="{{$place->user->profile_photo_path}}"/>
+                                   clip-path="url(#round)" href="{{Storage::url($place->user->profile_photo_path)}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
                             {{$place->user->name}} {{$place->user->surname}}
@@ -153,7 +159,7 @@
                                    clip-path="url(#round1)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round1)" href="{{$place->user->profile_photo_path}}"/>
+                                   clip-path="url(#round1)" href="{{Storage::url($place->user->profile_photo_path)}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
                             {{$place->user->name}} {{$place->user->surname}}
@@ -169,7 +175,7 @@
                                    clip-path="url(#round2)" href="{{asset('assets/profile_pictures/default.jpg')}}"/>
                         @else
                             <image x="{{$i*100+25}}" y="{{20+$j*50}}" height="50px" width="50px" alt="profile"
-                                   clip-path="url(#round2)" href="{{$place->user->profile_photo_path}}"/>
+                                   clip-path="url(#round2)" href="{{Storage::url($place->user->profile_photo_path)}}"/>
                         @endif
                         <text x={{$i*100}} y={{95+$j*50}} >
                             {{$place->user->name}} {{$place->user->surname}}
@@ -195,10 +201,10 @@
 
         <x-tmk.section>
             @if($podium->count()<1)
-                <p>No ranking available yet. When the competition admin has chosen the winners, they will appear
+                <p>No ranking available yet. When the competition organiser has chosen the winners, they will appear
                     here.</p>
             @else
-            <p>This ranking has been determined by the competition administrator.</p>
+                <p>This ranking has been determined by the competition organiser.</p>
             @endif
         </x-tmk.section>
     @endif

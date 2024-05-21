@@ -16,18 +16,18 @@ class CompetitionForm extends Form
     use WithFileUploads;
 
     public $id = null;
-    #[Validate('required|min:3', as: 'title')]
+    #[Validate('required|min:3|max:20', as: 'title')]
     public $title = null;
-    #[Validate('required', as: 'description')]
+    #[Validate('required|string|max:300', as: 'description')]
     public $description = null;
     #[Validate('required', as: 'competition type')]
     public $competition_type_id = null;
     #[Validate('required', as: 'start date')]
     public $start_date = null;
-    #[Validate('required', as: 'end date')]
-    public $end_date = null;
     #[Validate('required', as: 'submission date')]
     public $submission_date = null;
+    #[Validate('required', as: 'end date')]
+    public $end_date = null;
     public $competition_category_id = null;
     public $path_to_photo = null;
     // !!!!!!!!!!!!!! do not name a variable rules and set it to null !!!!!!!!!!!!
@@ -36,10 +36,13 @@ class CompetitionForm extends Form
     public $by_vote = null;
     #[Validate('required', as: 'prize')]
     public $prize = null;
+    #[Validate('image|nullable', as: 'photo')]
     public $photo;
     public $company = null;
-    public $number_of_votes_allowed;
-    public $number_of_uploads;
+    #[Validate('nullable|int')]
+    public $number_of_votes_allowed = 1;
+    #[Validate('required|int', as: 'number of submissions')]
+    public $number_of_uploads = 3;
 
     public bool $newTypeIsFile = false;
 
@@ -83,9 +86,12 @@ class CompetitionForm extends Form
         $this->validate();
 
         if ($this->photo) {
-            $originalPhoto = Image::make($this->photo)->encode('jpg', 75);
-            $this->path_to_photo = 'competition-pictures/' . Str::random(10) . '.jpg';
-            Storage::disk('public')->put($this->path_to_photo, $originalPhoto);
+            #$originalPhoto = Image::make($this->photo)->encode('jpg', 75);
+            #$this->path_to_photo = 'competition-pictures/' . Str::random(10) . '.jpg';
+            #Storage::disk('public')->putFile($this->path_to_photo, $originalPhoto);
+            #$this->path_to_photo = '/storage/' . $this->path_to_photo;
+
+            $this->path_to_photo = Storage::disk('public')->putFile('competition-pictures', $this->photo);
             $this->path_to_photo = '/storage/' . $this->path_to_photo;
         } else {
             $this->path_to_photo = '/assets/card-top.jpg';

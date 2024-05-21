@@ -20,6 +20,7 @@ class Users extends Component
     public $showModal = false;
     public UserForm $form;
     public $checkedRoles = [];
+    public $temporaryCheckedRoles = [];
 
 
     public $roles; // Define the $roles property
@@ -61,8 +62,6 @@ class Users extends Component
         $this->resetErrorBag();
         $this->form->fill($user);
 
-
-
         if ($this->form->active == 1)
             $this->form->active = true;
         else
@@ -71,14 +70,28 @@ class Users extends Component
         $userRoles = UserRole::where('user_id', $this->form->id)->pluck('role_id')->toArray();
         foreach ($this->roles as $role) {
             $this->checkedRoles[$role->id] = in_array($role->id, $userRoles);
+            $this->temporaryCheckedRoles[$role->id] = in_array($role->id, $userRoles);
         }
 
         $this->showModal = true;
     }
 
+
     public function updateUser(User $user): void
     {
         $this->form->update($user);
+
+        // Update roles
+        foreach ($this->temporaryCheckedRoles as $roleId => $isChecked) {
+            if ($isChecked) {
+                if (!UserRole::where('user_id', $user->id)->where('role_id', $roleId)->exists()) {
+                    UserRole::create(['user_id' => $user->id, 'role_id' => $roleId]);
+                }
+            } else {
+                UserRole::where('user_id', $user->id)->where('role_id', $roleId)->delete();
+            }
+        }
+
         $this->showModal = false;
         $this->dispatch('swal:toast', [
             'background' => 'success',
@@ -86,6 +99,7 @@ class Users extends Component
             'icon' => 'success',
         ]);
     }
+
 
     public function deleteUser($id)
     {
