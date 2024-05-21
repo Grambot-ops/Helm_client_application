@@ -3,7 +3,7 @@
     <div class="flex p-4 items-center bg-white">
         <a href="{{ route('dashboard') }}">
             <img src="{{ asset('thomasmore_logo_oranje.svg') }}" alt="Thomas more logo" class="h-10">
-    </a>
+        </a>
     </div>
 
     <!-- Navbar -->
@@ -25,16 +25,16 @@
                     @endauth
                 </span>
                 @php
-                $link = auth()->user()->profile_photo_path == null
-                    ? asset('/assets/profile_pictures/default.jpg')
-                    : Storage::url(auth()->user()->profile_photo_path);
+                    $link = auth()->user()->profile_photo_path == null
+                        ? asset('/assets/profile_pictures/default.jpg')
+                        : Storage::url(auth()->user()->profile_photo_path);
                 @endphp
                 <img src="{{ $link }}" alt="Profile Photo" class="rounded-full h-10 w-10 object-cover">
+                <x-phosphor-caret-down x-bind:style="{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }" class="h-5 w-5 transition-transform duration-200"></x-phosphor-caret-down>
             </button>
             <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
                 @if(auth()->user()->user_roles()->where('role_id', 3)->exists())
-                    <a href="{{ route('announcement') }}"
-                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Send announcement</a>
+                    <a href="{{ route('announcement') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Send announcement</a>
                     <div class="border-t border-gray-100"></div>
                 @endif
                 @if(auth()->user()->admin)
@@ -42,10 +42,10 @@
                     <a href="{{ route('admin.compcat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition categories</a>
                     <a href="{{ route('admin.comptyp') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage competition types</a>
                     <a href="{{ route('admin.notifications') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage notifications</a>
-                        <a href="{{ route('admin.users') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage users</a>
+                    <a href="{{ route('admin.users') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage users</a>
                 @endif
                 <a href="{{ route('settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                    <a href="{{ route('help') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Help</a>
+                <a href="{{ route('help') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Help</a>
                 <div class="border-t border-gray-100"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
