@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Competition;
 use App\Models\Participation;
 use App\Models\Submission;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -20,6 +21,8 @@ class UploadEndProduct extends Component
 
     public $competition;
     public $participation;
+
+    public $photo;
 
     public $mimetype;
 
@@ -51,7 +54,7 @@ class UploadEndProduct extends Component
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
             'participation_id' => $this->participation->id,
-            'path' => $filename ?? null,
+            'path' => '/storage/' . Storage::disk('public')->putFile('competition-pictures', $this->photo) ?? null,
             'link' => !$is_file ? $this->uploaded : null,
         ]);
 
