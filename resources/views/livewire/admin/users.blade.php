@@ -11,7 +11,6 @@
         <div class="my-4">{{ $users->links()}}</div>
         <table class="text-center w-full border border-gray-300">
             <colgroup>
-                <col class="w-14">
                 <col class="w-max">
                 <col class="w-max">
                 <col class="w-20">
@@ -19,7 +18,6 @@
             </colgroup>
             <thead>
             <tr class="bg-gray-100 text-gray-700 [&>th]:p-2">
-                <th>#</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Active</th>
@@ -38,7 +36,6 @@
             <tbody>
             @forelse($users as $user)
                 <tr wire:key="{{ $user->id }}" class="border-t border-gray-300">
-                    <td>{{ $user->id }}</td>
                     <td>{{ $user->name }} {{ $user->surname }}</td>
                     <td>
                         @forelse($user->user_roles as $key => $userRole)
@@ -49,7 +46,7 @@
                                 @endif
                             @endif
                         @empty
-                            No role
+                            Guest
                         @endforelse
 
                     </td>
@@ -123,8 +120,7 @@
                         @foreach($roles as $role)
                             <li>
                                 <x-input id="role_{{ $role->id }}" type="checkbox"
-                                         wire:model="checkedRoles.{{ $role->id }}"
-                                         wire:change="addRoleToUser({{ $role->id }}, {{ $form->id }})"
+                                         wire:model="temporaryCheckedRoles.{{ $role->id }}"
                                 ></x-input>
                                 {{ $role->name }}
                             </li>
