@@ -26,6 +26,7 @@
 
 .button-grayed-places:active {
     background-color: lightgray !important;
+}
 
 @media (max-width: 640px) {
     #rankingrightdiv {
