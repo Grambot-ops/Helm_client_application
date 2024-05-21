@@ -46,7 +46,7 @@
                     {{ __('Select A New Photo') }}
                 </x-secondary-button>
 
-                @if ($this->user->profile_photo_path && $this->user->profile_photo_path !== 'assets/profile_pictures/default.jpg')
+                @if ($this->user->profile_photo_path !== '/assets/profile_pictures/default.jpg')
                     <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Remove Photo') }}
                     </x-secondary-button>
