@@ -6,7 +6,7 @@ services:
             context: .
             dockerfile: Dockerfile
         ports:
-            - "365000:365000"
+            - "36500:36500"
         volumes:
             - .:/var/www/html
             - ./storage:/var/www/html/storage
