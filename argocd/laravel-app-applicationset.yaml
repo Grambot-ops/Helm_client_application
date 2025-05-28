@@ -1,0 +1,84 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: laravel-app-environments
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: laravel-app
+    app.kubernetes.io/component: application-set
+spec:
+  generators:
+  - list:
+      elements:
+      - environment: development
+        domain: dev.example.com
+        namespace: laravel-app-dev
+        replicas: 1
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+      - environment: production
+        domain: example.com
+        namespace: laravel-app
+        replicas: 3
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+  template:
+    metadata:
+      name: laravel-app-{{environment}}
+      labels:
+        app.kubernetes.io/name: laravel-app
+        app.kubernetes.io/environment: "{{environment}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Grambot-ops/Helm_client_application.git
+        targetRevision: HEAD
+        path: helm/laravel-app
+        helm:
+          valueFiles:
+            - values.yaml
+            - values-{{environment}}.yaml
+          parameters:
+            - name: image.tag
+              value: "latest"
+            - name: ingress.hosts[0].host
+              value: "laravel-app.{{domain}}"
+            - name: replicaCount
+              value: "{{replicas}}"
+            - name: resources.requests.memory
+              value: "{{resources.requests.memory}}"
+            - name: resources.requests.cpu
+              value: "{{resources.requests.cpu}}"
+            - name: resources.limits.memory
+              value: "{{resources.limits.memory}}"
+            - name: resources.limits.cpu
+              value: "{{resources.limits.cpu}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: false
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      revisionHistoryLimit: 10

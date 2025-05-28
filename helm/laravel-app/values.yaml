@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: laravel-app
+  repository: ghcr.io/grambot-ops/helm_client_application/laravel-app
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"

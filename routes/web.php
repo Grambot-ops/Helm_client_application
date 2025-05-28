@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HealthController;
 use App\Livewire\Admin\AcceptCompetition;
 use App\Livewire\Admin\ApplyForCompetition;
 use App\Livewire\Admin\ManageCompetitionCategories;
@@ -24,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Health check routes (no auth required for Kubernetes probes)
+Route::get('/health', [HealthController::class, 'check'])->name('health.check');
+Route::get('/health/detailed', [HealthController::class, 'detailed'])->name('health.detailed');
 
 Route::middleware(['auth'])->group(function() {
     Route::get('welcome', Welcome::class)->name('welcome');

@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: laravel-app
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    app.kubernetes.io/name: laravel-app
+    app.kubernetes.io/component: web-application
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Grambot-ops/Helm_client_application.git
+    targetRevision: HEAD
+    path: helm/laravel-app
+    helm:
+      # Use values file for the target environment
+      valueFiles:
+        - values.yaml
+        - values-production.yaml
+      parameters:
+        - name: image.tag
+          value: "latest"
+        - name: ingress.hosts[0].host
+          value: "laravel-app.example.com"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: laravel-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  revisionHistoryLimit: 10
+  info:
+    - name: 'Description'
+      value: 'Laravel application deployed via Helm chart from GitHub repository'
+    - name: 'Repository'
+      value: 'https://github.com/Grambot-ops/Helm_client_application.git'
+    - name: 'Environment'
+      value: 'Production'
