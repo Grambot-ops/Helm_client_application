@@ -37,6 +37,8 @@ mysql:
   enabled: true
   auth:
     rootPassword: "root"
+    database: "laravel"
+    username: "laravel_user"
     password: "dev_password"
   primary:
     persistence:

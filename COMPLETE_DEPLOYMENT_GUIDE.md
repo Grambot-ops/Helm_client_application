@@ -13,20 +13,23 @@ ArgoCD → Helm Chart → Laravel App + MySQL + PHPMyAdmin
 ## 📋 Prerequisites
 
 ### 1. Infrastructure Requirements
-- **Kubernetes Cluster** (v1.24+)
-- **ArgoCD** installed in the cluster
-- **Ingress Controller** (NGINX, Traefik, or similar)
-- **Container Registry** access (GitHub Container Registry or Docker Hub)
+
+-   **Kubernetes Cluster** (v1.24+)
+-   **ArgoCD** installed in the cluster
+-   **Ingress Controller** (NGINX, Traefik, or similar)
+-   **Container Registry** access (GitHub Container Registry or Docker Hub)
 
 ### 2. Tools Required
-- `kubectl` configured for your cluster
-- `helm` (v3.8+)
-- `docker` for local testing
-- `argocd` CLI (optional)
+
+-   `kubectl` configured for your cluster
+-   `helm` (v3.8+)
+-   `docker` for local testing
+-   `argocd` CLI (optional)
 
 ### 3. Repository Setup
-- GitHub repository: `https://github.com/Grambot-ops/Helm_client_application.git`
-- Docker image repository configured
+
+-   GitHub repository: `https://github.com/Grambot-ops/Helm_client_application.git`
+-   Docker image repository configured
 
 ## 🚀 Deployment Steps
 
@@ -42,11 +45,12 @@ vim helm/laravel-app/values.yaml
 ```
 
 Update the image section:
+
 ```yaml
 image:
-  repository: ghcr.io/grambot-ops/helm_client_application/laravel-app
-  pullPolicy: IfNotPresent
-  tag: "latest"
+    repository: ghcr.io/grambot-ops/helm_client_application/laravel-app
+    pullPolicy: IfNotPresent
+    tag: "latest"
 ```
 
 #### 1.2 Configure Domains
@@ -54,23 +58,25 @@ image:
 Update ingress hosts for your environments:
 
 **Production** (`helm/laravel-app/values-production.yaml`):
+
 ```yaml
 ingress:
-  hosts:
-    - host: laravel-app.yourdomain.com
-      paths:
-        - path: /
-          pathType: Prefix
+    hosts:
+        - host: laravel-app.yourdomain.com
+          paths:
+              - path: /
+                pathType: Prefix
 ```
 
 **Development** (`helm/laravel-app/values-development.yaml`):
+
 ```yaml
 ingress:
-  hosts:
-    - host: laravel-app-dev.yourdomain.com
-      paths:
-        - path: /
-          pathType: Prefix
+    hosts:
+        - host: laravel-app-dev.yourdomain.com
+          paths:
+              - path: /
+                pathType: Prefix
 ```
 
 ### Step 2: Set Up GitHub Actions (Optional)
@@ -80,8 +86,9 @@ If using GitHub Actions for CI/CD:
 #### 2.1 Configure Repository Secrets
 
 In your GitHub repository settings, add these secrets:
-- `KUBE_CONFIG`: Base64-encoded kubeconfig file
-- `GITHUB_TOKEN`: Automatically provided
+
+-   `KUBE_CONFIG`: Base64-encoded kubeconfig file
+-   `GITHUB_TOKEN`: Automatically provided
 
 #### 2.2 Trigger Initial Build
 
@@ -97,11 +104,13 @@ git push origin main
 #### 3.1 Option A: Individual Applications
 
 Deploy development environment:
+
 ```bash
 kubectl apply -f argocd/laravel-app-development.yaml
 ```
 
 Deploy production environment:
+
 ```bash
 kubectl apply -f argocd/laravel-app.yaml
 ```
@@ -109,6 +118,7 @@ kubectl apply -f argocd/laravel-app.yaml
 #### 3.2 Option B: ApplicationSet (Recommended)
 
 Deploy both environments:
+
 ```bash
 kubectl apply -f argocd/laravel-app-applicationset.yaml
 ```
@@ -132,7 +142,7 @@ kubectl describe application laravel-app-dev -n argocd
 # Production
 kubectl get pods -n laravel-app -w
 
-# Development  
+# Development
 kubectl get pods -n laravel-app-dev -w
 ```
 
@@ -183,6 +193,7 @@ kubectl exec -it -n laravel-app deployment/laravel-app -- php artisan migrate:st
 Key environment variables are managed through Kubernetes ConfigMaps and Secrets:
 
 #### ConfigMap (Non-sensitive)
+
 ```yaml
 APP_NAME: "Laravel App"
 APP_ENV: "production"
@@ -195,6 +206,7 @@ DB_DATABASE: "laravel"
 ```
 
 #### Secrets (Sensitive)
+
 ```yaml
 APP_KEY: "base64:generated-key"
 DB_USERNAME: "laravel"
@@ -341,12 +353,12 @@ kubectl get pv
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: laravel-app
-  name: laravel-app-role
+    namespace: laravel-app
+    name: laravel-app-role
 rules:
-- apiGroups: [""]
-  resources: ["secrets", "configmaps"]
-  verbs: ["get", "list"]
+    - apiGroups: [""]
+      resources: ["secrets", "configmaps"]
+      verbs: ["get", "list"]
 ```
 
 ### 2. Network Policies
@@ -355,34 +367,34 @@ rules:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: laravel-app-netpol
-  namespace: laravel-app
+    name: laravel-app-netpol
+    namespace: laravel-app
 spec:
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/name: laravel-app
-  policyTypes:
-  - Ingress
-  - Egress
+    podSelector:
+        matchLabels:
+            app.kubernetes.io/name: laravel-app
+    policyTypes:
+        - Ingress
+        - Egress
 ```
 
 ### 3. Pod Security Standards
 
 ```yaml
 securityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  fsGroup: 2000
-  seccompProfile:
-    type: RuntimeDefault
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 2000
+    seccompProfile:
+        type: RuntimeDefault
 ```
 
 ## 📚 Additional Resources
 
-- **Helm Chart Documentation**: `helm/laravel-app/README.md`
-- **Kubernetes Deployment Guide**: `KUBERNETES_DEPLOYMENT.md`
-- **ArgoCD Configuration**: `argocd/README.md`
-- **GitHub Actions Workflow**: `.github/workflows/deploy.yml`
+-   **Helm Chart Documentation**: `helm/laravel-app/README.md`
+-   **Kubernetes Deployment Guide**: `KUBERNETES_DEPLOYMENT.md`
+-   **ArgoCD Configuration**: `argocd/README.md`
+-   **GitHub Actions Workflow**: `.github/workflows/deploy.yml`
 
 ## 🎯 Next Steps
 
@@ -396,6 +408,7 @@ securityContext:
 ## 📞 Support
 
 For deployment issues:
+
 1. Check the troubleshooting section above
 2. Review application and ArgoCD logs
 3. Verify Helm chart configuration

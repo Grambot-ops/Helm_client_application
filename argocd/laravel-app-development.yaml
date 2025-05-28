@@ -21,10 +21,16 @@ spec:
         - values.yaml
         - values-development.yaml
       parameters:
+        - name: image.repository
+          value: "laravel-app"
         - name: image.tag
           value: "latest"
+        - name: image.pullPolicy
+          value: "Never"
+        - name: service.type
+          value: "NodePort"
         - name: ingress.hosts[0].host
-          value: "laravel-app-dev.example.com"
+          value: "laravel-app-dev.local"
   destination:
     server: https://kubernetes.default.svc
     namespace: laravel-app-dev
@@ -45,9 +51,9 @@ spec:
         maxDuration: 3m
   revisionHistoryLimit: 10
   info:
-    - name: 'Description'
-      value: 'Laravel application (Development) deployed via Helm chart from GitHub repository'
-    - name: 'Repository'
-      value: 'https://github.com/Grambot-ops/Helm_client_application.git'
-    - name: 'Environment'
-      value: 'Development'
+    - name: "Description"
+      value: "Laravel application (Development) deployed via Helm chart from GitHub repository"
+    - name: "Repository"
+      value: "https://github.com/Grambot-ops/Helm_client_application.git"
+    - name: "Environment"
+      value: "Development"

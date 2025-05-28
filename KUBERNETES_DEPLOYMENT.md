@@ -1,52 +1,88 @@
-# Laravel Kubernetes Deployment Guide
+# Laravel Kubernetes Deployment Guide - Local Deployment Focus
 
-This guide explains how to deploy your Laravel application to Kubernetes using the provided Helm chart.
+This guide explains how to deploy your Laravel application to a **local Kubernetes cluster** using the provided Helm chart.
 
-## Quick Start
+## Quick Start for Local Development
 
 ### 1. Prerequisites
 
--   Docker
--   Kubernetes cluster (minikube, kind, or cloud provider)
--   Helm 3.x installed
--   kubectl configured
+-   **Local Kubernetes cluster**: minikube, kind, k3s, or Docker Desktop
+-   **Docker** for building images
+-   **Helm 3.x** installed
+-   **kubectl** configured for your local cluster
 
-### 2. Build and Push Docker Image
-
-```bash
-# Build the Docker image
-docker build -t your-registry/laravel-app:latest .
-
-# Push to your container registry
-docker push your-registry/laravel-app:latest
-```
-
-### 3. Update Helm Values
-
-Edit `helm/laravel-app/values.yaml`:
-
-```yaml
-image:
-    repository: your-registry/laravel-app
-    tag: latest
-```
-
-### 4. Deploy to Kubernetes
+### 2. Build and Load Docker Image Locally
 
 ```bash
-# Test the chart first
+# Build the Docker image locally
+docker build -t laravel-app:latest .
+
+# For minikube - load image into minikube
+minikube image load laravel-app:latest
+
+# For kind - load image into kind cluster
+kind load docker-image laravel-app:latest
+
+# For k3s/k3d - import image
+k3d image import laravel-app:latest
+```
+
+### 3. Validate Helm Chart
+
+```bash
+# Test the chart
 ./test-helm-chart.sh
 
-# Install for development
-helm install my-laravel-app ./helm/laravel-app -f ./helm/laravel-app/values-development.yaml
-
-# Or install for production
-helm install my-laravel-app ./helm/laravel-app -f ./helm/laravel-app/values-production.yaml
+# Lint the chart
+helm lint ./helm/laravel-app
 ```
 
-## Development Setup
+### 4. Deploy to Local Kubernetes
 
-For local development with minikube:
+```bash
+# Create namespace and deploy
+helm install laravel-local ./helm/laravel-app \
+  -f ./helm/laravel-app/values-development.yaml \
+  --set image.repository=laravel-app \
+  --set image.tag=latest \
+  --set image.pullPolicy=Never \
+  --namespace laravel-local \
+  --create-namespace \
+  --wait --timeout=300s
+```
+
+### 5. Access Your Application
+
+```bash
+# Get service information
+kubectl get services -n laravel-local
+
+# For minikube - get URL directly
+minikube service laravel-local --url -n laravel-local
+
+# For other local clusters - use port forwarding
+kubectl port-forward service/laravel-local 8080:80 -n laravel-local
+
+# Access PHPMyAdmin (if enabled)
+kubectl port-forward service/laravel-local-phpmyadmin 8081:80 -n laravel-local
+```
+
+### 6. Verify Deployment
+
+```bash
+# Check pod status
+kubectl get pods -n laravel-local
+
+# Check logs
+kubectl logs -f deployment/laravel-local -n laravel-local
+
+# Execute commands in the container
+kubectl exec -it deployment/laravel-local -n laravel-local -- php artisan --version
+```
+
+## Local Development Setup
+
+For active development with live reloading:
 
 ```bash
 # Start minikube
@@ -141,35 +177,71 @@ autoscaling:
   maxReplicas: 10
 ```
 
-## Troubleshooting
+## Troubleshooting Local Deployments
 
 ### Common Issues
 
 1. **Image Pull Errors**
 
-    - Ensure image exists in registry
-    - Check imagePullSecrets if using private registry
+    ```bash
+    # Check if image exists locally
+    docker images | grep laravel-app
+
+    # For minikube - ensure image is loaded
+    minikube image ls | grep laravel-app
+
+    # For kind - ensure image is loaded
+    docker exec -it kind-control-plane crictl images | grep laravel-app
+    ```
 
 2. **Database Connection Issues**
 
-    - Verify MySQL is running: `kubectl get pods`
-    - Check database credentials in ConfigMap/Secret
+    ```bash
+    # Check MySQL pod status
+    kubectl get pods -n laravel-local | grep mysql
 
-3. **Application Errors**
-    - Check logs: `kubectl logs deployment/laravel-prod`
-    - Verify environment variables: `kubectl describe configmap laravel-prod-env`
+    # Check MySQL logs
+    kubectl logs deployment/laravel-local-mysql -n laravel-local
 
-### Useful Commands
+    # Test database connection from Laravel pod
+    kubectl exec -it deployment/laravel-local -n laravel-local -- php artisan migrate:status
+    ```
+
+3. **Service Not Accessible**
+
+    ```bash
+    # Check service endpoints
+    kubectl get endpoints -n laravel-local
+
+    # For minikube - ensure tunnel is running
+    minikube tunnel
+
+    # Check NodePort assignments
+    kubectl get services -n laravel-local -o wide
+    ```
+
+### Useful Commands for Local Development
 
 ```bash
-# Port forward for local access
-kubectl port-forward service/laravel-prod 8080:80
-
-# Execute commands in pod
-kubectl exec -it deployment/laravel-prod -- bash
+# Rebuild and redeploy quickly
+docker build -t laravel-app:latest . && \
+minikube image load laravel-app:latest && \
+helm upgrade laravel-local ./helm/laravel-app \
+  -f ./helm/laravel-app/values-development.yaml \
+  --set image.repository=laravel-app \
+  --set image.tag=latest \
+  --set image.pullPolicy=Never \
+  -n laravel-local
 
 # View all resources
-kubectl get all -l app.kubernetes.io/instance=laravel-prod
+kubectl get all -n laravel-local
+
+# Port forward for development
+kubectl port-forward service/laravel-local 8080:80 -n laravel-local
+
+# Clean up completely
+helm uninstall laravel-local -n laravel-local
+kubectl delete namespace laravel-local
 ```
 
 ## Security Best Practices

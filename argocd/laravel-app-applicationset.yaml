@@ -8,30 +8,30 @@ metadata:
     app.kubernetes.io/component: application-set
 spec:
   generators:
-  - list:
-      elements:
-      - environment: development
-        domain: dev.example.com
-        namespace: laravel-app-dev
-        replicas: 1
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "200m"
-      - environment: production
-        domain: example.com
-        namespace: laravel-app
-        replicas: 3
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "200m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+    - list:
+        elements:
+          - environment: development
+            domain: dev.example.com
+            namespace: laravel-app-dev
+            replicas: 1
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "100m"
+              limits:
+                memory: "256Mi"
+                cpu: "200m"
+          - environment: production
+            domain: example.com
+            namespace: laravel-app
+            replicas: 3
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "200m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
   template:
     metadata:
       name: laravel-app-{{environment}}
