@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "laravel-app.fullname" . }}-env
+  labels:
+    {{- include "laravel-app.labels" . | nindent 4 }}
+data:
+  APP_NAME: {{ .Values.laravel.env.APP_NAME | quote }}
+  APP_ENV: {{ .Values.laravel.env.APP_ENV | quote }}
+  APP_DEBUG: {{ .Values.laravel.env.APP_DEBUG | quote }}
+  APP_URL: {{ .Values.laravel.env.APP_URL | quote }}
+  LOG_CHANNEL: {{ .Values.laravel.env.LOG_CHANNEL | quote }}
+  LOG_LEVEL: {{ .Values.laravel.env.LOG_LEVEL | quote }}
+  
+  DB_CONNECTION: {{ .Values.laravel.env.DB_CONNECTION | quote }}
+  {{- if .Values.mysql.enabled }}
+  DB_HOST: {{ include "laravel-app.mysql.fullname" . | quote }}
+  {{- else }}
+  DB_HOST: {{ .Values.laravel.env.DB_HOST | quote }}
+  {{- end }}
+  DB_PORT: {{ .Values.laravel.env.DB_PORT | quote }}
+  {{- if .Values.mysql.enabled }}
+  DB_DATABASE: {{ .Values.mysql.auth.database | quote }}
+  DB_USERNAME: {{ .Values.mysql.auth.username | quote }}
+  {{- else }}
+  DB_DATABASE: {{ .Values.laravel.env.DB_DATABASE | quote }}
+  DB_USERNAME: {{ .Values.laravel.env.DB_USERNAME | quote }}
+  {{- end }}
+  
+  CACHE_DRIVER: {{ .Values.laravel.env.CACHE_DRIVER | quote }}
+  SESSION_DRIVER: {{ .Values.laravel.env.SESSION_DRIVER | quote }}
+  SESSION_LIFETIME: {{ .Values.laravel.env.SESSION_LIFETIME | quote }}
+  
+  MAIL_MAILER: {{ .Values.laravel.env.MAIL_MAILER | quote }}
+  MAIL_HOST: {{ .Values.laravel.env.MAIL_HOST | quote }}
+  MAIL_PORT: {{ .Values.laravel.env.MAIL_PORT | quote }}
+  MAIL_FROM_ADDRESS: {{ .Values.laravel.env.MAIL_FROM_ADDRESS | quote }}

@@ -1,0 +1,77 @@
+# Production values for Laravel app
+# Override default values for production deployment
+
+replicaCount: 2
+
+image:
+  repository: your-registry/laravel-app
+  pullPolicy: Always
+  tag: "stable"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: yourdomain.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: laravel-app-tls
+      hosts:
+        - yourdomain.com
+
+laravel:
+  env:
+    APP_ENV: "production"
+    APP_DEBUG: "false"
+    APP_URL: "https://yourdomain.com"
+    LOG_LEVEL: "warning"
+    CACHE_DRIVER: "redis"
+    SESSION_DRIVER: "redis"
+
+  secrets:
+    APP_KEY: "base64:your-generated-32-char-key-here"
+    DB_PASSWORD: "your-secure-database-password"
+
+  persistence:
+    enabled: true
+    storageClass: "fast-ssd"
+    storage:
+      size: 10Gi
+    logs:
+      size: 2Gi
+
+mysql:
+  enabled: true
+  auth:
+    rootPassword: "your-secure-root-password"
+    password: "your-secure-database-password"
+  primary:
+    persistence:
+      enabled: true
+      size: 50Gi
+      storageClass: "fast-ssd"
+
+phpmyadmin:
+  enabled: false # Disable in production for security

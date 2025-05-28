@@ -1,0 +1,33 @@
+{{- if .Values.laravel.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "laravel-app.fullname" . }}-storage
+  labels:
+    {{- include "laravel-app.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.laravel.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.laravel.persistence.storage.size }}
+  {{- if .Values.laravel.persistence.storageClass }}
+  storageClassName: {{ .Values.laravel.persistence.storageClass }}
+  {{- end }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "laravel-app.fullname" . }}-logs
+  labels:
+    {{- include "laravel-app.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.laravel.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.laravel.persistence.logs.size }}
+  {{- if .Values.laravel.persistence.storageClass }}
+  storageClassName: {{ .Values.laravel.persistence.storageClass }}
+  {{- end }}
+{{- end }}

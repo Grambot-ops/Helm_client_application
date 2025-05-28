@@ -1,0 +1,48 @@
+# Development values for Laravel app
+# Override default values for development deployment
+
+replicaCount: 1
+
+image:
+  repository: laravel-app
+  pullPolicy: Never # Use local images
+  tag: "dev"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+service:
+  type: NodePort
+
+laravel:
+  env:
+    APP_ENV: "local"
+    APP_DEBUG: "true"
+    APP_URL: "http://localhost:8080"
+    LOG_LEVEL: "debug"
+
+  secrets:
+    APP_KEY: "" # Will be auto-generated
+    DB_PASSWORD: "dev_password"
+
+  persistence:
+    enabled: false # Use emptyDir for development
+
+mysql:
+  enabled: true
+  auth:
+    rootPassword: "root"
+    password: "dev_password"
+  primary:
+    persistence:
+      enabled: false # Use emptyDir for development
+
+phpmyadmin:
+  enabled: true
+  service:
+    type: NodePort

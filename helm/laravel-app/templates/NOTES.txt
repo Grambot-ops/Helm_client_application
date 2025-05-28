@@ -1,0 +1,58 @@
+1. Get the application URL by running these commands:
+{{- if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- else if contains "NodePort" .Values.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "laravel-app.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.service.type }}
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "laravel-app.fullname" . }}'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "laravel-app.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  echo http://$SERVICE_IP:{{ .Values.service.port }}
+{{- else if contains "ClusterIP" .Values.service.type }}
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "laravel-app.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
+{{- end }}
+
+{{- if and .Values.phpmyadmin.enabled .Values.mysql.enabled }}
+
+2. Access PHPMyAdmin by running:
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "laravel-app.name" . }},app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/component=phpmyadmin" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8081 to access PHPMyAdmin"
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8081:80
+{{- end }}
+
+3. Check the status of your Laravel application:
+  kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "laravel-app.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+
+4. View application logs:
+  kubectl logs --namespace {{ .Release.Namespace }} deployment/{{ include "laravel-app.fullname" . }}
+
+{{- if .Values.mysql.enabled }}
+
+5. Connect to MySQL database:
+  kubectl run mysql-client --rm -it --restart=Never --image=mysql:8.0 --namespace {{ .Release.Namespace }} -- mysql -h {{ include "laravel-app.mysql.fullname" . }} -u {{ .Values.mysql.auth.username }} -p{{ .Values.mysql.auth.password }} {{ .Values.mysql.auth.database }}
+{{- end }}
+
+{{- if not .Values.laravel.secrets.APP_KEY }}
+
+⚠️  IMPORTANT: The Laravel APP_KEY will be auto-generated on first run.
+   For production deployments, consider setting a fixed APP_KEY in your values.yaml
+{{- end }}
+
+{{- if eq .Values.laravel.env.APP_ENV "production" }}
+
+🔒 SECURITY REMINDER for Production:
+   - Ensure APP_DEBUG is set to false
+   - Use strong passwords for database
+   - Configure proper resource limits
+   - Enable TLS/SSL certificates
+   - Disable PHPMyAdmin in production
+{{- end }}
